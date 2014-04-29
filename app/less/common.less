@@ -1,0 +1,27 @@
+ .rozbaleno { font-family: 'NeutraDispB', "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 1em; letter-spacing: 0.25em; width: 100%; display: block; z-index: 1;
+ background: @dark; color: #fff; text-align: center; padding: 8px 0 4px 0; position: absolute; bottom: 0; left: 0; text-transform: uppercase; line-height: 1em; }
+ 
+ 
+ .to-wish-wrap, .to-wish-wrap-rozbaleno { height: 0; overflow: hidden;}
+ .img, .product-li {
+    &:hover {
+        .to-wish-wrap, .to-wish-wrap-rozbaleno { .bdra(4px 4px 0 0); .opacity(0.7); background: @dark; position: absolute; bottom: 0px; left: 0; display: block; width: 100%; height: 30px; .transition(all 200ms linear);
+            a.to-wish {.opacity(1) !important; font-size: 11px; color: #fff; padding-left: 25px;  height: 30px; line-height: 30px; text-align: center; width: 100%; background: url(../images/sprite-ico.png) no-repeat 8px -210px transparent;}
+        }
+        .to-wish-wrap-rozbaleno { bottom: 20px; 
+            a { text-transform: none; line-height: 30px;}
+        }
+        .to-wish-wrap {
+            a { text-transform: none; line-height: 30px;}
+        }
+    }
+}  
+.product-li a.to-wish {.bg('to-wish-min.png',6px,8px) !important; .size(14px,14px); padding-left: 17px !important; text-align: left; float: left; font-family: Arial; font-size: 11px; letter-spacing: 0em;}
+      
+.qtip-content { display: block; overflow: auto !important; background: #282828 !important; opacity: .9; color: #fff !important; font-family: Arial, sans-serif; .border-radius(5px); font-size: 11px; padding: 10px !important; border: 0 !important;
+        /*.qtip-wrapper  { position: relative !important; overflow: auto !important;       
+        &:after { position: absolute; display: block; width: 0; left: 50%; top: -5px; border-width: 0 15px 15px; border-color: #f3961c transparent; border-style: solid;
+            content: ''; z-index: 10000 !important;}
+}*/
+ 
+}       

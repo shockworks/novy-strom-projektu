@@ -1,3 +1,5 @@
 /node_modules/*
 /files/*
 /client-files/*
+/assets/*
+/bower_components/*

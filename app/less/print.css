@@ -1,0 +1,9 @@
+@CHARSET "UTF-8";
+* {font-family: Arial;}
+#top {display: none !important;}
+#left-menu {display: none;}
+#breadcrumb {display: none;}
+#frm-addCartForm {display: none;}
+#foot {display: none;}
+#product-img {display: block !important; width: 50%; float: left;}
+hr {border: none;}

@@ -3,15 +3,14 @@
 <!--[if IE 7]>      <html lang="cs" xml:lang="cs" class="lt-ie10 lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>      <html lang="cs" xml:lang="cs" class="lt-ie10 lt-ie9"> <![endif]-->
 <!--[if IE 9]>      <html lang="cs" xml:lang="cs" class="lt-ie10"> <![endif]-->
-<!--[if gt IE 9]>   <!--> 
+<!--[if gt IE 9]>   <!-->
 <html lang="cs" xml:lang="cs" class=""> <!-- <![endif]-->
     <head>
-        
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         {control metaHeaderComponent}
         {control seoHeaderComponent}
         {block canonical}{/block}
-        {control plugins 
+        {* control plugins
             'cssTools/autocompleteCSS-1.0.0',
             'common/jquery-1.7.2',
             'common/bootstrap-3.0.3',
@@ -38,16 +37,22 @@
             'tools/interactive-filter-1.0.0',
             'tools/qtip-1.0.0',
             'tools/mixitup-1.5.5'
-        }
-        {control css 'sw-bootstrap.css', 'sw-bootstrap-theme.css', 'mixins.less', 'basic.less', 'common.less', 'layout.less', 'content.less', 'cart.less', 'browsers.less'} {* <!-- 'content.less' 'backend/basecss-1.0.2', --> *}
+        *}
+        {* control css 'sw-bootstrap.css', 'sw-bootstrap-theme.css', 'mixins.less', 'basic.less', 'common.less', 'layout.less', 'content.less', 'cart.less', 'browsers.less' *} {* <!-- 'content.less' 'backend/basecss-1.0.2', --> *}
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/js/melonhtml5-timeline/css/timeline.css" />
-    <link rel="stylesheet" type="text/css" href="/js/melonhtml5-timeline/css/timeline_light.css" />  
+    <link rel="stylesheet" type="text/css" href="/js/melonhtml5-timeline/css/timeline_light.css" />
     <script type="text/javascript" src="/js/melonhtml5-timeline/javascript/timeline.min.js"></script>
     <script type="text/javascript" src="/js/init.js"></script>
     <script type="text/javascript" src="/js/modernizr.custom.64083.js"></script>
     {control googleAnalyticsComponent}
-    <script type="text/javascript" src="/js/respond.min.js"></script> 
+    <script type="text/javascript" src="/js/respond.min.js"></script>
+
+    <!-- nove by se melo volat pouze toto / mozna dame do nejake komponenty -->
+    <link rel="stylesheet" type="text/css" media="all" href="/assets/css/screen.css" />
+    <link rel="stylesheet" type="text/css" media="print" href="/assets/css/print.css" /> <!-- print.css je dnes v nejake komponente -->
+    <script src="/assets/js/js.min.js"></script>
+    <!-- end -->
     </head>
     <body>
         {if isset($actualCategory) && isset($actualCategory->galleries['pozadi']) && !isset($product) }
@@ -56,7 +61,7 @@
                     body { background: url("{plink Files:default $file->id}") no-repeat center fixed transparent; }
                 </style>
             {/foreach}
-        {/if}  
+        {/if}
         <div id="fb-root"></div>
 
         <!-- ---- ---- ---- -->
@@ -64,7 +69,7 @@
         {? $freeShipping = 2000;}
         <a id="spec-top" class="anchor"></a>
         <div id="fb-root"></div>
-        
+
         <script>
             (function(d, s, id) {
                             var js, fjs = d.getElementsByTagName(s)[0];
@@ -86,10 +91,10 @@
                     </div>
                     <div class="top-benefits doprava col-md-3 col-lg-3">
                         <p>Od 1 500 Kč <strong>doprava zdarma</strong></p>
-                    </div> 
+                    </div>
                     <div class="top-benefits tel col-md-3 col-lg-3" title="Na telefonu jsme pro tebe v pondělí–pátek 8.00–18.00 a v sobotu 8.00–12.00">
                         <p><strong>724 002 009</strong>  / 556 300 700</p>
-                    </div> 
+                    </div>
                 </div>
         </div>
         </div>
@@ -97,7 +102,7 @@
             <div class="container" id="sub-header">
                 <div class="row logo-search-buy">
                     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                        <{block logo}span{/block} class="navbar-left"><a n:href="Default:" class="navbar-link"><img alt="logo" src="http:/images/logo.png" class="logo" /></a></{block logo_end}span{/block}>
+                        <{block logo}span{/block} class="navbar-left"><a n:href="Default:" class="navbar-link"><img alt="logo" src="/images/logo.png" class="logo" /></a></{block logo_end}span{/block}>
                     </div>
                     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
                         {control searchForm:autocomplete}
@@ -146,13 +151,13 @@
                     </div>
                     <script>
                         var timer;
-                        $('#out-top-cart').hover(function(){             
+                        $('#out-top-cart').hover(function(){
                             clearTimeout(timer);
-                            $('#under-top-cart').addClass('ac').fadeIn('fast');  
-                        },function(){              
+                            $('#under-top-cart').addClass('ac').fadeIn('fast');
+                        },function(){
                             timer = setTimeout(function() {
                                 $('#under-top-cart').removeClass('ac').fadeOut('fast');
-                            }, 500); 
+                            }, 500);
                         });
                     </script>
                 {/snippet}
@@ -179,17 +184,17 @@
                             <li class="nav-li"><a href="{plink Search:default array('gender'=>23)}"><span></span>Kluci</a></li>
                             <li class="nav-li"><a href="{plink Search:default array('gender'=>24)}"><span></span>Holky</a></li>
                             <li class="nav-li"><a href="{plink Search:default array('gender'=>25)}"><span></span>Děti</a></li>
-                            
+
                             {? $listId = CategoryList::getOneBy('implementation_name', 'hudba')->id; }
                             <li class="nav-li"><a href="{plink Search:default array('category_list'=>$listId)}">{_'Hudba'}<span></span></a></li>
                             {? $listId = CategoryList::getOneBy('implementation_name', 'film')->id; }
                             <li class="nav-li"><a href="{plink Search:default array('category_list'=>$listId)}" class="last">{_'Film'}</a></li>
                         </ul>
-                    </div> 
+                    </div>
                 </div>
             </div>
         </div>
-        
+
         {block banner}{/block}
     <!-- CONTENT -->
         <div id="content" class="{block presenter}{/block}">
@@ -220,7 +225,7 @@
         <div id="foot" class="{block footer}{/block}">
             <div class="container" id="foot-inner">
                 <div class="row">
-                    
+
                     <div class="face-anchor"></div>
                     <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 fb-plugin" id="facb-plugin">
                         <div class="fb-like-box" data-href="https://www.facebook.com/obleknisihudbu" data-width="700" data-height="190" data-colorscheme="light" data-show-faces="true" data-header="false" data-stream="false" data-show-border="false"></div>
@@ -257,7 +262,7 @@
                         <a n:href="Section: kalendar-udalosti">Kalendář událostí</a><br />
                         <a n:href="Section: clanky, o-csr">Společenská odpovědnost</a><br />
                         <a n:href="Section: clanky, obchodni-podminky">Obchodní podmíky</a><br />
-                        
+
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 csr-logos">
                         {foreach $sections['titulni-strana']->galleries['loga-csr']->files as $file}
@@ -270,17 +275,17 @@
                     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 payments">
                         <img alt="" src="/images/platebni-loga.jpg" class="img-responsive pull-left" />
                     </div>
-                    
+
                     <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 top-hudba">
                         <h3>TOP hudba</h3>
                         {include top-paticka.latte type=>'hudba'}
                     </div>
-                    
+
                     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 top-filmy">
                         <h3>TOP filmy</h3>
                          {include top-paticka.latte type=>'film'}
                     </div>
-                        
+
                 </div>
                 <div class="divider-big"></div>
             </div>

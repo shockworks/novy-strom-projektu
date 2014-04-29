@@ -1,0 +1,50 @@
+/*firefox*/
+body:not(:-moz-handler-blocked) #selector {}
+
+/*chrome*/
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    
+}
+/*opera*/
+noindex:-o-prefocus, #id {}
+noindex:-o-prefocus, #id-2 {}
+
+/*IE*/
+/*9*/
+.lt-ie10 {
+    
+}
+/*8*/
+.lt-ie9 {
+    .text {line-height: @input-height;}    
+}
+/*7*/
+.lt-ie8 {
+    
+}
+
+/* start of modification for 5 columns */
+@media (min-width: 768px){
+    #products-list .col-md-2, .products-list .col-md-2 {
+        width: 20.000777%;
+    }
+    #products-list.title-products .col-md-2 {
+
+    }
+}
+@media (min-width: 1200px) {
+    #products-list .col-md-2, .products-list .col-md-2 {
+        width: 20.001334%;
+    }
+    #products-list.title-products .col-md-2 {
+        width: 16.668002%;
+    }
+}
+@media (min-width: 768px) and (max-width: 979px) {
+    #products-list .col-md-2, .products-list .col-md-2 {
+
+    }
+    #products-list.title-products .col-md-2 {
+    }
+}
+/* end of modification for 5 columns */

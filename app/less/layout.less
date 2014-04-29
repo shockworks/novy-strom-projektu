@@ -1,0 +1,239 @@
+body {background: url('../images/background.png') #fff top center repeat-x;}
+
+#spec-top {display: none;
+    &:after {content: "^"; color: #282828; position: absolute; margin-left: 7px; margin-top: 12px; font-size: 30px;}
+}
+.anchor {display: block; position: fixed; right: 50px; bottom: 50px; background: rgba(255,255,255,0.5); border: 3px solid #282828; width: 40px; height: 40px; text-decoration: none;}
+
+#content, #foot {
+    .container {background: #fff;}
+}
+.outer-gallery .gal-arr { top: 100px; .size(37px,37px);}
+.prev, .outer-gallery .gal-arr-l {.bg('sprite-elm.png',0,-18px);}
+.next, .outer-gallery .gal-arr-r {.bg('sprite-elm.png',0,-63px);}
+
+// prida bilou sipku s sedym rameckem pro vyskakovaci boxy v headeru
+.arrow-top {
+    &:before {content: ''; border-bottom: 8px solid @border-color; border-left: 8px solid transparent; border-right: 8px solid transparent; .absolute; right: 17px; top: -8px; z-index: 9;}
+    &:after  {content: ''; border-bottom: 7px solid #fff; border-left: 7px solid transparent; border-right: 7px solid transparent; .absolute; right: 18px; top: -7px; z-index: 10;}
+}
+
+// interaktivni kosik
+#hidInteractiveCont {.size(750px,430px); .p(0 30px); .fixed; right: 75px; top: 75px; background: #fff; .drop-shadow (0, 3px, 3px, 0, 0.20); border-top: 1px solid #d2d2d2; z-index: 1500;
+    .left {height: 353px; .relative; width: 210px;
+        h4 {.m-b(0);}
+        &:after {content: ""; .bg('shadow.png'); .size(97px,352px); .absolute; top: 0; right: -60px;}
+        table {.robot; color: @h-color;
+            td:first-child {width: 90px; font-weight: 700; .uppercase;}
+        }
+    }
+    .right {width: 408px; .relative;
+        &:after {content: ""; .bg('slider-bg.png'); .size(408px,39px); .absolute; top: 91px;}
+        #slide-top {width: 345px !important; height: 15px; float: right !important; .m(37px 0); .m-r(2px); border: none; .green-grad; width: 163px; .radius;
+            .ui-slider-range {background: #eee; height: 15px; border: 1px solid @under; border-left: none; .border-radiuses (2px, 2px, 0, 0);}
+            .ui-slider-handle {.m-t(-30px); .bg('handle-car.png'); .size(25px,29px); border: none; .m-l(-13px);}
+        }
+        #products-list-mini li {float: left; .m-t(-5px); 
+            a {text-align: center; display: block; color: @h-color !important; .robot; font-weight: 700;
+                .price {.p-t(8px); display: block;}
+            }
+        }
+    }
+    .under {background: #eee; border-top: 1px solid @under; .size(750px,75px); .m-l(-30px); .p-t(13px);
+        .btn-default {.m-r(20px); .m-l(150px);}
+    }
+}
+// top header
+#header-bar {
+    background: #282828;
+    .top-benefits { display: block; height: 34px; .f-s(11px); .arial; letter-spacing: 0; text-align: right;
+        i {}
+        &.dokdy, &.postovne { text-align: left; } 
+        p { display: inline-block; }
+        &.dokdy p, &.postovne p, &.doprava p, &.tel p { line-height: 34px; color: @link; padding-left: 30px; padding-bottom: 0; }
+        &.dokdy p { background: url(../images/sprite-ico.png) no-repeat 0 9px transparent;}
+        &.postovne p { background: url(../images/sprite-ico.png) no-repeat 0 -20px transparent; }
+        &.doprava p { background: url(../images/sprite-ico.png) no-repeat 0 -51px transparent; }
+        &.tel p { background: url(../images/sprite-ico.png) no-repeat 0 -82px transparent;}
+        strong { font-weight: bold;}
+        span span.glyphicon, p span.glyphicon {font-size: 26px;}
+        span.navbar-link { vertical-align: middle; line-height: 18px;
+            span.glyphicon {}
+        }
+        span.glyphicon-question-sign { position: absolute; top: 5px; right: 25px; cursor: help;}
+    }
+}
+.cat-banner { margin-bottom: -10px; }        
+// header
+#header { background: #f2f2f2; .box-shadow(5px 0 5px #999); 
+    .ui-autocomplete {width: 333px; position: fixed; top: 90px !important; .drop-shadow(0,0,5px,0,.25); border: none;
+        li { .size(100%,68px); 
+            a { color: @color; 
+                .autocomplete-img {.size(86px,66px); line-height: 66px;}
+                span {padding-top: 17px; .size(150px,48px);line-height: 16px;}
+                strong {color: @color; font-size: 12px; line-height: 68px; .size(80px,68px); padding-right: 17px;}
+            }
+            a.ui-state-hover {.horizontal-gradient(#fff,#f0f0f0); color: @color; .size(100%,68px) !important; }
+        }
+        .searchWords, .searchWpc {.size(100%px,23px); line-height: 23px;
+            a {.size(318px,23px); line-height: 23px !important; padding-left: 22px !important;}
+            a.ui-state-hover {background: #f0f0f0 !important; .size(100%,23px) !important;}
+        }
+        #search-panel-li, .search-panel-li {.size(100%,32px); background: @h-color; line-height: 32px; .m-b(0); .p-l(36px) !important; .p-r(16px) !important; color: #fff; font-weight: bold;                  
+            .triangel {left: 21px; top: 15px; border-top: 5px solid #fff;}
+            span {line-height: 32px;}
+        }
+    }      
+    #sub-header {position: relative;
+        .logo-search-buy { margin-top: 24px; 
+            .navbar-left {
+                .navbar-link {
+                    img.logo { margin-top: 2px; }
+                }
+            }
+            h1.navbar-left {margin: 0;}
+            .header-wishlist {float: right; margin: 0px; font-size: 11px; letter-spacing: 0.08em; color: @dark; line-height: 36px; padding: 0 12px; height: 36px; display: block;}
+        }    
+        
+        span.navbar-left {
+            a.navbar-link { line-height: 28px; display: block;}
+        }
+        .header-menu { width: 100%; background: #F2F2F2; z-index: 1000 !important;
+                      & > div {  }
+        }
+        
+        ul.nav {
+            li.nav-li {  .bdb(2px,transparent); .transition(all 200ms linear); 
+                a {   padding: 28px 0 15px 0;display: block; font-family: Arial, sans-serif !important; font-size: 12px; line-height: 1.5em; position: relative; 
+                     letter-spacing: 0.25em; text-transform: uppercase; text-decoration: none; color: @dark;  .bdra(0);
+                    &.last { .bdr(0); }
+                    span {display: block; width: 1px; background: @grey; height: 15px; position: absolute; top: 28px; right: 0; }
+                }
+                &:hover { .bdb(2px,@dark);.transition(all 200ms linear); }
+            }
+        }
+        
+        #snippet--cartbox { float: right; 
+            #out-top-cart { text-align: right;
+                #top-cart { line-height: 34px; color: #fff; .size(40px,35px); .p(0 5px 0 0); .right; .m(0px 0 0 15px); .f-s(11px); .relative;
+                            letter-spacing: 0.08em; background: url(../images/sprite-ico.png) no-repeat right -243px transparent; }
+                #under-top-cart {.absolute; right: 0; top: 40px; background: #fff; width: 305px; display: none; min-height: 115px; .border; z-index: 300; .arrow-top;
+                    &.empty {text-align: center; color: @dark; .arial; .f-s(11px);
+                        p {width: 205px; .m(35px auto -10px auto); line-height: 13px;}
+                        span {.georgia;}
+                    }
+                    .top { .f-s(11px); .arial; border-bottom: @border; .m(10px); 
+                        .in { display: inline-block; overflow: hidden; margin-bottom: -8px;
+                            &.scroll {height: 335px; overflow-y: scroll;}
+                            .cart-prod {border-bottom: @border; display: block; .left; .size(98%,105px); 
+                                .obal-cart-img {.size(75px,105px); line-height: 105px; .left;}
+                                p {width: 160px; .right; text-align: left; color: @color; .p-t(15px); line-height: 13px !important;
+                                    strong {color: @dark; .m-b(5px); .left; width: 100%;}
+                                    span {.uppercase; line-height: 13px !important;}
+                                    .price {color: @red; text-transform: none;}
+                                } 
+                                &:first-child {border-top: none;}                   
+                            }
+                        }
+                    }
+                    .bottom { .p(0 15px 20px 15px); display: block;
+                        p {color: @dark; .arial; .f-s(11px); .uppercase; .m(0); display: block; .right; .l-height(45px);
+                           strong {text-transform: none; font-weight: bold;}
+                        }
+                        .btn {width: 100%; }
+                    }
+                }
+            }
+            
+            
+        }
+        .simpleloginul {float: right; margin: 0px 0 0 25px; font-size: 11px; letter-spacing: 0.08em;}
+        a.simple-login-login { color: @dark; }
+        #snippet-simpleLoginForm-simpleloginlogin, #snippet-simpleLoginForm-simpleloginlogout.simple-login-logout { }
+        a.simple-login-login, .simple-login-logout a, a.simple-login-user {color: @a-n; line-height: 36px; padding: 0 12px; height: 36px; display: block;
+            &.disabled {.bg('login-box-close.png', 60px, 9px, #fff); color: #e42929; font-weight: bold; padding-right: 37px;}
+            &:hover {.opacity(1);}
+        }
+        a.simple-login-user {background: url(../images/top-li.png) center right no-repeat;}
+        .simple-login-box {padding: 28px; .drop-shadow(0,8px,8px,0,.4); display: block; height: 300px; width: 88%; top: 34px !important; right: 70px !important;
+            .simple-login-box-close {width: 14px; height: 13px; background: url(../images/login-box-close.png) no-repeat; display: block; float: right; margin-top: 7px;}
+            h3 {font-size: 18px; color: @a-color; text-transform: uppercase; margin: 0px; margin-bottom: 25px;}
+            th {width: 57px; text-align: left; font-size: 11px;}
+            .text {margin-bottom: 15px; width: 208px;}
+            #frmloginForm-login.text {background: url(../images/mail-text-bg.png) 203px 8px #fff no-repeat;}
+            #frmloginForm-password.text {background: url(../images/pass-text-bg.png) 202px 9px #fff no-repeat;}
+            #frmloginForm-send.imagebutton {margin-top: 10px; margin-left: -57px;}
+            ul {display: inline-block; float: left; .m-t(10px);
+                li {float: left; line-height: 18px; clear: left; .p-l(60px);}
+            }
+            .simple-login-registrate a, .simple-login-forgotten-password a {font-size: 11px !important;}
+            .simple-login-error {float: left; margin-top: 20px; color: #e42929;}
+        }
+        #frm-searchForm-searchForm {
+            #frmsearchForm-searchtext {font-family: Georgia, sans-serif; float: left; font-style: italic; height: 36px; .box-shadow(inset 0px 2px 6px #eee); width: 100%;}
+            #frmsearchForm-send { position: absolute; top: 8px; right: 16px; width: 45px; font-size: 0; height: 25px; border: 0px solid transparent; text-shadow: none;
+             background: url(../images/sprite-ico.png) no-repeat right -125px transparent; filter: none; filter: none; text-shadow: none; 
+            }
+            #frmsearchForm-send-off {.size(60px,39px); float: left; padding: 0;margin-left: -6px; height: 39px; border-radius: 0px 0px 0px 0px !important; -moz-border-radius: 0px 0px 0px 0px !important; -webkit-border-radius: 0px 0px 0px 0px !important; width: 70px; border: 0;}
+            .text {width: 260px; color: @grey; font-size: 13px; }
+            label { display: none;}
+        }
+    }
+}
+
+#foot {background: url('../images/foot.png') repeat-x; height: 300px; font-size: 11px; 
+    #foot-inner.container {
+        .fb-plugin { height: 190px; margin-bottom: 40px;
+            .fb-like-box {  }
+        }
+        .contacts { color: @dark; letter-spacing: 0.08em;
+            h2 { margin-top: 0px; font-size: 13px; letter-spacing: 0.08em; margin-bottom: 1.85em;}
+            span { padding-left: 50px; line-height: 37px; margin-bottom: 13px; display: block;
+                &.adresa { background: url(../images/sprite-elm.png) no-repeat left -222px transparent; }
+                &.email { background: url(../images/sprite-elm.png) no-repeat left -264px transparent; }
+                &.telefon { background: url(../images/sprite-elm.png) no-repeat left -306px transparent; }
+            }
+        }
+        .contact-social { margin-top: 38px;
+            span { padding-left: 50px; line-height: 37px; margin-bottom: 13px; display: block;
+                &.adresa { background: url(../images/sprite-elm.png) no-repeat left -222px transparent; }
+            }
+            .fa { font-size: 42px; color: #282828; text-decoration: none; margin-left: 20px;}
+        }
+        .rozcestnik { .bdl(); padding-left: 30px;
+            h2 { margin-top: 0px; font-size: 13px; letter-spacing: 0.08em; margin-bottom: 1.85em;}
+            #snippet--userinteractionwish { display: inline; }
+            a { text-decoration: underline; color: @dark; line-height: 2.4em; 
+                &:hover { text-decoration:none; color: @text; }
+            }
+            
+        }
+        .csr-logos { margin: 40px 0; .bdt(); .bdb(); padding: 35px 0;
+            .csr-logo { float: left; line-height: 64px; width: 25%; text-align: center;
+                &.last { margin-right: 0; }
+                img { vertical-align: middle; display: inline-block; }
+            }
+        }
+        .copyright { margin-bottom: 40px; }
+        .payments {  }    
+        .top-filmy, .top-hudba { 
+            h3 { margin-top: 0px; } 
+            a { text-decoration: none; line-height: 2.18em; color: @text;
+                &:hover { text-decoration:underline; color: @dark;}
+            }
+        }    
+    }
+    &.detail {margin-bottom: 152px; .transition(all 300ms linear);}
+}
+
+
+.newsletter-box {
+    h4 {margin-top: 31px;}
+    label { display: none}
+    form table {border: 1px solid #D8DFEA; border-left: 0; border-right: 0; 
+        td, tr, th {padding: 15px 0; display: inline;}
+    }
+    input.text { float: left; width: 207px; margin: 28px 10px 24px 0; font-family: Georgia, serif; font-style: italic; }
+    input.button { margin: 28px 0 0 0; padding: 8px 15px; background: #282828; color: #fff;}
+    
+}

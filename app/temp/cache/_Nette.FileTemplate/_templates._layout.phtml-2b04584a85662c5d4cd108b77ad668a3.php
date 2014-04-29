@@ -1,37 +1,37 @@
-<?php //netteCache[01]000383a:2:{s:4:"time";s:21:"0.53700000 1398765750";s:9:"callbacks";a:2:{i:0;a:3:{i:0;a:2:{i:0;s:19:"Nette\Caching\Cache";i:1;s:9:"checkFile";}i:1;s:61:"D:\WEB_SERVER\novy-strom-projektu\app\templates\@layout.phtml";i:2;i:1394711684;}i:1;a:3:{i:0;a:2:{i:0;s:19:"Nette\Caching\Cache";i:1;s:10:"checkConst";}i:1;s:25:"Nette\Framework::REVISION";i:2;s:30:"dc83a21 released on 2013-07-11";}}}?><?php
+<?php //netteCache[01]000383a:2:{s:4:"time";s:21:"0.50420000 1398771952";s:9:"callbacks";a:2:{i:0;a:3:{i:0;a:2:{i:0;s:19:"Nette\Caching\Cache";i:1;s:9:"checkFile";}i:1;s:61:"D:\WEB_SERVER\novy-strom-projektu\app\templates\@layout.phtml";i:2;i:1398768911;}i:1;a:3:{i:0;a:2:{i:0;s:19:"Nette\Caching\Cache";i:1;s:10:"checkConst";}i:1;s:25:"Nette\Framework::REVISION";i:2;s:30:"dc83a21 released on 2013-07-11";}}}?><?php
 
 // source file: D:\WEB_SERVER\novy-strom-projektu\app\templates\@layout.phtml
 
 ?><?php
 // prolog Nette\Latte\Macros\CoreMacros
-list($_l, $_g) = Nette\Latte\Macros\CoreMacros::initRuntime($template, '7zg0naerts')
+list($_l, $_g) = Nette\Latte\Macros\CoreMacros::initRuntime($template, '5u6msdc960')
 ;
 // prolog Nette\Latte\Macros\UIMacros
 //
 // block canonical
 //
-if (!function_exists($_l->blocks['canonical'][] = '_lbe6add7d81c_canonical')) { function _lbe6add7d81c_canonical($_l, $_args) { extract($_args)
+if (!function_exists($_l->blocks['canonical'][] = '_lb0be0220750_canonical')) { function _lb0be0220750_canonical($_l, $_args) { extract($_args)
 ;
 }}
 
 //
 // block logo
 //
-if (!function_exists($_l->blocks['logo'][] = '_lbfd27e2f713_logo')) { function _lbfd27e2f713_logo($_l, $_args) { extract($_args)
+if (!function_exists($_l->blocks['logo'][] = '_lb8df6ed72e5_logo')) { function _lb8df6ed72e5_logo($_l, $_args) { extract($_args)
 ?>span<?php
 }}
 
 //
 // block logo_end
 //
-if (!function_exists($_l->blocks['logo_end'][] = '_lbdbf95372d8_logo_end')) { function _lbdbf95372d8_logo_end($_l, $_args) { extract($_args)
+if (!function_exists($_l->blocks['logo_end'][] = '_lbf285e0baf2_logo_end')) { function _lbf285e0baf2_logo_end($_l, $_args) { extract($_args)
 ?>span<?php
 }}
 
 //
 // block _cartbox
 //
-if (!function_exists($_l->blocks['_cartbox'][] = '_lb8bd8813b4f__cartbox')) { function _lb8bd8813b4f__cartbox($_l, $_args) { extract($_args); $_control->validateControl('cartbox')
+if (!function_exists($_l->blocks['_cartbox'][] = '_lb7e78e0ee49__cartbox')) { function _lb7e78e0ee49__cartbox($_l, $_args) { extract($_args); $_control->validateControl('cartbox')
 ?>                    <div id="out-top-cart">
                         <a id="top-cart" href="<?php echo htmlSpecialChars($_control->link("Cart:")) ?>
 ">
@@ -79,13 +79,13 @@ empty<?php endif ?>">
                     </div>
                     <script>
                         var timer;
-                        $('#out-top-cart').hover(function(){             
+                        $('#out-top-cart').hover(function(){
                             clearTimeout(timer);
-                            $('#under-top-cart').addClass('ac').fadeIn('fast');  
-                        },function(){              
+                            $('#under-top-cart').addClass('ac').fadeIn('fast');
+                        },function(){
                             timer = setTimeout(function() {
                                 $('#under-top-cart').removeClass('ac').fadeOut('fast');
-                            }, 500); 
+                            }, 500);
                         });
                     </script>
 <?php
@@ -94,35 +94,35 @@ empty<?php endif ?>">
 //
 // block banner
 //
-if (!function_exists($_l->blocks['banner'][] = '_lb8c89b43a20_banner')) { function _lb8c89b43a20_banner($_l, $_args) { extract($_args)
+if (!function_exists($_l->blocks['banner'][] = '_lb294fd7bdea_banner')) { function _lb294fd7bdea_banner($_l, $_args) { extract($_args)
 ;
 }}
 
 //
 // block presenter
 //
-if (!function_exists($_l->blocks['presenter'][] = '_lb530187c698_presenter')) { function _lb530187c698_presenter($_l, $_args) { extract($_args)
+if (!function_exists($_l->blocks['presenter'][] = '_lb691c7026eb_presenter')) { function _lb691c7026eb_presenter($_l, $_args) { extract($_args)
 ;
 }}
 
 //
 // block content
 //
-if (!function_exists($_l->blocks['content'][] = '_lb301c4db452_content')) { function _lb301c4db452_content($_l, $_args) { extract($_args)
+if (!function_exists($_l->blocks['content'][] = '_lb61284883e3_content')) { function _lb61284883e3_content($_l, $_args) { extract($_args)
 ;
 }}
 
 //
 // block _notes
 //
-if (!function_exists($_l->blocks['_notes'][] = '_lb976b17aa02__notes')) { function _lb976b17aa02__notes($_l, $_args) { extract($_args); $_control->validateControl('notes')
+if (!function_exists($_l->blocks['_notes'][] = '_lb1db17b586f__notes')) { function _lb1db17b586f__notes($_l, $_args) { extract($_args); $_control->validateControl('notes')
 ;$recently = Note::get(Note::VISITED);
                         $recently = array_reverse($recently); if (isset($recently) && count($recently) > 0): ?>
                         <hr class='clear' />
                         <div class="row last-visited">
                             <h2 class="music-heading text-center">Prohlížené</h2>
                             <ul>
-<?php $iterations = 0; foreach ($recently as $p): Nette\Latte\Macros\CoreMacros::includeTemplate("../templates/Includes/product-list-mini.phtml", array('product'=>$p) + $template->getParameters(), $_l->templates['7zg0naerts'])->render() ;$iterations++; endforeach ?>
+<?php $iterations = 0; foreach ($recently as $p): Nette\Latte\Macros\CoreMacros::includeTemplate("../templates/Includes/product-list-mini.phtml", array('product'=>$p) + $template->getParameters(), $_l->templates['5u6msdc960'])->render() ;$iterations++; endforeach ?>
                             </ul>
                             <hr class="clear" />
                             <a class="erase-all ajax" title="Vymazat vše" href="<?php echo htmlSpecialChars($_control->link("noteErase!")) ?>
@@ -134,14 +134,14 @@ if (!function_exists($_l->blocks['_notes'][] = '_lb976b17aa02__notes')) { functi
 //
 // block footer
 //
-if (!function_exists($_l->blocks['footer'][] = '_lb53938fb1c3_footer')) { function _lb53938fb1c3_footer($_l, $_args) { extract($_args)
+if (!function_exists($_l->blocks['footer'][] = '_lb6686a87459_footer')) { function _lb6686a87459_footer($_l, $_args) { extract($_args)
 ;
 }}
 
 //
 // block _userinteractionwish
 //
-if (!function_exists($_l->blocks['_userinteractionwish'][] = '_lb4648e71288__userinteractionwish')) { function _lb4648e71288__userinteractionwish($_l, $_args) { extract($_args); $_control->validateControl('userinteractionwish')
+if (!function_exists($_l->blocks['_userinteractionwish'][] = '_lb36c3424f8b__userinteractionwish')) { function _lb36c3424f8b__userinteractionwish($_l, $_args) { extract($_args); $_control->validateControl('userinteractionwish')
 ;if (!isset($user->id)): ?>
                                 <a href="<?php echo htmlSpecialChars($_control->link("Wishlist:")) ?>
 "><?php echo Nette\Templating\Helpers::escapeHtml($template->translate('Můj seznam'), ENT_NOQUOTES) ?></a><br />
@@ -176,50 +176,28 @@ if ($_l->extends) {
 <!--[if IE 7]>      <html lang="cs" xml:lang="cs" class="lt-ie10 lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>      <html lang="cs" xml:lang="cs" class="lt-ie10 lt-ie9"> <![endif]-->
 <!--[if IE 9]>      <html lang="cs" xml:lang="cs" class="lt-ie10"> <![endif]-->
-<!--[if gt IE 9]>   <!--> 
+<!--[if gt IE 9]>   <!-->
 <html lang="cs" xml:lang="cs" class=""> <!-- <![endif]-->
     <head>
-        
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <?php $_ctrl = $_control->getComponent("metaHeaderComponent"); if ($_ctrl instanceof Nette\Application\UI\IRenderable) $_ctrl->validateControl(); $_ctrl->render() ;$_ctrl = $_control->getComponent("seoHeaderComponent"); if ($_ctrl instanceof Nette\Application\UI\IRenderable) $_ctrl->validateControl(); $_ctrl->render() ?>
         <?php if ($_l->extends) { ob_end_clean(); return Nette\Latte\Macros\CoreMacros::includeTemplate($_l->extends, get_defined_vars(), $template)->render(); }
 call_user_func(reset($_l->blocks['canonical']), $_l, get_defined_vars())  ?>
 
-<?php $_ctrl = $_control->getComponent("plugins"); if ($_ctrl instanceof Nette\Application\UI\IRenderable) $_ctrl->validateControl(); $_ctrl->render('cssTools/autocompleteCSS-1.0.0',
-            'common/jquery-1.7.2',
-            'common/bootstrap-3.0.3',
-            'common/jquery-livequery-1.1.1',
-            'common/jquery-nette-forms-1.0.0',
-            'common/jquery-ui-1.8.21',
-            'common/nette-ajax-web-1.2.0',
-            'common/alfax-editable-1.0.0',
-            'common/cookies-1.0.0',
-            'common/paginator-1.0.0',
-            'forms/checkbox-1.0.0',
-            'forms/plusMinus-1.0.2',
-            'forms/inputText-1.0.0',
-            'forms/selectbox-0.1.3',
-            'galleries/endless-gallery-1.0.0',
-            'galleries/slideshow-1.0.0',
-            'tools/anchor-1.0.1',
-            'tools/ordererTabs-1.0.3',
-            'tools/elevate-zoom-3.0.0',
-            'tools/fancybox-1.3.4',
-            'tools/fixedAndResize-1.0.0',
-            'tools/topMenuActive-1.0.0',
-            'tools/jeditable-1.7.1',
-            'tools/interactive-filter-1.0.0',
-            'tools/qtip-1.0.0',
-            'tools/mixitup-1.5.5') ?>
-        <?php $_ctrl = $_control->getComponent("css"); if ($_ctrl instanceof Nette\Application\UI\IRenderable) $_ctrl->validateControl(); $_ctrl->render('sw-bootstrap.css', 'sw-bootstrap-theme.css', 'mixins.less', 'basic.less', 'common.less', 'layout.less', 'content.less', 'cart.less', 'browsers.less') ?> 
-    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet" />
+                     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="/js/melonhtml5-timeline/css/timeline.css" />
-    <link rel="stylesheet" type="text/css" href="/js/melonhtml5-timeline/css/timeline_light.css" />  
+    <link rel="stylesheet" type="text/css" href="/js/melonhtml5-timeline/css/timeline_light.css" />
     <script type="text/javascript" src="/js/melonhtml5-timeline/javascript/timeline.min.js"></script>
     <script type="text/javascript" src="/js/init.js"></script>
     <script type="text/javascript" src="/js/modernizr.custom.64083.js"></script>
 <?php $_ctrl = $_control->getComponent("googleAnalyticsComponent"); if ($_ctrl instanceof Nette\Application\UI\IRenderable) $_ctrl->validateControl(); $_ctrl->render() ?>
-    <script type="text/javascript" src="/js/respond.min.js"></script> 
+    <script type="text/javascript" src="/js/respond.min.js"></script>
+
+    <!-- nove by se melo volat pouze toto / mozna dame do nejake komponenty -->
+    <link rel="stylesheet" type="text/css" media="all" href="/assets/css/screen.css" />
+    <link rel="stylesheet" type="text/css" media="print" href="/assets/css/print.css" /> <!-- print.css je dnes v nejake komponente -->
+    <script src="/assets/js/js.min.js"></script>
+    <!-- end -->
     </head>
     <body>
 <?php if (isset($actualCategory) && isset($actualCategory->galleries['pozadi']) && !isset($product)): $iterations = 0; foreach ($actualCategory->galleries['pozadi']->files as $file): ?>
@@ -233,7 +211,7 @@ call_user_func(reset($_l->blocks['canonical']), $_l, get_defined_vars())  ?>
 <?php $globalVat = 21; $freeShipping = 2000 ?>
         <a id="spec-top" class="anchor"></a>
         <div id="fb-root"></div>
-        
+
         <script>
             (function(d, s, id) {
                             var js, fjs = d.getElementsByTagName(s)[0];
@@ -255,10 +233,10 @@ call_user_func(reset($_l->blocks['canonical']), $_l, get_defined_vars())  ?>
                     </div>
                     <div class="top-benefits doprava col-md-3 col-lg-3">
                         <p>Od 1 500 Kč <strong>doprava zdarma</strong></p>
-                    </div> 
+                    </div>
                     <div class="top-benefits tel col-md-3 col-lg-3" title="Na telefonu jsme pro tebe v pondělí–pátek 8.00–18.00 a v sobotu 8.00–12.00">
                         <p><strong>724 002 009</strong>  / 556 300 700</p>
-                    </div> 
+                    </div>
                 </div>
         </div>
         </div>
@@ -268,7 +246,7 @@ call_user_func(reset($_l->blocks['canonical']), $_l, get_defined_vars())  ?>
                     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
                         <<?php ;call_user_func(reset($_l->blocks['logo']), $_l, get_defined_vars())  ?>
  class="navbar-left"><a class="navbar-link" href="<?php echo htmlSpecialChars($_control->link("Default:")) ?>
-"><img alt="logo" src="http:/images/logo.png" class="logo" /></a></<?php call_user_func(reset($_l->blocks['logo_end']), $_l, get_defined_vars())  ?>>
+"><img alt="logo" src="/images/logo.png" class="logo" /></a></<?php call_user_func(reset($_l->blocks['logo_end']), $_l, get_defined_vars())  ?>>
                     </div>
                     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
 <?php $_ctrl = $_control->getComponent("searchForm"); if ($_ctrl instanceof Nette\Application\UI\IRenderable) $_ctrl->validateControl(); $_ctrl->renderAutocomplete() ?>
@@ -301,7 +279,7 @@ call_user_func(reset($_l->blocks['canonical']), $_l, get_defined_vars())  ?>
                             <li class="nav-li"><a href="<?php echo htmlSpecialChars($_presenter->link("Search:default", array(array('gender'=>23)))) ?>"><span></span>Kluci</a></li>
                             <li class="nav-li"><a href="<?php echo htmlSpecialChars($_presenter->link("Search:default", array(array('gender'=>24)))) ?>"><span></span>Holky</a></li>
                             <li class="nav-li"><a href="<?php echo htmlSpecialChars($_presenter->link("Search:default", array(array('gender'=>25)))) ?>"><span></span>Děti</a></li>
-                            
+
 <?php $listId = CategoryList::getOneBy('implementation_name', 'hudba')->id ?>
                             <li class="nav-li"><a href="<?php echo htmlSpecialChars($_presenter->link("Search:default", array(array('category_list'=>$listId)))) ?>
 "><?php echo Nette\Templating\Helpers::escapeHtml($template->translate('Hudba'), ENT_NOQUOTES) ?><span></span></a></li>
@@ -309,11 +287,11 @@ call_user_func(reset($_l->blocks['canonical']), $_l, get_defined_vars())  ?>
                             <li class="nav-li"><a href="<?php echo htmlSpecialChars($_presenter->link("Search:default", array(array('category_list'=>$listId)))) ?>
 " class="last"><?php echo Nette\Templating\Helpers::escapeHtml($template->translate('Film'), ENT_NOQUOTES) ?></a></li>
                         </ul>
-                    </div> 
+                    </div>
                 </div>
             </div>
         </div>
-        
+
         <?php call_user_func(reset($_l->blocks['banner']), $_l, get_defined_vars())  ?>
 
     <!-- CONTENT -->
@@ -328,7 +306,7 @@ call_user_func(reset($_l->blocks['canonical']), $_l, get_defined_vars())  ?>
         <div id="foot" class="<?php call_user_func(reset($_l->blocks['footer']), $_l, get_defined_vars())  ?>">
             <div class="container" id="foot-inner">
                 <div class="row">
-                    
+
                     <div class="face-anchor"></div>
                     <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 fb-plugin" id="facb-plugin">
                         <div class="fb-like-box" data-href="https://www.facebook.com/obleknisihudbu" data-width="700" data-height="190" data-colorscheme="light" data-show-faces="true" data-header="false" data-stream="false" data-show-border="false"></div>
@@ -364,7 +342,7 @@ call_user_func(reset($_l->blocks['canonical']), $_l, get_defined_vars())  ?>
 ">Společenská odpovědnost</a><br />
                         <a href="<?php echo htmlSpecialChars($_control->link("Section:", array('clanky', 'obchodni-podminky'))) ?>
 ">Obchodní podmíky</a><br />
-                        
+
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 csr-logos">
 <?php $iterations = 0; foreach ($iterator = $_l->its[] = new Nette\Iterators\CachingIterator($sections['titulni-strana']->galleries['loga-csr']->files) as $file): ?>
@@ -378,17 +356,17 @@ last<?php endif ?>"><img src="<?php echo htmlSpecialChars($_presenter->link("Fil
                     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 payments">
                         <img alt="" src="/images/platebni-loga.jpg" class="img-responsive pull-left" />
                     </div>
-                    
+
                     <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 top-hudba">
                         <h3>TOP hudba</h3>
-<?php Nette\Latte\Macros\CoreMacros::includeTemplate("top-paticka.latte", array('type'=>'hudba') + $template->getParameters(), $_l->templates['7zg0naerts'])->render() ?>
+<?php Nette\Latte\Macros\CoreMacros::includeTemplate("top-paticka.latte", array('type'=>'hudba') + $template->getParameters(), $_l->templates['5u6msdc960'])->render() ?>
                     </div>
-                    
+
                     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 top-filmy">
                         <h3>TOP filmy</h3>
-<?php Nette\Latte\Macros\CoreMacros::includeTemplate("top-paticka.latte", array('type'=>'film') + $template->getParameters(), $_l->templates['7zg0naerts'])->render() ?>
+<?php Nette\Latte\Macros\CoreMacros::includeTemplate("top-paticka.latte", array('type'=>'film') + $template->getParameters(), $_l->templates['5u6msdc960'])->render() ?>
                     </div>
-                        
+
                 </div>
                 <div class="divider-big"></div>
             </div>

@@ -1,9 +1,5 @@
 module.exports = function (grunt) {
-    var auth = {
-        host: 'test_alfax_czgelf13.thinline.cz',
-        port: 22,
-        authKey: '/t/auth_keys/private_filezilla.'
-    };grunt.initConfig({
+    grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
         concat: {
@@ -35,11 +31,8 @@ module.exports = function (grunt) {
 
         less: {
             development: {
-                options: {
-                    paths: ["assets/css"]
-                },
                 files: {
-                    "css/style.css": "less/bootstrap/bootstrap.less"
+                    "assets/css/style.css": ["app/less/mixins.less"]
                 }
             },
             production: {
@@ -124,8 +117,10 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-deploy');
     grunt.loadNpmTasks('grunt-mkdir');
     grunt.loadNpmTasks('grunt-sftp-deploy');
+    grunt.loadNpmTasks('grunt-bower');
 
     grunt.registerTask('init', ['mkdir']);
     grunt.registerTask('test-deploy', ['sftp-deploy']);
+    grunt.registerTask('test', ['less:development']);
     //grunt.registerTask('default', ['jshint' ]);
 };
