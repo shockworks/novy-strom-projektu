@@ -1,0 +1,70 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs">
+<head>
+    <meta http-equiv="content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="content-Language" content="CS"/>
+    <script type="text/javascript" src="/js/jquery.js"></script>
+    <style type="text/css">
+            body { font-family: Arial, sans-serif; padding-left: 20px;}
+            /*kontaktní formulář*/   
+            #kontakt-form { overflow-y: hidden;}
+            #kontakt-form { text-align: left; font-size: 14px; font-family: Arial; position: relative;}
+            #kontakt-form h3 { font-size: 30px; color: #00a3ce; margin-bottom: 20px; margin-top: 10px; }
+
+
+            body {  font-size: 14px; color: #073b49;}
+            p { line-height: 20px; margin-bottom: 20px; padding-right: 20px;}
+
+            
+            #frm-ContactForm-formNoTable{ display: block; background: #d6f1f9; width: 338px; height: 454px; padding: 32px 0 24px 42px; margin-right: 30px;
+                                            position: relative; -webkit-border-radius: 10px;
+                                          -moz-border-radius:    10px;
+                                          border-radius:         10px;}
+            label { float: left; width: 85px; font-weight: normal; height: 35px; line-height: 55px; font-size: 14px;}
+            .text { float: left; width: 222px; height: 31px; line-height: 31px; font-size: 14px; margin-left: 70px; margin-top: -20px; }
+            .text, #frmformNoTable-text { font-family: Arial; font-size: 14px; 
+                                          padding: 0px 10px; border: 1px solid #bcd8e0; color: #073b49;
+                                          -webkit-border-radius: 10px;
+                                          -moz-border-radius:    10px;
+                                          border-radius:         10px;
+                                          -webkit-box-shadow: inset 5px 5px 8px #f4f4f4;
+                                          -moz-box-shadow:    inset 5px 5px 8px #f4f4f4;
+                                          box-shadow:         inset 5px 5px 8px #f4f4f4;
+            }
+            .text:focus, #frmformNoTable-text:focus { border: 1px solid #00a3ce;}
+            #frmformNoTable-text  { width: 295px; height: 200px; float: left; margin-top: 200px; left: 41px; padding: 10px; position: absolute;}
+            #frmformNoTable-send.imagebutton { left: 41px; bottom: 20px; position: absolute;}
+            
+            .flash { padding-left: 20px; float: left; margin-top: -35px;}
+
+        </style>
+        <!--[if lte IE 8]>
+            <link rel="stylesheet" media="screen,projection,tv" href="/css/ie.css" type="text/css" />
+        <![endif]-->
+</head>
+<body>
+    <div id="kontakt-form">
+        <h3>Kontaktní formulář</h3>
+        {? $f = array(
+            'name'      => array('type'=> ContactForm::TYPE_TEXT, 'label'=>'Jméno:', 'required'=>true),
+            'email'     => array('type'=> ContactForm::TYPE_TEXT, 'label'=>'E-mail:', 'required'=>true),
+            'phone'     => array('type'=> ContactForm::TYPE_TEXT, 'label'=>'Telefon:', 'required'=>false),
+            'text'      => array('type'=> ContactForm::TYPE_TEXTAREA, 'label'=>'Vaše zpráva:', 'required'=>true),
+        );}
+        {control ContactForm:NoTable $f}
+        <script type="text/javascript">
+            $i = 0;
+            $('#frmformNoTable-email.text').val('@');
+            $("#frmformNoTable-email.text").blur(function(){
+                if($(this).val() == ""){
+                    $(this).val("@");  
+                }   
+            });
+            $('#frmformNoTable-email.text').click(function(){
+                if($(this).val() == "@"){
+                    $(this).val("");
+                }
+            });
+        </script>
+    </div>
+</body>
+</html>

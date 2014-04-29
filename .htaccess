@@ -1,0 +1,22 @@
+# configure PHP
+#php_flag magic_quotes_gpc off
+#php_flag register_globals off
+
+# mod_rewrite
+RewriteEngine On
+RewriteBase /
+
+#security
+RewriteRule /app - [F]
+
+# www redirect
+RewriteCond %{HTTP_HOST} ^([^.]*)\.([^.]*)$
+    RewriteRule ^(.*)$ http://www.%{HTTP_HOST}/$1 [R=301,QSA,L]
+
+# prepis hlavnich kategorii
+RewriteRule ^kluci/$ http://www.musicwear-cz.dom/search/?limiter%5bgender%5d=23&productsPerPage=15 [L]
+
+# front controller
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule !\.(js|ico|css\.gz)$ index.php [L]

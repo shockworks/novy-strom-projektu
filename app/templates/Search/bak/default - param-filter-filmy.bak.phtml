@@ -1,0 +1,650 @@
+{block body}
+{? $cat = $actualCategory->id }
+{foreach $cat->galleries as $gall }
+    {if $gal->implementation_name == 'background'}
+        style="background: #777;"
+    {/if}
+{/foreach}
+{/block}
+
+{block canonical}<link rel="canonical" href="{plink //Search:default 'limiter'=>array('category'=>$actualCategory->id)}"/>{/block}
+{block presenter}search{/block}
+
+{block banner}
+    {foreach $actualCategory->galleries as $gall}
+        {if $gall->implementation_name == 'banner'}
+            <hr class="divider-big"><img src="" data-src="holder.js/100%x120/text:Banner(výpis produktů)" class="test img-rounded img-responsive" />
+        {/if}
+    {/foreach}
+{/block}
+
+{block content}
+  
+    <div class="row">
+        <div class="col-md-12">
+
+            {foreach $actualCategory->galleries as $gall }
+                {if $gal->implementation_name == 'category-bg'}
+                    style="background: #777;"
+                {/if}
+            {/foreach}
+
+
+            {* <!-- ********************************************************************************* --> *}
+            {* <!-- ******************** PRODUCT-LIST (výpis produktů kategorie) ******************** --> *}
+            {* <!--                                                                                   --> *}
+            {if isset($actualCategory) && $actualCategory->id != 4 && $actualCategory->id != 5}
+                <div class="row products">
+                    {* <!-- ******************** L - LEVY SLOUPEC (filtr) ******************** --> *}
+                    {* <!-- __________________________________________________________________ --> *}
+                    <div class="col-md-2">
+                        <div class="row">
+                        <div class="col-md-12">
+                            <h3>Filtr paremetrů</h3>
+                            <hr class="divider-big line" />
+                            {if isset($actualCategory) && $actualCategory->id != 1 && $actualCategory->id != 2 && $actualCategory->id != 3}
+                                <h4>Gender</h4>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" value="">Muži
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" value="">Ženy
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" value="">Děti
+                                    </label>
+                                </div>
+                                <hr class="divider-big line" />
+                            {/if}
+                            <h4>Akce</h4>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="">Výprodej
+                                </label>
+                            </div> 
+                            <hr class="divider-big line" />
+
+                            <h4>Typ</h4>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="">Triko
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="">Mikina
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="">Doplňky
+                                </label>
+                            </div>
+                            <hr class="divider-big line" />
+
+                            <h4>Žánr</h4>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="">Country
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="">Metal
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="">Pop
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="">Rap
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="">Rock
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="">Ska
+                                </label>
+                            </div>
+                            <hr class="divider-big line" />
+
+                            <h4>Barva</h4>
+                            <span class="glyphicon glyphicon-stop"></span>
+                            <span class="glyphicon glyphicon-stop"></span>
+                            <span class="glyphicon glyphicon-stop"></span>
+                            <span class="glyphicon glyphicon-stop"></span>
+                            <span class="glyphicon glyphicon-stop"></span>
+                            <span class="glyphicon glyphicon-stop"></span>
+                            <hr class="divider-sml" />
+                            <span class="glyphicon glyphicon-stop"></span>
+                            <span class="glyphicon glyphicon-stop"></span>
+                            <span class="glyphicon glyphicon-stop"></span>
+                            <span class="glyphicon glyphicon-stop"></span>
+                            <span class="glyphicon glyphicon-stop"></span>
+                            <span class="glyphicon glyphicon-stop"></span>
+                            <hr class="divider-big line" />
+                            
+                            <h4>Velikost</h4>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="">S
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="">M
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="">L
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="">XL
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="">XXL
+                                </label>
+                            </div>
+                            <hr class="divider-big line" />
+                            
+                            <h4>Cena</h4>
+                        </div>
+                    </div>
+                    </div>
+                    {* <!-- ******************** R - PRAVY SLOUPEC (vypis kategorie) ******************** --> *}
+                    {* <!-- _____________________________________________________________________________ --> *}
+                    <div class="col-md-10">
+                        {control breadcrumb}
+                        {? $myCat = $actualCategory->id}
+                        {? $cat = new Category($myCat);}
+                        {* <!-- - - - - - - - - - --> *}
+                        {foreach $cat->galleries['foto'] as $gal}
+                            {if $gal->implementation_name == 'logo'}
+                            {foreach $gal->files as $file}        
+                                <img src="{plink Files:default $file->id,150,80}" alt="{$product->name}" class="pull-right logo" />
+                            {/foreach}
+                            {/if}
+                        {/foreach}
+                        <div class="cat-description">
+
+                            {? $myCat = $actualCategory->id}
+                            {? $cat = new Category($myCat);}
+                            {* <!-- - - - - - - - - - --> *}
+
+                            {foreach $cat->galleries['foto'] as $gal}  {* {foreach $cat->getInnerCategories() as $cat2} *}
+                                {if $gal->implementation_name == 'uvodni'}
+                                {foreach $gal->files as $file}        
+                                    {if isset($file->url) && $file->url != '' }
+                                        <object width="427" height="300">
+                                            <param value="true" name="allowfullscreen" />
+                                            <param value="always" name="allowscriptaccess" />
+                                            <param name="movie" value="{$file->url|replace:'watch?v=':'v/'}?version=3&amp;hl=cs_CZ" />
+                                            <param name="wmode" value="transparent" />
+                                            <embed width="427" height="300" allowscriptaccess="always" 
+                                              allowfullscreen="true" type="application/x-shockwave-flash"          
+                                              src="{$file->url|replace:'watch?v=':'v/'}?version=3&amp;hl=cs_CZ"
+                                              wmode="transparent"
+                                              >
+                                            </embed>
+                                        </object>
+                                    {else}
+                                        <img src="{plink Files:default $file->id,427,300,null,null,false,File::FILL}" class="img-thumbnail pull-left" /> {* data-src="holder.js/427x300/text:obrázek" *}
+                                    {/if}
+                                {/foreach}
+                                {/if}
+                            {/foreach}
+                            <h1>{if isset($actualCategory)}{$actualCategory->title}{else}{_'Výsledky vyhledávání'}{/if}</h1>
+                            <div>{if isset($actualCategory)}{!$actualCategory->description}{/if}</div>
+                            <hr class="clear" />
+                        </div>
+                        <hr class="divider-sml">
+                        
+                        {* <!-- CO FRCI (slider) --> *}
+                        {if isset($lists['co-frci']) && count($lists['co-frci'])>=15}                    
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h2>Co frčí</h2>
+                                <div class="row co-frci" id="frci"> 
+                                    <ul class="ul">                                    
+                                        {foreach $lists['co-frci'] as $product}
+                                            <li class="col-md-2"><div><a href="{plink Detail:default $product->id}" class="bordered">
+                                                <img src="{plink Files:default $product->mainFoto,102,147}" alt="" class="img-rounded img-responsive" /></a></div></li>
+                                        {/foreach}
+                                    </ul>
+                                </div>
+                                <script>
+                                    $('#frci').endlessGallery({ speed: 200, count: 1 });
+                                </script>
+                                {*
+                                    <div class="prev" ></div>
+                                    <div class="next" ></div>
+                                *}
+                            </div>
+                        </div>
+                        <hr class="divider-big">
+                        {/if}<hr class="divider-big"><hr class="divider-big">
+                        <div id="ordererTabs"></div>
+                        <hr class="divider-big">
+                        
+                        {* <!-- ******************** PRODUCT-LIST ******************** --> *}
+                        {snippet productsList}
+                            <ul id="products-list">
+                                {foreach $productsList as $product}    
+                                    <li class="col-md-2 {if $iterator->getCounter()%5==0}last{/if}">
+                                        {include ../Includes/product-list.phtml product=>$product}
+                                    </li>
+                                {/foreach}
+                            </ul>
+                        {/snippet}
+                        <hr class="divider-big">
+                        {widget paginator}
+                        <script>
+                            $(window).on('scroll',function(){
+                                if($(window).scrollTop() + $(window).height() > $(document).height() - 1000) {
+                                    if ($('a.next').length>0){
+                                        $('a.paginator-next-button').trigger('click');
+                                    }
+                                }
+                            });        
+                        </script>                         
+                        <hr class="divider-big">
+
+                        {* <!-- CO FRCI (slider) --> *}
+                        <script>
+                            $(window).scroll(function() {
+                                if(isVisibleOnScreen($('#bott-list'))) {
+                                    $('#bott-list').fadeIn();
+                                }
+                            });
+                        </script>
+                        <div class="row" id="bott-list">
+                            <div class="col-md-12">
+                                <h2>Co frčí</h2>
+                                <div class="row co-frci" id="frci2"> 
+                                    <ul class="ul">                                    
+                                        {foreach $lists['co-frci'] as $product}
+                                            <li class="col-md-2"><div><a href="{plink Detail:default $product->id}" class="bordered">
+                                                <img src="{plink Files:default $product->mainFoto,102,147}" alt="" class="img-rounded img-responsive" /></a></div></li>
+                                        {/foreach}
+                                    </ul>
+                                </div>
+                                <script>
+                                    $('#frci2').endlessGallery({ speed: 200, count: 1 });
+                                </script>
+                                {*
+                                    <div class="prev" ></div>
+                                    <div class="next" ></div>
+                                *}
+                            </div>
+                        </div>
+                        <hr class="divider-big">
+                        <a class="anchor">Nahoru</a>
+                    </div>
+                </div>
+
+            
+            {* <!-- ***************************************************************************** --> *}
+            {* <!-- ******************** SEZNAMY INTERPRETŮ, UDÁLOSTÍ, VÝROBCŮ ******************** --> *}
+            {* <!--                                                                               --> *}
+            {else}
+
+                {* <!-- ******************** SEZNAM INTERPRETŮ (vypis kategorií) ******************** --> *}
+                {* <!-- _____________________________________________________________________________ --> *}
+                {if isset($actualCategory) && $actualCategory->id == 4 || $actualCategory->id == 5}
+
+                    {? $myCat = $actualCategory->id}
+                    {? $cat = new Category($myCat);}
+                    {* <!-- - - - - - - - - - --> *}
+                    <div class="row lists">
+                        <div class="col-md-12">
+                            {* <!-- ******************** FILTR DLE ŽÁNRU ******************** --> *}
+                            <div class="row check-filter">
+                                <h2>Filtr dle žánru</h2>
+                                {if false}
+                                {foreach $productsList as $product} 
+                                    {if isset($product->parameters)}
+                                        {foreach $product->parameters as $param}
+                                        {if isset($product->param[$param->implementationName]) && !empty($product->param[$param->implementationName])}
+                                        {if $param->implementationName == 'zanrhudba'}
+                                        <div class="col-md-1">
+                                            <div class="checkbox">
+                                                <label>
+
+                                                    <input type="checkbox" value="">{$product->param[$param->implementationName]}
+                                                </label>
+                                            </div>
+                                        </div>
+                                        {/if}
+                                        {/if}
+                                        {/foreach}
+                                    {/if}
+                                {/foreach}
+                                {/if}
+
+                                {if false}
+                                    {? $implementationNames = array('zanrhudba' , 'zanrfilm') }
+                                    {? $sortedParams = array(); }
+
+                                    {foreach $productsList as $product} 
+                                        {foreach $implementationNames as $implementationName}
+                                            {if isset($product->param[$implementationName]) && !empty($product->param[$implementationName])}
+                                                
+                                            
+
+                                                {if is_array($product->param[$implementationName])}
+                                                    {? $params = $product->param[$implementationName]}
+                                                {else}
+                                                    {? $params = array($product->param[$implementationName])}  {* produkt ma tento parametr pouze s jednou hodnotou (tzn nevraci to pole), tak si to pole vytvorime *}
+                                                {/if}
+                                            
+
+
+                                                {foreach $params as $param}
+                                                    {if !array_key_exists($param->id, $sortedParams)}
+                                                        {? $sortedParams[$param->id] = $param; }
+                                                    {/if}
+                                                {/foreach}
+                                            {/if}
+                                        {/foreach}
+                                    {/foreach}
+
+                                    <?php
+                                        function cmpParamName($a, $b){
+                                            if ($a->name == $b->name) {
+                                                return 0;
+                                            }
+                                            return ($a->name < $b->name) ? -1 : 1;
+                                        }
+                                    ?>
+                                    {? usort($sortedParams, 'cmpParamName') }
+
+                                    {foreach $sortedParams as $param}
+                                        <div class="col-md-1">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" value="">{$param->name}
+                                                </label>
+                                            </div>
+                                        </div>
+                                    {/foreach}
+                                {/if}
+
+
+                                {if true}
+                                    {if $actualCategory->id === 4}
+                                        {? $implementationName = 'zanrhudba'; }
+                                    {/if}
+                                    {if $actualCategory->id === 5}
+                                        {? $implementationName = 'zanrfilm'; }
+                                    {/if}
+
+                                    {? $sortedParams = array(); }
+
+                                    {foreach $productsList as $product}
+                                        {if isset($product->param[$implementationName]) && !empty($product->param[$implementationName])}
+                                        
+                                            {if is_array($product->param[$implementationName])}
+                                                {? $params = $product->param[$implementationName]}
+                                            {else}
+                                                {? $params = array($product->param[$implementationName])}  {* produkt ma tento parametr pouze s jednou hodnotou (tzn nevraci to pole), tak si to pole vytvorime *}
+                                            {/if}
+                                        
+                                            {foreach $params as $param}
+                                                {if !array_key_exists($param->id, $sortedParams)}
+                                                    {? $sortedParams[$param->id] = $param; }
+                                                {/if}
+                                            {/foreach}
+                                        {/if}
+                                    {/foreach}
+
+                                    <?php
+                                        function cmpParamName($a, $b){
+                                            if ($a->name == $b->name) {
+                                                return 0;
+                                            }
+                                            return ($a->name < $b->name) ? -1 : 1;
+                                        }
+                                    ?>
+                                    {? usort($sortedParams, 'cmpParamName') }
+
+                                    {foreach $sortedParams as $param}
+                                        <div class="col-md-1">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" value="">{$param->name}
+                                                </label>
+                                            </div>
+                                        </div>
+                                    {/foreach}
+                                {/if}
+                            </div>
+                            <hr class="divider-big">
+                            {* <!-- ******************** TOP INTERPRETI () ******************** 
+                            <div class="row">
+                                <h2>Top interpreti</h2>
+                                {foreach $cat->getInnerCategories() as $cat2}
+
+                                <div class="col-md-2">
+                                    <a href="{plink Search:default array('category'=>$cat2->id)}" class="">
+                                    <img alt="" src="" data-src="holder.js/100%x120/text:{$cat2->name}" class="img-thumbnail img-responsive" /></a>
+                                </div>
+                                {/foreach}
+                            </div> --> *}
+                            <hr class="divider-big">
+                            {* <!-- ******************** ABECEDA INTERPRETŮ () ******************** --> *}
+
+                            {?
+                                $alphabet = array('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z');
+                            }
+
+                            <div class="row">
+                                <h2>Seznam Interpretů</h2>
+                                <div class="col-md-12">
+                                    <div class="btn-group btn-group-justified alphabet">
+                                        {foreach $alphabet as $letter}
+                                            <a data-href="#{$letter}" class="btn btn-default {$letter}">{$letter}</a>
+                                        {/foreach}
+                                    </div>                                 
+                                </div>
+                            </div>
+                            <hr class="divider-big">
+                            {* <!-- ******************** SEZNAM VŠECH INTERPRETŮ  DLE ABECEDY ******************** --> *}
+                            {? include(APP_DIR.'/templates/Functions/getCategoriesAlphabetically.php'); }
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="alphabeticaly">
+                                        {? 
+                                            $iterArr = array_fill_keys($alphabet, 0);
+                                            $myIter = array();
+
+                                            $categoriesAlphabetically = getCategoriesAlphabetically($cat);
+                                            $lastUsedLetter = "";
+                                        }
+                                        <style>
+
+                                            div.ln-wrapper { background: #F9F9F9; }
+                                            div.ln-column { width: 200px; float: left; }
+                                            hr.clearer { clear:both; height:0px; }
+
+                                        </style>
+                                        {foreach $categoriesAlphabetically as $cat2}
+                                            {?
+                                                $firstLetter = strtolower(substr($cat2->name,0,1));
+                                            }
+
+                                            {if $lastUsedLetter != $firstLetter}
+                                                {if $lastUsedLetter != ""}
+                                                    </div> <!-- for previous ln-column 1 -->
+                                                    <hr class="clearer" />
+                                                    </div> <!-- for previous ln-wrapper 1 -->
+                                                {/if}
+                                                <h3 id="{$firstLetter}">{? echo strtoupper($firstLetter)}</h3>
+                                                <div class="ln-wrapper">
+                                                {? $lastUsedLetter = $firstLetter}
+                                            {/if}
+
+                                            {if $iterArr[$firstLetter] == 0}
+                                                <div class="ln-column">
+                                            {/if}
+
+                                            {if $iterArr[$firstLetter] > 0 && $iterArr[$firstLetter]%4==0}
+                                                </div><div class="ln-column">
+                                            {/if}
+
+                                            <div class="ln-{? echo $firstLetter; }">
+                                                <a title="{$cat2->name}" href="{plink Search: array('category'=>$cat2->id)}"><span>{!$cat2->name}</span></a>
+                                                {* <!-- 
+                                                <a title="{$cat2->name}" href="{plink Search: array('category'=>$cat2->id)}">
+                                                {foreach $cat2->galleries as $gal}
+                                                    {foreach $gal->files as $file}        
+                                                            <img alt="{!$cat2->name}" src="{plink Files: $file->id,100,100}" />
+                                                    {/foreach}          
+                                                {/foreach}
+                                                </a> --> *}
+                                            </div>
+                                            {? $iterArr[$firstLetter]++; }
+                                        {/foreach}
+
+                                        </div> <!-- for previous ln-column 2 -->
+                                        <hr class="clearer" />
+                                        </div> <!-- for previous ln-wrapper 2 -->
+                                    </div>
+                                </div>
+                            </div>  
+                            <script>
+                                $(document).ready(function() {
+                                    //
+                                    $('.alphabet a.ac').livequery(function(){
+                                        $(this).anchor({ speed: 800, anchor: $(this).data('href'), minus: 70});
+                                    });
+                                    //
+                                    var str = 'ln-';
+
+                                    $('.alphabeticaly h3').each(function(){
+                                        var letter = ($(this).attr('id')).replace('#','');
+                                        $('.alphabet .'+letter).addClass('ac');
+                                    });
+
+                                    
+                                });
+                            </script>
+                        </div>
+                    </div>                        
+                    
+                {else}
+                {* <!-- ******************** SEZNAM UDÁLOSTÍ (výpis parametrů) ******************** --> *}
+                {* <!--                                                                             --> *}
+
+                    {* <!-- ******************** FILTR DLE ŽÁNRU ******************** --> *}
+                    <div class="row check-filter">
+                        <h2>Filtr dle žánru</h2>
+                        {foreach $productsList as $product} 
+                            {if isset($product->parameters)}
+                                {foreach $product->parameters as $param}
+                                    {if isset($product->param[$param->implementationName]) && !empty($product->param[$param->implementationName])}
+                                    {if $param->implementationName == 'zanr'}
+                                    <div class="col-md-1">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" value="">{$product->param[$param->implementationName]}
+                                            </label>
+                                        </div>
+                                    </div>
+                                    {/if}
+                                    {/if}
+                                {/foreach}
+                            {/if}
+                        {/foreach}
+                    </div>
+                    <hr class="divider-big">
+                    {* <!-- ******************** SEZNAM UDÁLOSTI (TIMELINE) ******************** --> *}
+                    <div class="row events">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="cold-md-5 ev-box u1">
+                                    <img src="../images/ev-arr-l.jpg" class="ev-arr-l">
+                                    <img src="" data-src="holder.js/440x200/text:událost" class="img-thumbnail img-responsive" />
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus blandit dui a mattis vestibulum. Mauris rhoncus magna id mauris euismod vehicula.</p>
+                                </div>
+                                <div class="cold-md-5 ev-box u2">
+                                    <img src="../images/ev-arr-r.jpg" class="ev-arr-r">
+                                    <img src="" data-src="holder.js/440x200/text:událost" class="img-thumbnail img-responsive" />
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus blandit dui a mattis vestibulum. Mauris rhoncus magna id mauris euismod vehicula.</p>
+                                </div>
+                                <div class="cold-md-5 ev-box u3">
+                                    <img src="../images/ev-arr-l.jpg" class="ev-arr-l">
+                                    <img src="" data-src="holder.js/440x200/text:událost" class="img-thumbnail img-responsive" />
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus blandit dui a mattis vestibulum. Mauris rhoncus magna id mauris euismod vehicula.</p>
+                                </div>
+                                <div class="cold-md-5 ev-box u4">
+                                    <img src="../images/ev-arr-r.jpg" class="ev-arr-r">
+                                    <img src="" data-src="holder.js/440x200/text:událost" class="img-thumbnail img-responsive" />
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus blandit dui a mattis vestibulum. Mauris rhoncus magna id mauris euismod vehicula.</p>
+                                </div>
+                            </div>
+
+
+
+                           {* <!-- <div class="row">
+                                {foreach $productsList as $product}
+                                    {if isset($product->parameters)}
+                                        {foreach $product->parameters as $param}
+                                            {if isset($product->param[$param->implementationName]) && !empty($product->param[$param->implementationName])}
+                                                
+                                                {if $param->implementationName == 'udalost'}
+                                                    {if is_array($product->param[$param->implementationName])}
+                                                        <div class="col-md-5 time-left">
+                                                            {$product->param[$param->implementationName]|implode: ' '.$param->unit.', '}
+                                                        </div>
+                                                    {else}
+                                                        <div class="col-md-5 time-right">
+                                                            {$product->param[$param->implementationName]}
+                                                        </div>
+                                                    {/if}
+                                                    {if isset($param->unit)} {$param->unit}{/if}
+                                                {/if}
+                                            {/if}
+                                        {/foreach}
+                                    {/if}
+                                {/foreach}
+                            </div> --> *}
+                        </div>
+                    </div>        
+                {/if}                     
+            {/if}
+        </div>
+    </div>
+    <script>
+        $(document).ready(function() {
+            $('.anchor').anchor({ speed: 800, anchor:'body', minus: 0 });
+            $('.anchor, .paginator a').livequery(function(){
+                $(this).anchor({ speed: 800, anchor:'body', minus: 0});
+            });
+        });
+    </script>
+    <script>
+        $('#ordererTabs').ordererTabs([ // protoze je tu latte (preklady)
+            { name: {_'Nejprodávanější'} , lim: 'product_venality' , val: 'desc'},
+            { name: {_'Největší sleva'} , lim: 'product_sale', val: 'desc'},
+            { name: {_'Od nejlevnějšího'} , lim: 'product_price', val: 'asc'},
+            { name: {_'Od nejdražšího'} , lim: 'product_price', val: 'desc'}
+        ]);
+    </script>
+{/block}

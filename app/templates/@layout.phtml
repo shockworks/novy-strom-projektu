@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>   <html lang="cs" xml:lang="cs" class="lt-ie10 lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>      <html lang="cs" xml:lang="cs" class="lt-ie10 lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>      <html lang="cs" xml:lang="cs" class="lt-ie10 lt-ie9"> <![endif]-->
+<!--[if IE 9]>      <html lang="cs" xml:lang="cs" class="lt-ie10"> <![endif]-->
+<!--[if gt IE 9]>   <!--> 
+<html lang="cs" xml:lang="cs" class=""> <!-- <![endif]-->
+    <head>
+        
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        {control metaHeaderComponent}
+        {control seoHeaderComponent}
+        {block canonical}{/block}
+        {control plugins 
+            'cssTools/autocompleteCSS-1.0.0',
+            'common/jquery-1.7.2',
+            'common/bootstrap-3.0.3',
+            'common/jquery-livequery-1.1.1',
+            'common/jquery-nette-forms-1.0.0',
+            'common/jquery-ui-1.8.21',
+            'common/nette-ajax-web-1.2.0',
+            'common/alfax-editable-1.0.0',
+            'common/cookies-1.0.0',
+            'common/paginator-1.0.0',
+            'forms/checkbox-1.0.0',
+            'forms/plusMinus-1.0.2',
+            'forms/inputText-1.0.0',
+            'forms/selectbox-0.1.3',
+            'galleries/endless-gallery-1.0.0',
+            'galleries/slideshow-1.0.0',
+            'tools/anchor-1.0.1',
+            'tools/ordererTabs-1.0.3',
+            'tools/elevate-zoom-3.0.0',
+            'tools/fancybox-1.3.4',
+            'tools/fixedAndResize-1.0.0',
+            'tools/topMenuActive-1.0.0',
+            'tools/jeditable-1.7.1',
+            'tools/interactive-filter-1.0.0',
+            'tools/qtip-1.0.0',
+            'tools/mixitup-1.5.5'
+        }
+        {control css 'sw-bootstrap.css', 'sw-bootstrap-theme.css', 'mixins.less', 'basic.less', 'common.less', 'layout.less', 'content.less', 'cart.less', 'browsers.less'} {* <!-- 'content.less' 'backend/basecss-1.0.2', --> *}
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/js/melonhtml5-timeline/css/timeline.css" />
+    <link rel="stylesheet" type="text/css" href="/js/melonhtml5-timeline/css/timeline_light.css" />  
+    <script type="text/javascript" src="/js/melonhtml5-timeline/javascript/timeline.min.js"></script>
+    <script type="text/javascript" src="/js/init.js"></script>
+    <script type="text/javascript" src="/js/modernizr.custom.64083.js"></script>
+    {control googleAnalyticsComponent}
+    <script type="text/javascript" src="/js/respond.min.js"></script> 
+    </head>
+    <body>
+        {if isset($actualCategory) && isset($actualCategory->galleries['pozadi']) && !isset($product) }
+            {foreach $actualCategory->galleries['pozadi']->files as $file}
+                <style type="text/css">
+                    body { background: url("{plink Files:default $file->id}") no-repeat center fixed transparent; }
+                </style>
+            {/foreach}
+        {/if}  
+        <div id="fb-root"></div>
+
+        <!-- ---- ---- ---- -->
+        {? $globalVat = 21;}
+        {? $freeShipping = 2000;}
+        <a id="spec-top" class="anchor"></a>
+        <div id="fb-root"></div>
+        
+        <script>
+            (function(d, s, id) {
+                            var js, fjs = d.getElementsByTagName(s)[0];
+                            if (d.getElementById(id)) return;
+                            js = d.createElement(s); js.id = id;
+                            js.src = "//connect.facebook.net/cs_CZ/all.js#xfbml=1&appId=369741426490196";
+                            fjs.parentNode.insertBefore(js, fjs);
+                        }(document, 'script', 'facebook-jssdk'));
+        </script>
+    <!-- HEADER -->
+        <div id="header-bar">
+            <div class="container" id="sub-header">
+                <div class="row hidden-xs hidden-sm">
+                    <div class="top-benefits dokdy col-sm-3 col-lg-3" title="Platí pro všechno zboží, které máme skladem.">
+                        <p>Expedujeme <strong>do 24 hodin</strong></p>
+                    </div>
+                    <div class="top-benefits postovne col-md-3 col-lg-3">
+                        <p><strong>Poštovné 85 Kč</strong> / ČR a 120 Kč / SK</p>
+                    </div>
+                    <div class="top-benefits doprava col-md-3 col-lg-3">
+                        <p>Od 1 500 Kč <strong>doprava zdarma</strong></p>
+                    </div> 
+                    <div class="top-benefits tel col-md-3 col-lg-3" title="Na telefonu jsme pro tebe v pondělí–pátek 8.00–18.00 a v sobotu 8.00–12.00">
+                        <p><strong>724 002 009</strong>  / 556 300 700</p>
+                    </div> 
+                </div>
+        </div>
+        </div>
+        <div id="header">
+            <div class="container" id="sub-header">
+                <div class="row logo-search-buy">
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                        <{block logo}span{/block} class="navbar-left"><a n:href="Default:" class="navbar-link"><img alt="logo" src="http:/images/logo.png" class="logo" /></a></{block logo_end}span{/block}>
+                    </div>
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                        {control searchForm:autocomplete}
+                    </div>
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                        {snippet cartbox}
+                    <div id="out-top-cart">
+                        <a n:href="Cart:" id="top-cart">
+                            {$cartCount}
+                        </a>
+                        <div id="under-top-cart" class="{if $cartCount == 0}empty{/if}">
+                            <div class="out-triangle"><div class="triangle-with-shadow"></div></div>
+                            {if $cartCount > 0}
+                                <div class="top">
+                                    <div class="in {if $cartList > 3}scroll{/if}">
+                                        {? include(APP_DIR.'/templates/Functions/cartParams.php'); }
+                                        {foreach $cartList as $item}
+                                            <a class="cart-prod">
+                                                <div class="obal-cart-img img">
+                                                    <img src="{plink Files:default $item->object->mainFoto,65,90}" alt="fotografie není k dispozici" />
+                                                </div>
+                                                <p>
+                                                    <strong>{$item->name}</strong>
+                                                    <br /><span>ks {$item->count}</span>
+                                                    <br /><span>vel M</span>
+                                                    <br />
+                                                    {if $item->object->price_recommended > $item->price}
+                                                        <span class="price-trought">{$item->object->price_recommended|money}</span> <span class="price">{$item->price|money}</span>
+                                                    {else}
+                                                        <span class="price">{$item->price|money}</span>
+                                                    {/if}
+                                                </p>
+                                            </a>
+                                        {/foreach}
+                                    </div>
+                                </div>
+                                <div class="bottom">
+                                    <p>{_'Celková cena'}: <strong>{$cartSum|money}</strong></p>
+                                    <a n:href="Cart:" class="btn green">{_'Obsah nákupní tašky'}</a>
+                                </div>
+                            {else}
+                                <p>Momentálně zde není žádná hudba,kterou by sis mohl obléknout…</p>
+                                <span class="italic">Honem do obchodu!</span>
+                            {/if}
+                        </div>
+                    </div>
+                    <script>
+                        var timer;
+                        $('#out-top-cart').hover(function(){             
+                            clearTimeout(timer);
+                            $('#under-top-cart').addClass('ac').fadeIn('fast');  
+                        },function(){              
+                            timer = setTimeout(function() {
+                                $('#under-top-cart').removeClass('ac').fadeOut('fast');
+                            }, 500); 
+                        });
+                    </script>
+                {/snippet}
+                        {control simpleLoginForm,65,-200}
+                        {if !isset($user->id)}
+                            <a n:href="Wishlist:" class="header-wishlist">{_'Můj seznam'}</a>
+                        {else}
+                            <a n:href="Wishlist:detail $wishlist->id" class="header-wishlist" >{_'Můj seznam'}<span class="count"> {$wishlistCount}</span></a>
+                             <script>
+                                //muj ucet zmena href
+                                $('.simple-login-login').click(function(event){
+                                    event.stopPropagation();
+                                    event.preventDefault();
+                                    window.location.href = '/users/account';
+                                });
+                            </script>
+                        {/if}
+                    </div>
+                </div>
+                <div class="row header-menu">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <ul class="nav nav-pills nav-justified">
+                            <li class="nav-li"><a n:href="Default:">Úvod<span></span></a></li>
+                            <li class="nav-li"><a href="{plink Search:default array('gender'=>23)}"><span></span>Kluci</a></li>
+                            <li class="nav-li"><a href="{plink Search:default array('gender'=>24)}"><span></span>Holky</a></li>
+                            <li class="nav-li"><a href="{plink Search:default array('gender'=>25)}"><span></span>Děti</a></li>
+                            
+                            {? $listId = CategoryList::getOneBy('implementation_name', 'hudba')->id; }
+                            <li class="nav-li"><a href="{plink Search:default array('category_list'=>$listId)}">{_'Hudba'}<span></span></a></li>
+                            {? $listId = CategoryList::getOneBy('implementation_name', 'film')->id; }
+                            <li class="nav-li"><a href="{plink Search:default array('category_list'=>$listId)}" class="last">{_'Film'}</a></li>
+                        </ul>
+                    </div> 
+                </div>
+            </div>
+        </div>
+        
+        {block banner}{/block}
+    <!-- CONTENT -->
+        <div id="content" class="{block presenter}{/block}">
+            <div class="container">
+                {block content}{/block}
+                {snippet notes}
+                    {?
+                        $recently = Note::get(Note::VISITED);
+                        $recently = array_reverse($recently);
+                    }
+                    {if isset($recently) && count($recently) > 0}
+                        <hr class='clear' />
+                        <div class="row last-visited">
+                            <h2 class="music-heading text-center">Prohlížené</h2>
+                            <ul>
+                            {foreach $recently as $p}
+                                {include ../templates/Includes/product-list-mini.phtml product=>$p}
+                            {/foreach}
+                            </ul>
+                            <hr class="clear" />
+                            <a class="erase-all ajax" n:href="noteErase!" title="Vymazat vše">Vymazat vše</a>
+                        </div>
+                    {/if}
+                {/snippet}
+            </div>
+        </div>
+    <!-- FOOTER -->
+        <div id="foot" class="{block footer}{/block}">
+            <div class="container" id="foot-inner">
+                <div class="row">
+                    
+                    <div class="face-anchor"></div>
+                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 fb-plugin" id="facb-plugin">
+                        <div class="fb-like-box" data-href="https://www.facebook.com/obleknisihudbu" data-width="700" data-height="190" data-colorscheme="light" data-show-faces="true" data-header="false" data-stream="false" data-show-border="false"></div>
+                    </div>
+                    <div class="col-4 newsletter-box">
+                        <h4>Odběr novinek</h4>
+                        {control ajaxNewsletterForm}
+                    </div>
+
+                    <div class="divider-big"></div>
+
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 contacts">
+                        <h2>Musicwear</h2>
+                        <span class="adresa">Wolkerova 1009, 749 01 Vítkov</span>
+                        <span class="email"><a href="mailto:info@musicwear.cz">info@musicwear.cz</a></span>
+                        <span class="telefon">724 002 009 / 556 300 700</span>
+                    </div>
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 contact-social">
+                        <span class="adresa"><a n:href="Section: 'kontaktni-formular'" class="fancybox">Kontaktní formulář</a></span><br />
+                        <a href="https://www.facebook.com/obleknisihudbu?fref=ts" class="fa fa-facebook-square" title="Přidej se na náš Facebook"></a>
+                        <a href="" class="fa fa-pinterest-square" title="Jsme na Pinterestu "></a>
+                        <a href="" class="fa fa-instagram" title="Náš Instragram"></a>
+                    </div>
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 rozcestnik">
+                        <h2>Rozcestník</h2>
+                        {snippet userinteractionwish}
+                            {if !isset($user->id)}
+                                <a n:href="Wishlist:">{_'Můj seznam'}</a><br />
+                            {else}
+                                <a n:href="Wishlist:detail $wishlist->id">{_'Můj seznam'}</a><br />
+                            {/if}
+                        {/snippet}
+                        <a n:href="Section: clanky, obchodni-podminky">Moje přání a návrhy</a><br />
+                        <a n:href="Section: kalendar-udalosti">Kalendář událostí</a><br />
+                        <a n:href="Section: clanky, o-csr">Společenská odpovědnost</a><br />
+                        <a n:href="Section: clanky, obchodni-podminky">Obchodní podmíky</a><br />
+                        
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 csr-logos">
+                        {foreach $sections['titulni-strana']->galleries['loga-csr']->files as $file}
+                            <div class="csr-logo {if $iterator->getCounter()%4 == 0}last{/if}"><img src="{plink Files:default $file->id}" class="img-responsive" /></div>
+                        {/foreach}
+                    </div>
+                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 copyright">
+                        Copyright © 2014 <a href="http://www.musicwear.cz">musicwear.cz</a><br />Využíváme komplexní služby <a href="http://www.profesionalni-e-shop.cz/">Profesionální e-shop</a> od společnosti <a href="http://www.shockworks.cz/">Shockworks s.r.o.</a>
+                    </div>
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 payments">
+                        <img alt="" src="/images/platebni-loga.jpg" class="img-responsive pull-left" />
+                    </div>
+                    
+                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 top-hudba">
+                        <h3>TOP hudba</h3>
+                        {include top-paticka.latte type=>'hudba'}
+                    </div>
+                    
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 top-filmy">
+                        <h3>TOP filmy</h3>
+                         {include top-paticka.latte type=>'film'}
+                    </div>
+                        
+                </div>
+                <div class="divider-big"></div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,39 @@
+<div class="img">
+    <a class="main-a-img" href="{plink Detail:default $product->id}">
+        <img src="{plink Files:default $product->mainFoto,NULL,115}" alt="" class="img-responsive" /></a>
+        {snippet userinteraction}
+            {if $product->lists['rozbaleno']}
+                <span class="rozbaleno">Rozbaleno</span>
+                <div class="to-wish-wrap-rozbaleno">
+                    <a href="{if isset($user)} {plink addToWishlist! $product->id} {/if}" class="to-wish">{_'Do seznamu'}</a>
+                </div>
+            {else}
+                
+                <div class="to-wish-wrap">
+                    <a href="{if isset($user)} {plink addToWishlist! $product->id} {/if}" class="to-wish">{_'Do seznamu'}</a>
+                </div>
+            {/if}
+        {/snippet}
+</div>
+<h2 title="{$product->name}">
+    <a href="{plink Detail:default $product->id}">
+        {$product->name}
+    </a></h2>
+<div class="price-box">
+    {if $product->price_recommended > $product->price}
+        <p><span class="price-trought">{$product->price_recommended|money} </span>&nbsp;<strong class="buy-price"> {$product->price|money}</strong></p>
+    {else}
+        <p><strong class="buy-price">{$product->price|money}</strong></p>
+    {/if}
+</div>
+
+
+    {if ($product->price_recommended > $product->price) && ((round((($product->price_recommended - $product->price) * 100) / ($product->price_recommended))) > 30) }
+        <div class="lists-big">
+        <span class="lists-ico action" ></span><span class="lists-txt" ><span>- {=round((($product->price_recommended - $product->price) * 100) / ($product->price_recommended))}</span><span>%</span></div>
+
+    {elseif $product->lists['new-product']}
+        <div class="lists-big">
+        <span class="lists-ico new" ></span><span class="lists-txt" ><span>{_'Nové'}</span></div>
+    {/if}
+{* {if $product->lists['zanovni-product']}<p class="ico zanewP">{_'Zánovní'}<br />{_'zboží'}</p>{/if} *}

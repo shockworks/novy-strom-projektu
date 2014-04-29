@@ -1,0 +1,43 @@
+<div class="row events" style="display:none;">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="row">
+
+                                    {? $implementationName = 'udalost'; }
+                                    {? $ssortedParams = array(); }
+
+                                    {foreach $productsList as $product}
+                                        {if isset($product->param[$implementationName]) && !empty($product->param[$implementationName])}
+                                        
+                                            {if is_array($product->param[$implementationName])}
+                                                {? $params = $product->param[$implementationName]}
+                                            {else}
+                                                {? $params = array($product->param[$implementationName])}  {* produkt ma tento parametr pouze s jednou hodnotou (tzn nevraci to pole), tak si to pole vytvorime *}
+                                            {/if}
+                                        
+                                            {foreach $params as $param}
+                                                {if !array_key_exists($param->id, $ssortedParams)}
+                                                    {? $ssortedParams[$param->id] = $param; }
+                                                {/if}
+                                            {/foreach}
+                                        {/if}
+                                    {/foreach}
+
+                                    {foreach $ssortedParams as $param}
+                                        <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 {if $iterator->getCounter()%2 == 0}to-right{else}to-left{/if} {if $iterator->getCounter() == 1}first{/if}">
+                                            <div class="ev-box new">
+                                                {if $iterator->getCounter()%2 == 0}
+                                                    <div class="ev-arr-r"></div>
+                                                {else}
+                                                    <div class="ev-arr-l"></div>
+                                                {/if}
+                                                <img class="main" src="{plink Files:default $param->mainFoto,458,257,null,null,false,File::FILL}" alt="{$param->name}" title="{$param->name}" />
+                                                <h3><a href="{plink Search:default array('udalost'=>$param->id)}">{$param->name}</a></h3>
+                                                {!$param->describe|implode:', '}
+                                            </div>  
+                                        </div>
+                                    {/foreach}
+
+                               
+                                </div>
+                            </div> 
+                        </div>

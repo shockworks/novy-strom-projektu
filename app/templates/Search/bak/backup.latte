@@ -1,0 +1,125 @@
+<div class="row products">
+                    {* <!-- ******************** L - LEVY SLOUPEC (filtr) ******************** --> *}
+                    {* <!-- __________________________________________________________________ --> *}
+                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                        <h3>Filtr paremetrů</h3>
+                        <hr class="divider-big line" />
+                        {include ../Includes/filter.phtml limitersURL => $limitersURL}
+                    </div>
+                    {* <!-- ******************** R - PRAVY SLOUPEC (vypis kategorie) ******************** --> *}
+                    {* <!-- _____________________________________________________________________________ --> *}
+                    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                    {*  {control breadcrumb}
+                        {? $myCat = $actualCategory->id}
+                        {? $cat = new Category($myCat);}
+                       
+                        {foreach $cat->galleries['foto'] as $gal}
+                            {if $gal->implementation_name == 'logo'}
+                            {foreach $gal->files as $file}        
+                                <img src="{plink Files:default $file->id,150,80}" alt="{$product->name}" class="pull-right logo" />
+                            {/foreach}
+                            {/if}
+                        {/foreach}
+                        <div class="cat-description">
+
+                            {? $myCat = $actualCategory->id}
+                            {? $cat = new Category($myCat);}
+                            
+                            {foreach $cat->galleries['foto'] as $gal}  
+                                {if $gal->implementation_name == 'uvodni'}
+                                {foreach $gal->files as $file}        
+                                    {if isset($file->url) && $file->url != '' }
+                                        {if strpos('youtube', $file->url)}
+                                            <object width="459" height="300">
+                                                <param value="true" name="allowfullscreen" />
+                                                <param value="always" name="allowscriptaccess" />
+                                                <param name="movie" value="{$file->url|replace:'watch?v=':'v/'}?version=3&amp;hl=cs_CZ" />
+                                                <param name="wmode" value="transparent" />
+                                                <embed width="459" height="300" allowscriptaccess="always" 
+                                                  allowfullscreen="true" type="application/x-shockwave-flash"          
+                                                  src="{$file->url|replace:'watch?v=':'v/'}?version=3&amp;hl=cs_CZ"
+                                                  wmode="transparent"
+                                                  >
+                                                </embed>
+                                            </object>
+                                        {else}
+                                            no
+                                        {/if}
+                                    {else}
+                                        <img src="{plink Files:default $file->id,459,300,null,null,false,File::FILL}" class="img-thumbnail pull-left" /> 
+                                    {/if}
+                                {/foreach}
+                                {/if}
+                            {/foreach} 
+                            <h1>{if isset($actualCategory)}{$actualCategory->title}{else}{_'Výsledky vyhledávání'}{/if}</h1>
+                            <div>{if isset($actualCategory)}{!$actualCategory->description}{/if}</div>
+                            <hr class="clear" />
+                        </div> *}
+                        <h1>Limiter gender</h1>
+                        {? var_dump($limiter);}  
+                        <hr class="divider-sml">
+                        
+                        {* <!-- CO FRCI (slider) --> *}
+                        {if isset($lists['co-frci']) && count($lists['co-frci'])>=5}                    
+                                    <h2 class="endlessgal">Co právě frčí</h2>
+                                    <div class="co-frci col-xs-12 col-sm-12 col-md-12 col-lg-12" id="frci"> 
+                                        <ul class="row ul products-list">                                    
+                                            {foreach $lists['co-frci'] as $product}
+                                                <li class="col-xs-2 col-sm-2 col-md-2 col-lg-2 {if $iterator->getCounter()%5==0}last{/if}">
+                                                    {include ../Includes/product-list.phtml product=>$product}
+                                                </li>
+                                            {/foreach}
+                                        </ul>
+                                    </div>
+                                    <script>
+                                        $('#frci').endlessGallery({ speed: 200, count: 1 });
+                                        $('#out-frci').addClass('row');
+                                    </script>
+                            <div class="divider-big"></div>
+                        {/if}<div class="divider-big"></div><div class="divider-big"></div>
+                        <div id="ordererTabs"></div>
+                        <div class="divider-big"></div>
+                        
+                        {* <!-- ******************** PRODUCT-LIST ******************** --> *}
+                            <ul class="row" id="products-list">
+                                {foreach $productsList as $product}    
+                                    <li class="col-xs-2 col-sm-2 col-md-2 col-lg-2 {if $iterator->getCounter()%5==0}last{/if}">
+                                        {include ../Includes/product-list.phtml product=>$product}
+                                    </li>
+                                {/foreach}
+                            </ul>
+                        {widget paginator}                       
+
+                        {* <!-- CO FRCI (slider) --> *}
+                        {* <!-- <script>
+                            $(window).scroll(function() {
+                                if(isVisibleOnScreen($('#bott-list2'))) {
+                                    $('#bott-list2').fadeIn();
+                                }
+                            });
+                        </script> --> *}
+                        <div class="row" id="gal-wrap-note">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <h2>Co frčí hned</h2>
+                                <div class="products-list co-frci" id="frci2"> 
+                                    <ul class="row ul">                                    
+                                        {foreach $lists['co-frci'] as $product}
+                                            <li class="col-xs-2 col-sm-2 col-md-2 col-lg-2 {if $iterator->getCounter()%5==0}last{/if}">
+                                                {include ../Includes/product-list.phtml product=>$product}
+                                            </li>
+                                        {/foreach}
+                                    </ul>
+                                </div>
+                                <script>
+                                    $('#frci2').endlessGallery({ speed: 200, count: 1 });
+                                </script>
+                                {*
+                                    <div class="prev" ></div>
+                                    <div class="next" ></div>
+                                *}
+                            </div>
+                        </div>
+                        <div class="divider-big"></div>
+                        <a class="anchor">Nahoru</a>
+                    </div>
+                </div>

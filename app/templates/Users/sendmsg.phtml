@@ -1,0 +1,50 @@
+{block presenter}user account{/block}
+{block content}
+    {* <!-- ********************************************************************** --> *}
+    {* <!-- ******************** USER (sprava uctu uzivatele) ******************** --> *}
+    {* <!--                                                                        --> *}
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            {* <!-- ******************** MENU ******************** --> *}
+            {* <!-- ______________________________________________ --> *}
+            <div class="user-menu">
+                <h1>{_('Můj účet')}</h1><strong>{$user->name} {$user->surname}</strong>
+                <a class="logout" n:href="logout!">{_'Odhlásit se'}</a>
+                <hr class="divider-big">
+                <ul class="main-user-nav">
+                    <li class="osobni"><a href="{plink Users:account}">{_'Osobní sekce'}</a></li>
+                    <li class="objednavky"><a href="{plink Users:orders}">{_'Objednávky'}</a></li>
+                    <li class="seznam">
+                        {snippet userinteractionwishuser}
+                            {if isset($user->id)}
+                                <span class="count">{$wishlistCount}</span>
+                                <a n:href="Wishlist:detail $wishlist->id" >{_'Můj seznam'}</a>
+                            {else}
+                                <a href="{plink Wishlist:default}">{_'Můj seznam'}</a></li>
+                            {/if}
+                        {/snippet}
+                    <li class="navrhy active"><a href="{plink Users:sendmsg}" class="send-us">{_'Přání a návrhy'}</a></li>
+                </ul>
+            </div>
+            {* <!-- ******************** CONTENT ******************** --> *}
+            {* <!-- _________________________________________________ --> *}
+            <div class="user-content">
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 intro">
+                        <h2>Řekni nám, co si myslíš</h2>
+                        <p>Dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur: </p>
+                        <select>
+                            <option>Mám návrh na nový produkt1</option>
+                            <option>Mám návrh na nový produkt2</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 form">
+                        <h2>Předmět: Mám návrh na nový produkt</h2>
+                        <textarea></textarea>
+                        <button class="btn btn-primary">Odeslat</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{/block}

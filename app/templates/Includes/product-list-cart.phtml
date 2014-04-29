@@ -1,0 +1,7 @@
+<div class="product-li-div">
+    <div class="product-img"><img src="{plink Files:default $product->mainFoto,90,90}" alt="{$product->name}" title="{$product->name}" /></div>
+    <div>
+        <h5 title="{$product->name}">{$product->name|truncate:55}</h5>
+        <span class="product-card-price"><strong>{$product->price|money}</strong></span><a href="{plink Cart: $product->id}" class="btn btn-primary">{_'Koupit'}</a>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+<div class="img">
+    <a href="{plink Detail:default $product->id}" class="bordered">
+        <img src="{plink Files:default $product->mainFoto,null,115}" alt="" class="img-responsive" /></a>
+        {snippet userinteraction}
+    {if $product->lists['rozbaleno']}
+        <span class="rozbaleno">Rozbaleno</span>
+        <div class="to-wish-wrap-rozbaleno">
+            <a href="{if isset($user)} {plink addToWishlist! $product->id, 0} {/if}" class="to-wish">{_'Vložit do wishlistu'}</a>
+        </div>
+    {else}
+        
+        <div class="to-wish-wrap">
+            <a href="{if isset($user)} {plink addToWishlist! $product->id, 0} {/if}" class="to-wish">{_'Vložit do wishlistu'}</a>
+        </div>
+    {/if}
+        {/snippet}
+</div>
+{* {if $product->lists['tip-product']}<p class="ico tipP">{_'Náš'}<br />{_'tip'}</p>{/if} *}
+{if ($product->price_recommended > $product->price) && ((round((($product->price_recommended - $product->price) * 100) / ($product->price_recommended))) > 30) }<p class="ico actionP">{_'Akce'}<br /><strong>- {=round((($product->price_recommended - $product->price) * 100) / ($product->price_recommended))}</strong><b>%</b></p>{/if}
+{if $product->lists['new-product']}<p class="ico newP">{_'Nové'}<br />{_'zboží'}</p>{/if}
+{if $product->lists['zanovni-product']}<p class="ico zanewP">{_'Zánovní'}<br />{_'zboží'}</p>{/if}

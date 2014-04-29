@@ -1,0 +1,12 @@
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <ul id="products-list" class="row title-products">
+            {foreach $lists['title-product'] as $product}
+                <li class="col-xs-2 col-sm-2 col-md-2 col-lg-2 {if $iterator->getCounter()%6==0}last{/if}">
+                    {include ../Includes/product-list.phtml product=>$product}
+                </li>
+                {if $iterator->getCounter() == 6}{? break;}{/if}
+            {/foreach}
+        </ul>
+    </div>
+</div>

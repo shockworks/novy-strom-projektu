@@ -1,0 +1,75 @@
+{block presenter}user account{/block}
+{block content}
+    {* <!-- ********************************************************************** --> *}
+    {* <!-- ******************** USER (sprava uctu uzivatele) ******************** --> *}
+    {* <!--                                                                        --> *}
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            {* <!-- ******************** MENU ******************** --> *}
+            {* <!-- ______________________________________________ --> *}
+            <div class="user-menu">
+                <h1>{_('Můj účet')}</h1><strong>{$user->name} {$user->surname}</strong>
+                <a class="logout" n:href="logout!">{_'Odhlásit se'}</a>
+                <hr class="divider-big">
+                <ul class="main-user-nav">
+                    <li class="osobni"><a href="{plink Users:account}">{_'Osobní sekce'}</i></a></li>
+                    <li class="objednavky active"><a href="{plink Users:orders}">{_'Objednávky'}</a></li>
+                    <li class="seznam">
+                        {snippet userinteractionwishuser}
+                            {if isset($user->id)}
+                                <span class="count">{$wishlistCount}</span>
+                                <a n:href="Wishlist:detail $wishlist->id" >{_'Můj seznam'}</a>
+                            {else}
+                                <a href="{plink Wishlist:default}">{_'Můj seznam'}</a></li>
+                            {/if}
+                        {/snippet}
+                    <li class="navrhy"><a href="{plink Users:sendmsg}" class="send-us">{_'Přání a návrhy'}</a></li>
+                </ul>
+            </div>
+            {* <!-- ******************** CONTENT ******************** --> *}
+            {* <!-- _________________________________________________ --> *}
+            <div class="user-content">
+                {if isset($orders) && count($orders)>0}
+                    {? $mainTrCounter = 0; }
+                    <table id="basket-table" class="user">
+                        <tr class="basket-table-head"><th>{_('Číslo/počet')}</th><th>{_('Datum/info')}</th><th class="price">{_'Cena'}</th></tr>
+                        <?php 
+                            foreach($orders as $item){ 
+                            $mainTrCounter++;
+                            ?>
+                                <tr class="odd {if $mainTrCounter==1}on{/if} {if $mainTrCounter%2==0}darken{/if}" data-row='{$mainTrCounter}' data-max-row='{count($orders)}'>
+                                    <td>{$item->order_number}</td>
+                                    <td>{$item->date_ordered|date:'%d. %m. %Y'}</td>
+                                    <td class="price">{$item->totalAmount|money}</td>
+                                </tr>
+                            <?php
+                            foreach($item->products as $product){    
+                                ?>
+                                <tr class="under {if $mainTrCounter>1}hidden{/if}" data-row='{$mainTrCounter}'>
+                                    <td>{$product->count}</td>
+                                    <td><a href="{plink Detail:default $product->id}">
+                                            {? $p = new Product($product->product_id);}
+                                            <div class='img'><img src="{plink Files:default $p->mainFoto,60,100}" alt="" class="img-responsive" /></div>
+                                            {$product->name}
+                                        </a>
+                                    </td>
+                                    <td class="price">á {$product->price|money}</td>
+                                </tr>
+                           <?php
+                            }
+                                if($mainTrCounter>1){
+                                    echo "<tr class='under blank hidden' data-row='".$mainTrCounter."'><td></td><td></td><td></td></tr>";
+                                }else{
+                                    echo "<tr class='under blank' data-row='".$mainTrCounter."'><td></td><td></td><td></td></tr>";
+                                }
+                            }
+                            ?>
+                    </table>
+                {else}
+                    <p>{_'Žádné objednávky nebyly odeslány skrze tento účet'}.</p>
+                {/if}
+                <div class="clear divider-big"></div>
+            </div>
+        </div>
+    </div>
+{/block}

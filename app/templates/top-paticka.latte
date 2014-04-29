@@ -1,0 +1,12 @@
+{? $music = CategoryList::getCategories($type); 
+    usort($music, function($a, $b) {
+    return strcasecmp($a->name, $b->name); 
+    });
+    $i = 0;
+}
+{foreach $music as $m}
+    {if $m->hasList('top-paticka')}
+        {if $i>0}&nbsp;·&nbsp;{/if}<a href="{plink Search:default array('category'=>$m->id)}">{$m->name}</a>
+        {? $i++ }
+    {/if}
+{/foreach}

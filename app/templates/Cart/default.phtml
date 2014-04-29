@@ -1,0 +1,257 @@
+{block presenter}cart{/block}
+{block left}{/block}
+{block content}
+    <h1 class="center">nákupní taška</h1>
+    <ul id="cart-steps" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <li class="active"><a href="{plink Cart:default}">1/ {_'Obsah tašky'}</a></li>
+        <li {if count($cartList)<1}class="disable"{/if}><a href="{plink Cart:paymant}">2/ {_'Doprava a platba'}</a></li>
+        <li class="disable"><a href="#">3/ {_'Dodací údaje'}</a></li>
+        <li class="last disable"><a href="#" >4/ {_'Souhrn'}</a></li>
+    </ul>    
+    <hr class="clear" />
+    <div id="cart" class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            {if count($cartList)>0}
+                {control CartTable:editable}
+                <table>
+                    <tr id="bonus-tr" class="{if $cartSum < 1000}remains{else}no-remains{/if}"> 
+                        <td class="cart-name">
+                            <div class="obal-cart-img">
+                                <a href="">
+                                    <img alt="fotografie není k dispozici" src="" />
+                                </a>
+                            </div>
+                            <a class="nameA" href="">Bonus: Musicwear tričko, 2013</a>
+                        </td>
+                        {if $cartSum < 1000}
+                            <td colspan="4">
+                                <div class="info-bonus"><strong>Získej bonus a podpoř dobrou věc!</strong> Ke zpřístupnění schází:</div>
+                                <div class="q-tip"></div>
+                                <div class="slider"></div>
+                                <div id="amount"></div>
+                                <div class="pr min">1,–</div>
+                                <div class="pr max">1000,–</div>
+                            </td>
+                        {else}
+                            <td></td>
+                            <td>skladem</td>
+                            <td>1</td>
+                            <td>
+                                <div class="info-bonus"><strong>Můj příspěvek</strong></div>
+                                <div id="amount">1 Kč</div>
+                                <div class="q-tip"></div>
+                                <div class="slider"></div>
+                            </td>
+                        {/if}
+                    </tr>
+                </table>
+                {if $cartSum < 1000}
+                    <script>
+                        $(document).ready(function(){
+                            $('#basket-table tr:last').after($('#bonus-tr'));
+                            $('#bonus-tr .slider').slider({
+                                 disabled: true,
+                                 min: 1,
+                                 max: 1000,
+                                 value: {$cartSum},
+                                 range: "min",
+                                 slide: function( event, ui ) {
+                                    $( "#amount" ).html( (ui.value - 1000) + " Kč" );
+                                 },
+                            });
+                            $("#amount").html( $("#bonus-tr .slider").slider( "value" ) - 1000 + " Kč" );
+                            $("#bonus-tr .slider .ui-slider-handle").append($("#amount"));
+                        });
+                    </script>
+                {else}
+                    <script>
+                        $(document).ready(function(){
+                            $('#basket-table tr:last').after($('#bonus-tr'));
+                            $('#bonus-tr .slider').slider({
+                                 min: 1,
+                                 max: 1000,
+                                 value: 1,
+                                 range: "min",
+                                 slide: function( event, ui ) {
+                                    $( "#amount" ).html( (ui.value) + " Kč" );
+                                 },
+                            });
+                        });
+                    </script>
+                {/if}
+                <div class="col-lg-12 delivery-free-banner">
+                    <strong>DOPRAVNÉ ZDARMA</strong> PŘI OBJEDNÁVCE NAD 1 500 KČ
+                </div>
+                <hr class="clear" />
+                <div class="row no-padding">
+                    <div class="col-lg-7 under-cart-table left">
+                        <h3><i class="fa fa-tag"></i>Dárkový šek</h3>
+                        <hr />
+                        <p>Dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt</p>
+                        {control couponForm}
+                        <script>
+                            $('input[name$="code"]').attr('placeholder','Vložit kód...');
+                            $('#frmcouponForm-insert').val('uplatnit');
+                        </script>
+                    </div>
+                    <div class="col-lg-4 under-cart-table right">
+                       <div class="top">
+                           <div class="left">{_'Cena bez DPH'}</div>
+                            <div class="right">{$cartSum|money}</div>
+                       </div>
+                       <hr class="clear" />
+                       <hr />
+                       <div class="bottom">
+                            <div class="left">{_'Cena celkem'}</div>
+                            <div class="right">{$cartSum|money}</div>
+                       </div>
+                       <a class="continue btn btn-primary" href="{plink paymant}">{_'Objednat'}</a>
+                    </div> 
+                </div>
+                <hr class="clear" />
+                {if isset($flashes) && count($flashes)>0}
+                  {foreach $flashes as $flash}
+                    <p class="{$flash->type}">{$flash->message}</p>
+                  {/foreach}
+                {/if}
+                <a class="zpet" href="{plink Default:}">{_'Zpět do obchodu'}</a>
+                <hr class="clear" />
+                
+                {* <!-- {if count($cartList) > 0}
+                    <h2 class="hidden-h2" style="visibility: hidden">{_'Mohlo by Vás zaujmout'}:</h2>                                
+                    <hr class="clear" />
+                    <ul id="products-list">
+                        {foreach $cartList as $item}  
+                            {foreach $item->object->accessories as $product}
+                                <script type="text/javascript">
+                                    $('.hidden-h2').css("visibility", "visible");
+                                </script>
+                                <li {if $iterator->getCounter()==4} class="last" {/if}>
+                                    {include '../Includes/product-list.phtml' , 'product'=>$product}
+                                </li>
+                                {if $iterator->getCounter()==4} {?break;} {/if}
+                            {/foreach}
+                        {/foreach}     
+                    </ul>   
+                {/if} --> *}
+                {* *************************************** *}
+                {* *** Doprava zdarma a produkts-lists *** *}
+                {* *************************************** *}
+                <!--<div class="shipping-box">
+                    {if $cartSum >= $freeShipping}  
+                        <p class="freeship">{_'Poštovné máš zdarma!'}</p>
+                        <div class="more2buy">
+                            <h2><strong>{_'Napodobné notě'}</strong>.<br /></h2>                      
+                            <hr class="clear" />
+                            {***********************************************************}
+                            {**************** Přikoupit na dopravu 0 *******************}
+                            {***********************************************************}
+                        {*    {? include(APP_DIR.'/templates/Functions/cart.php'); } 
+
+                            {? $similiarProducts = getSimiliarProducts($cartList->items, $freeShipping-$cartSum, 9); }
+
+                            {if !empty($similiarProducts)}
+                                <ul id="products-list">
+                                    {foreach $similiarProducts as $p}
+                                        <li class="col-lg-3 col-xs-5 col-sm-5 col-md-5 col-lg-5 product-li">
+                                            {include ../Includes/product-list-cart.phtml product=>$p}         
+                                        </li>
+                                    {/foreach}
+                                </ul>
+                            {/if} *}
+                        </div>           
+                    {else}
+                        <p class="nyet">{_'Oblékni si hudbu ještě za'} <b>{= $freeShipping-$cartSum} {_'Kč a neplatíš poštovné'}</b></p>
+                        <div class="more2buy">
+                            <h2>{_'Výběr pro tebe:'}</h2>                      
+                            <hr class="clear" />
+                            {***********************************************************}
+                            {**************** Přikoupit na dopravu 0 *******************}
+                            {***********************************************************}
+                        {*    {? include(APP_DIR.'/templates/Functions/cart.php'); } 
+
+                            {? $similiarProducts = getSimiliarProducts($cartList->items, $freeShipping-$cartSum, 9); }
+
+                            {if !empty($similiarProducts)}
+                                <ul id="products-list">
+                                    {foreach $similiarProducts as $p}
+                                        <li class="col-lg-3 col-xs-5 col-sm-5 col-md-5 col-lg-5 product-li">
+                                            {include ../Includes/product-list-cart.phtml product=>$p}         
+                                        </li>
+                                    {/foreach}
+                                </ul>
+                            {/if} *}
+                        </div>
+                    {/if}
+                </div>-->
+            {else}
+                <div class="row empty-basket">
+                    <div id="empty-bag"></div>
+                    <div id="div">
+                        <h3>{_'Momentálně zde není žádná hudba, kterou by sis mohl'}<br />{_'obléknout'}</h3>
+                        <p>{_'Honem do obchodu'}! </p>
+                    </div>  
+                </div>
+               
+                <script type="text/javascript">
+                    $('#cart-steps li.disable').children('a').attr('href','#')
+                </script>
+            {/if}
+            
+            <h4 class="center underlink"><span>{_'A co tohle?'}</span></h4>  
+            <hr class="clear" />
+            {include '../Includes/top-products-row.latte'}
+        </div>
+      {* <!-- {if count($cartList)>0}
+            {control CartTable:editable}
+            <div id="under-cart-table" class="paymant-under">
+               <div class="right">
+                   <b>{_'Celková cena za zboží'}:</b> <strong class="right-p">{$cartSum|money}</strong>
+               </div>
+            </div> 
+            <hr class="clear" />
+            <a class="zpet" href="{plink Default:}">{_'Zpět do obchodu'}</a>
+            <a class="pokracovat" href="{plink paymant}"><img src="/images/btn-objednat.png" alt="{_'Objednat'}" /></a>
+            <hr class="clear" />
+            <hr class="clear" />
+            {control couponForm}
+            {if isset($flashes) && count($flashes)>0}
+              {foreach $flashes as $flash}
+                <p class="{$flash->type}">{$flash->message}</p>
+              {/foreach}
+            {/if}
+            <hr class="clear" />
+            {if count($cartList) > 0}
+                <h2 class="hidden-h2" style="visibility: hidden">{_'Mohlo by Vás zaujmout'}:</h2>                                
+                <hr class="clear" />
+                <ul id="products-list">
+                    {foreach $cartList as $item}  
+                        {foreach $item->object->accessories as $product}
+                            <script type="text/javascript">
+                                $('.hidden-h2').css("visibility", "visible");
+                            </script>
+                            <li {if $iterator->getCounter()==4} class="last" {/if}>
+                                {include '../Includes/product-list.phtml' , 'product'=>$product}
+                            </li>
+                            {if $iterator->getCounter()==4} {?break;} {/if}
+                        {/foreach}
+                    {/foreach}     
+                </ul>   
+            {/if}
+        {else}
+            <div class="empty-basket">
+                <div id="empty-bag"></div>
+                <div id="div">
+                    <h1>{_'Momentálně nemáte'}<br />{_'v košíku vloženo žádné zboží'}. </h1>
+                    <p>{_'Pro pokračování v nákupním procesu je nutné mít v nákupní tašce alespoň jeden produkt'}. </p>
+                    <a href="{plink Default:}"></a>
+                </div>  
+            </div>
+            <script type="text/javascript">
+                $('#cart-steps li.disable').children('a').attr('href','#')
+            </script>
+        {/if} --> *}
+        <hr class="clear" /> 
+    </div>
+{/block}
+

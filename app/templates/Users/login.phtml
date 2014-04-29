@@ -1,0 +1,15 @@
+{block presenter}user login{/block}
+{block content}
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <legend class="loginForm">{_'Můj účet'}</legend>
+            <div class="newuser">
+                {if isset($errorMessage)}
+                    <p>{$errorMessage}</p>
+                {/if}
+                {control loginForm}
+                <p class="act_btn"><a href="{plink Users:sendpassword}">{_'Zaslat heslo na e-mail'}</a></p>
+            </div>
+        </div>
+    </div>
+{/block}

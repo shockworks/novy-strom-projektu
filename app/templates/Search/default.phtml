@@ -1,0 +1,384 @@
+{block canonical}
+    {if isset($actualCategory)}
+        <link rel="canonical" href="{plink //Search:default 'limiter'=>array('category'=>$actualCategory->id)}"/>
+    {/if}
+{/block}
+{block presenter}search{/block}
+
+{block banner}
+    {if isset($actualCategory)}
+        {foreach $actualCategory->galleries as $gall}
+            {if $gall->implementation_name == 'banner'}
+                {foreach $gall->files as $file}        
+                    <div class="cat-banner container">
+                        <div class="row">
+                        <img src="{plink Files:default $file->id,1170,125}" alt="" class="img-responsive cat-img-banner" />
+                        </div>
+                    </div>       
+                    {? break; }
+                {/foreach}
+            {/if}
+        {/foreach}
+    {elseif isset($limiter['udalost'])}
+        {? $udalost = new ParameterOption($limiter['udalost']);}
+        {foreach $udalost->galleries as $gall}
+            {if $gall->implementation_name == 'banner'}
+                {foreach $gall->files as $file}        
+                    <div class="cat-banner container">
+                        <div class="row">
+                        <img src="{plink Files:default $file->id,1170,125}" alt="" class="img-responsive cat-img-banner" />
+                        </div>
+                    </div>       
+                    {? break; }
+                {/foreach}
+            {/if}
+        {/foreach}
+    {/if}
+    
+{/block}
+
+{block content}
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            {if isset($limiter['category_list']) && ($limiter['category_list'] == 1 || $limiter['category_list'] == 2)}
+                <?php
+    require_once(APP_DIR.'/templates/Search/alphabet.php');
+    require_once(APP_DIR.'/templates/Functions/getCategoriesAlphabetically.php'); 
+    
+    $categoryListImplementationName = 'hudba';
+    if($limiter['category_list'] == 1){
+        $categoryListImplementationName = 'film';
+    }
+
+    $activeLists = isset($_GET['category-list-filter']) ? $_GET['category-list-filter'] : array();
+
+    $result = getCategoriesAlphabetically($limiter['category_list'], $activeLists);               
+    $categoriesAlphabetically = $result['filtered'];
+    $allCategories = $result['all'];
+?>  
+<div class="row lists">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <h1>{if $categoryListImplementationName=='hudba'}A–Z Hudba{else}A–Z Filmy{/if}</h1>
+        {if $categoryListImplementationName=='hudba'}
+            <div class="row check-filter category-list-filter">
+                <div class="reset-check">
+                    <span class="heading">Žánry:</span><br />
+                    <a class="reset" id="reset-all">Zrušit vše</a>
+                </div>
+                {? $filterLists = \dibi::query('SELECT [id], [name] FROM [c_categories_lists_name] WHERE [implementation_name] NOT IN %in', array('top-titulka', 'top-paticka', 'hudba', 'film'))->fetchAll(); }
+
+                {foreach $filterLists as $list}
+                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" value="{$list->id}" {if in_array($list->id, $activeLists)}checked="checked"{/if}>{$list->name}
+                            </label>
+                        </div>
+                    </div>
+                {/foreach}
+            </div>
+            <div class="divider-big"></div>
+        {/if}
+        <div class="row top-interprets">
+            {? $tops = CategoryList::getCategories('top-titulka'); }
+            {? $iter = 0; }
+            {foreach $tops as $t}
+                {if $t->hasList($categoryListImplementationName)}
+                    {if isset($t->galleries['logo'])}
+                        {? $gal = $t->galleries['logo']; }
+                        {foreach $gal->files as $file}
+                            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                <a href="{plink Search: array('category'=>$t->id)}" title="{$file->describe}">
+                                    <img src="{plink Files:default $file->id,130,90,null,null,false,File::FILL}" class="img-responsive" alt="{$t->name}" />
+                                </a>
+                            </div>
+                            {? $iter++; } 
+                            {? break;}
+                        {/foreach}  
+                    {/if}
+                    {if $iter == 12}{? break;}{/if}
+                {/if}
+            {/foreach}
+        </div>
+        <div class="divider-big"></div>
+        <div class="row" id="fixed-alphabet">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="btn-group btn-group-justified alphabet">
+                    {foreach $alphabet as $letter}
+                        <a data-href="#{if $letter != '#'}{$letter}{else}specialChars{/if}" class="btn btn-default {if $letter != '#'}{$letter}{else}specialChars{/if}">{$letter}</a>
+                    {/foreach}
+                </div>                                 
+            </div>
+        </div>
+        <div class="divider-big"></div>
+        {* <!-- ******************** SEZNAM VŠECH INTERPRETŮ  DLE ABECEDY ******************** --> *}
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="alphabeticaly">
+                {? 
+                    $iterArr = array_fill_keys($alphabet, 0);
+                    $myIter = array();
+                    $lastUsedLetter = "";
+                    $specialCharsAdded = false;
+                }
+
+                {foreach $categoriesAlphabetically as $cat2}
+                    {?
+                        $firstLetter = substr(normalizeString($cat2->name),0,1);
+
+                        if(strtolower(substr($cat2->name,0,2)) == 'ch'){
+                            $firstLetter = 'ch';
+                        }
+
+                        if(!in_array($firstLetter, $alphabet)){
+                            $firstLetter = htmlentities($firstLetter);
+                        }
+
+                    }
+
+                    {if $lastUsedLetter != $firstLetter}
+                        {if $lastUsedLetter != "" && in_array($firstLetter, $alphabet)}
+                            </div> <!-- for previous ln-wrapper 1 -->
+                        {/if}
+
+                        {if in_array($firstLetter, $alphabet)}
+                            <h3 id="{$firstLetter}">{? echo strtoupper($firstLetter)}</h3>
+                            <div class="ln-wrapper">
+                        {else}
+                            {if !$specialCharsAdded}
+                                {? $specialCharsAdded = true;}
+                                <h3 id="specialChars">#</h3>
+                                <div class="ln-wrapper">
+                            {/if}
+                        {/if}
+
+                        {? $lastUsedLetter = $firstLetter}
+                    {/if}
+                    <div class="ln-cell ln-{? echo $firstLetter; }">
+                        <a title="{$cat2->name}" href="{plink Search: array('category'=>$cat2->id)}"><span>{$cat2->name}</span></a>
+                    </div>
+                    {? 
+                        if(isset($iterArr[$firstLetter])){
+                            $iterArr[$firstLetter]++;
+                        }
+                        else {
+                            $iterArr['#']++;
+                        }
+                    }
+                {/foreach}
+            </div> <!-- for previous ln-column 2 -->
+            </div> <!-- for previous ln-wrapper 2 -->
+        </div>
+    </div>
+    <div class="onlyforheight"></div>                         
+</div>
+
+<script>
+    function isVisibleOnScreen2(element) {
+        var scrollToElem = $(window).scrollTop();
+        return (scrollToElem > 590) ? true : false;
+    }
+    $(window).scroll(function() {
+        if(isVisibleOnScreen2($('#fixed-alphabet'))) {     
+            $('#fixed-alphabet').addClass('fixed-alphabet');
+            $('.alphabet').addClass('alphabet-bdb')
+            $('.onlyforheight').css('display','block')
+
+        } else {                                       
+            $('#fixed-alphabet').removeClass('fixed-alphabet');
+            $('.alphabet').removeClass('alphabet-bdb')
+            $('.onlyforheight').css('display','none')
+        };  
+    });
+
+    $('.category-list-filter input').change(function(){
+        var url = '/search/?limiter[category_list]=2';
+
+        $('.category-list-filter input:checked').each(function(){
+            url += '&category-list-filter[]=' + $(this).val();
+        });
+
+        window.location.href = url;
+    });
+
+    $('.category-list-filter .reset').click(function(){
+        window.location.href = '/search/?limiter[category_list]=2'
+    });
+    
+    $('.alphabet a.ac').livequery(function(){        
+        $(this).anchor({ speed: 800, anchor: $(this).data('href'), minus: 115});
+    });
+    //
+    var str = 'ln-';
+
+    $('.alphabeticaly h3').each(function(){
+        var letter = ($(this).attr('id')).replace('#','');
+        $('.alphabet .'+letter).addClass('ac');
+    });
+</script>
+                                    
+            {else}
+                <div class="row products">
+                {* <!-- ******************** L - LEVY SLOUPEC (filtr) ******************** --> *}
+                {* <!-- __________________________________________________________________ --> *}
+                <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 left-sidebar">
+                    {include ../Includes/filter.phtml limitersURL => $limitersURL}
+                </div>
+                {* <!-- ******************** R - PRAVY SLOUPEC (vypis kategorie) ******************** --> *}
+                {* <!-- _____________________________________________________________________________ --> *}
+                <div class="col-xs-8 col-sm-9 col-md-10 col-lg-10">
+                    {control breadcrumb}
+                    <div class="cat-description">
+                    {if isset($actualCategory)}
+                        {foreach $actualCategory->galleries as $gal}
+                            {foreach $gal->files as $file}    
+                                {if $gal->implementation_name == 'uvodni'}    
+                                    {if isset($file->url) && $file->url != '' }
+                                        {if strpos($file->url , 'youtube')}
+                                            <object width="459" height="258" class="youtube hidden-xs hidden-sm">
+                                                <param value="true" name="allowfullscreen" />
+                                                <param value="always" name="allowscriptaccess" />
+                                                <param name="movie" value="{$file->url|replace:'watch?v=':'v/'}?version=3&amp;hl=cs_CZ" />
+                                                <param name="wmode" value="transparent" />
+                                                <embed width="459" height="258" allowscriptaccess="always" 
+                                                  allowfullscreen="true" type="application/x-shockwave-flash"          
+                                                  src="{$file->url|replace:'watch?v=':'v/'}?version=3&amp;hl=cs_CZ"
+                                                  wmode="transparent"
+                                                  >
+                                                </embed>
+                                            </object>
+                                        {elseif strpos($file->url , 'vimeo')}
+                                            <iframe  class="vimeo" src="{$file->url|replace:'http://vimeo.com/':'//player.vimeo.com/video/'}?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;color=ffffff" width="459" height="258" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                                        {/if}                                        
+                                    {else}
+                                        <img src="{plink Files:default $file->id,459,258,null,null,false,File::FILL}" class="img-thumbnail pull-left" />
+                                    {/if}
+                                {/if}
+                            {/foreach}                                
+                        {/foreach}
+                    {/if}
+                    {if isset($actualCategory)}
+                        <h1>{$actualCategory->title}</h1>
+                        <div id="describe">{!$actualCategory->description}</div>
+                    {elseif isset($limiter['gender'])}
+                        {? $param = new ParameterOption($limiter['gender']);}
+                        <h1>{_$param->name}</h1>
+                        <div id="describe">{!$param->describe}</div>
+                    {elseif isset($limiter['udalost'])}
+                        {? $param = new ParameterOption($limiter['udalost']);}
+                        <h1>{_$param->name}</h1>
+                        <div id="describe">{!$param->describe}</div>
+                    {else}
+                        <h1>{_'Výsledky vyhledávání'}</h1>
+                        {if count($productsList)==0}
+                            <p>Tomuto dotazu bohužel neodpovídají žádné produkty.</p>
+                            <p>Zkus prosím rozšířit filtraci produktů nebo zadat obecnější výraz ve vyhledávači.</p>
+                            <p>I tak nemáme, co hledáš? Pošli nám <a n:href=":Front:Users:sendmsg">své přání</a>!</p></div>
+                        {/if}
+                    {/if}
+                    <hr class="clear" />
+                </div>
+                {* <!-- CO FRCI (slider) --> *}    
+                {?
+                  if($productListAll != NULL && !empty($productListAll)){
+                    $coFrci = dibi::query('SELECT c_products.id FROM c_products JOIN c_lists_values ON c_products.id=c_lists_values.product_id WHERE c_lists_values.list_id=7 AND c_products.id IN %l', $productsListAll);
+                  }
+                  else {
+                    $coFrci = array();
+                  }
+                }      
+                {if count($coFrci)>=5}        
+                    <div class="row" id="gal-wrap-frci">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">                
+                            <h2 class="endlessgal">Co právě frčí</h2>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 co-frci" id="co-prave-frci"> 
+                                <ul class="row ul products-list" id="co-prave-frci-ul">                    
+                                        {foreach $coFrci as $p}
+                                            {?
+                                              $product = new Product($p->id);
+                                            }
+                                            <li class="col-xs-2 col-sm-4 col-md-2 col-lg-2 {if $iterator->getCounter()%5==0}last{/if}">
+                                                {include ../Includes/product-list.phtml product=>$product}
+                                            </li>
+                                        {/foreach}
+                                </ul>                  
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                        <script>
+                            $('#co-prave-frci-ul').endlessGallery({ speed: 200 });
+                            $('#co-prave-frci').addClass('row');
+                        </script>
+                    </div>
+                {/if}   
+                {if count($productsList) > 0}
+                <div id="ordererTabs"></div>
+                {/if}
+                {* <!-- ******************** PRODUCT-LIST ******************** --> *}
+                {snippet productsList}
+                    <ul class="row" id="products-list">
+                        {? $it = 0;}
+                        {foreach $productsList as $product}    
+                            {? $it++;}
+                            <li class="col-xs-4 col-sm-4 col-md-2 col-lg-2 {if $it > 3}big-img-to-right{/if}">
+                                {include ../Includes/product-list.phtml product=>$product}
+                            </li>
+                            {if $it == 5}{? $it = 0;}{/if}
+                        {/foreach}
+                        {if !isset($user)}
+                            <script>
+                                $('.to-wish').click(function(){
+                                    alert('Pro vložení prouktu do nákupního seznamu je nutné se přihlásit.')
+                                    $("html:not(:animated),body:not(:animated)").animate({ scrollTop: $("body").offset().top }, 300 );
+                                    $('#snippet-simpleLoginForm-simpleloginlogin a.simple-login-login').trigger('click');
+                                    $('#frm-simpleLoginForm-loginForm #frmloginForm-login.text').focus();
+                                    return false;
+                                });
+                            </script>
+                        {else}
+            
+                        {/if}
+                    </ul>
+                {/snippet}  
+                    <script src="/js/searchZoom.js"></script> 
+                {control paginator}       
+                <div class="row" id="gal-wrap-note">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <h2 class="h-na-note">Na podobné notě</h2>
+                        <hr class='clear' />
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 endless na-note" id="na-podobne-note"> 
+                            <ul class="row ul products-list">                                    
+                                {foreach $lists['co-frci'] as $product}
+                                    <li class="col-xs-4 col-sm-4 col-md-2 col-lg-2 {if $iterator->getCounter()%5==0}last{/if}">
+                                        {include ../Includes/product-list.phtml product=>$product}
+                                    </li>
+                                {/foreach}
+                            </ul>
+                        </div>
+                        <script>
+                            $('#na-podobne-note').endlessGallery({ speed: 200, count: 1 });
+                            $('#out-na-podobne-note').addClass('row');
+                        </script>
+                    </div>
+                </div>
+            </div>        
+            {/if}
+        </div>    
+    </div>
+    <script>
+        $(document).ready(function() {
+            $('.anchor').anchor({ speed: 800, anchor:'body', minus: 0 });
+            $('.anchor, .paginator a').livequery(function(){
+                $(this).anchor({ speed: 800, anchor:'body', minus: 0});
+            });
+        });
+        $('#ordererTabs').ordererTabs([ // protoze je tu latte (preklady)
+            { name: {_'Doporučeno'} , lim: '', val: ''},
+            { name: {_'Nejprodávanější'} , lim: 'product_venality' , val: 'desc'},
+            { name: {_'Největší sleva'} , lim: 'product_sale', val: 'desc'},
+            { name: {_'Od nejlevnějšího'} , lim: 'product_price', val: 'asc'},
+            { name: {_'Od nejdražšího'} , lim: 'product_price', val: 'desc'}
+        ]);
+    </script>
+{/block}

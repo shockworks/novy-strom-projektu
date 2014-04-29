@@ -1,0 +1,34 @@
+common:
+	php:
+		date.timezone: Europe/Prague
+
+	services:
+		authenticator:
+			class: Authenticator
+		authorizator:
+			class: Authorizator
+			
+	constants:
+		APP_DIR: %appDir%
+ 
+	parameters:
+		database:
+			charset: utf8
+			driver: mysqli
+			catalog_onproductcreate: 1-foto  #po pridani produktu se vytvori galerie pocet-typ,
+
+production < common:
+	parameters:
+		database:
+			host: 127.0.0.1
+			username: musicwearcz001
+			password: LBUTJ8Xa
+			database: musicwearcz
+
+development < common:
+	parameters:
+		database:
+			host: 10.0.0.30
+			username: achievo
+			password: 27706818
+			database: musicwear-cz

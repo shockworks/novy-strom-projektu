@@ -1,0 +1,22 @@
+{if isset($lists[$myList]) && (count($lists[$myList]) > 0)}
+    {? $products = new Products();
+        $arrayProducts = $products->searchProducts(array('category'=>$mySection,'list'=>$myList),null,0,8);
+    }
+    {? shuffle($arrayProducts)}
+    <div class="gallery" id="{$myGallery}">
+        <ul>
+            {foreach $arrayProducts as $product}
+                <li class="li {if $iterator->isLast()}last{/if}">
+                    <div class="img"><a n:href="Detail: $product->id"><img src="{plink Files:default $product->mainFoto,137,120, false, null, false,true}" alt="{_'fotografie není k dispozici'}" /></a></div>
+                    <h2 title="{$product->name}"><a href="{plink Detail:default $product->id}">{$product->name|truncate:25}</a></h2>
+                    <p class="price">{$product->price|money}</p>
+                </li>
+            {/foreach}
+        </ul>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#'+{$myGallery}).endlessGallery({ speed: 200 });
+        });
+    </script>
+{/if}

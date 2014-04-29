@@ -1,0 +1,16 @@
+{block presenter}sitemap{/block}
+{block content}
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <h1>Mapa webu</h1>
+        {foreach $sitemap as $key=>$node}
+            <h2>{$key}</h2>
+            <ul>
+            {foreach $node as $n}
+                <li><a href="{$n->url}">{$n->name}</a></li>
+            {/foreach}
+            </ul>
+        {/foreach}
+    </div>
+</div>
+{/block}

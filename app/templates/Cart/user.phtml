@@ -1,0 +1,74 @@
+{block left}{/block}
+{block content}
+    <h1 class="center">nákupní taška</h1>
+    <ul id="cart-steps" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <li><a href="{plink Cart:default}">1/ {_'Obsah tašky'}</a></li>
+        <li><a href="{plink Cart:paymant}">2/ {_'Doprava a platba'}</a></li>
+        <li class="active"><a href="{plink Cart:user}">3/ {_'Dodací údaje'}</a></li>
+        <li class="last disable"><a href="#" >4/ {_'Souhrn'}</a></li>
+    </ul> 
+    <hr class="clear" />
+    <div id="cart" class="incontent">
+        <div id="newuser" class="btn-newuser-login"><strong>{_'Nový zákazník'}</strong><br />{_'Vytvoření registrace'}</div>
+        <div id="login" class="btn-newuser-login"><strong>{_'Stávající zákazník'}</strong><br />{_'Přihlásit se'}</div>
+        <hr class="clear" />    
+        
+        {if !$userLogged}
+            <div class="login">
+                <p id="login-legend">{_'Přihlášení'}</p>
+                {if count($flashes) > 0}
+                    {foreach $flashes as $f}
+                        <hr class="clear" />
+                        <p>{$f->message}</p>
+                    {/foreach}
+                {/if}
+                {control formLogin}
+            </div>
+        {else}
+            <script type="text/javascript">
+                $(document).ready(function() {
+                    $('.btn-newuser-login').hide();    
+                });
+            </script>
+            <p></p>
+        {/if}
+        <div class="newuser">
+            {control formUser}
+        </div>
+        
+        {if !$userLogged}
+            {if count($flashes) > 0}
+                <script type="text/javascript">
+                   $(document).ready(function() {
+                       $('div.newuser').hide();
+                       $('#login').addClass('active');
+                   });
+                </script>   
+            {else}
+                <script type="text/javascript">
+                   $(document).ready(function() {
+                       $('div.login').hide();
+                       $('#newuser').addClass('active');
+                   });
+                </script>
+            {/if}
+        {/if}
+        <script type="text/javascript">
+            $('#login').click(function(){
+               $('div.login').show('slow');
+               $('div.newuser').hide('slow');
+               
+               $('#login').addClass('active');
+               $('#newuser').removeClass('active');
+            });
+            $('#newuser').click(function(){
+               $('div.newuser').show('slow');
+               $('div.login').hide('slow');
+               
+               $('#newuser').addClass('active');
+               $('#login').removeClass('active');
+            });    
+        </script>
+    </div>
+    <hr class="clear" />
+{/block}

@@ -1,0 +1,16 @@
+{block left}{/block}
+{block content}
+    <h1 class="center">nákupní taška</h1>
+    <ul id="cart-steps" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <li><a href="{plink Cart:default}">1/ {_'Obsah tašky'}</a></li>
+        <li class="active"><a href="">2/ {_'Doprava a platba'}</a></li>
+        <li class="disable"><a href="#">3/ {_'Dodací údaje'}</a></li>
+        <li class="last disable"><a href="#" >4/ {_'Souhrn'}</a></li>
+    </ul>  
+
+    <hr class="clear" />
+    <div id="cart" class="incontent">
+        {control cartDeliverySelector}
+        <hr class="clear" />
+    </div>
+{/block}

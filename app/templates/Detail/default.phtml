@@ -1,0 +1,381 @@
+{block presenter}detail{/block}
+
+{block content}
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="row">
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><a href="javascript:history.back()" class="btn btn-back">Zpět na výpis</a></div>
+                <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">{control breadcrumb}</div>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                    <h1 class="music-heading">
+                        {$product->name_main_category}
+                        {$product->name}
+                        {if isset($product->param['gender']) && !empty($product->param['gender'])}
+                            {$product->param['gender']}<br />
+                        {/if}
+                    </h1></div>
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 detail-socials">
+                    <div class="fb-like" data-href="{plink //this}" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+                    <a href="Section: 'kontaktni-formular'" title="Zeptej se nás" class="fancybox send-question"></a>
+                </div>
+            </div>
+            <div class="clear line"></div>
+        </div>
+
+        {* <!-- ******************** L - LEVY SLOUPEC (obrazek) ******************** --> *}
+        {* <!-- ____________________________________________________________________ --> *}
+
+        {* <!-- ******************** MAIN IMAGE ******************** --> *}
+        <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 product-img-wrap">
+            <div class="product-img">
+                <a href="{plink Files:default $product->mainFoto,1600,1600,null,null,false,File::FILL}" rel="gallery" class="main-a-img fancybox">
+                    <img src="{plink Files: $product->mainFoto,456,520,null,null,false,File::FILL}" alt="{$product->name}" data-zoom-image="{plink Files: $product->mainFoto}" class="main-img zoom" />
+                </a>
+
+                {* {if $product->lists['csr-product'] || $product->lists['csr'] || $product->lists['csr'] }
+                    <div class="lists">
+                        {if $product->lists['csr-product']}<img src="" alt="" data-src="holder.js/50x50/text:CSR" class="img-thumbnail lists-ico" />{/if}
+                        {if $product->lists['csr-product']}<img src="" alt="" data-src="holder.js/50x50/text:CSR" class="img-thumbnail lists-ico" />{/if}
+                        {if $product->lists['csr-product']}<img src="" alt="" data-src="holder.js/50x50/text:CSR" class="img-thumbnail lists-ico" />{/if}
+                    </div>
+                {/if} *}
+                {if $product->lists['new-product'] || $product->price_recommended > $product->price }
+                    <div class="lists-big">
+                        {if $product->lists['new-product']}<span class="lists-ico new" ></span><span class="lists-txt" >Nové</span>{/if}
+                        {* <!-- <img src="" alt="" data-src="holder.js/100x100/text:štítek" class="img-thumbnail lists-ico" /> --> *}
+                    </div>
+                {/if}
+                {if ($product->price_recommended > $product->price) && ((round((($product->price_recommended - $product->price) * 100) / ($product->price_recommended))) > 30) }
+                    <div class="lists-big">
+                        <span class="lists-ico action" ></span><span class="lists-txt" >- {=round((($product->price_recommended - $product->price) * 100) / ($product->price_recommended))}<span>%</span></span>
+                    </div>
+                {/if}
+                {* {if $product->lists['zanovni-prduct']}
+                    <div class="lists-bott">
+                        <p class="lists-ico">{_'Zánovní'}</p>
+                    </div>
+                {/if} *}
+                {if $product->lists['rozbaleno']}
+                    <div class="lists-bott">
+                    </div>
+                {/if}
+                
+                {* <!-- ******************** GALERIE ******************** --> *}
+                <div class="gall-box" id="gallery">
+                    {foreach $product->galleries['foto'] as $gal}
+                        {foreach $gal->files as $file}
+                            {if $iterator->counter > 1}
+                                <a href="{plink Files:default $file->id,1600,1600}" class="fancybox" rel="gallery">
+                                    <img src="{plink Files:default $file->id,67,90}" alt="{$product->name}" />
+                                </a>
+                            {/if}
+                        {/foreach}
+                    {/foreach}
+                </div>      
+                <a n:href="Files: $product->mainFoto" class="large-photo fancybox" title="Velké foto"><span class="fa fa-picture-o"></span>Velké foto</a>
+            </div> 
+        </div>
+        {* <!-- ******************** C - STREDNI SLOUPEC (popis&nakup) ******************** --> *}
+        {* <!-- _________________________________________________________________________ --> *}
+        <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 product-info">
+            {? $myCat = $actualCategory->id}
+            {? $cat = new Category($myCat);}
+            {* <!-- - - - - - - - - - --> *}  
+            {if count($cat->galleries['logo'])>0}
+            {foreach $cat->galleries['logo']->files as $gal}       
+                <a href="{plink Search: array('category'=>$cat->id)}"><img src="{plink Files:default $gal->id,85,NULL}" alt="{$product->name}" class="pull-right logo" /></a>
+            {/foreach}
+            {/if}
+            {if $product->price_recommended > $product->price}
+                    <span class="price-trought">{$product->price_recommended|money}</span>&nbsp;&nbsp;&nbsp;
+                    <span class="buy-price"> 
+                    {if $product->getMaxStock()==0}
+                        {$product->price|money}
+                    {else}
+                        
+                    {/if}
+                    </span>
+            {else}
+                <p class="prices">
+                    <strong class="buy-price">
+                        {if $product->getMaxStock()==0}
+                            {$product->price|money}
+                        {else}
+                            
+                        {/if}
+                    </strong>
+                </p>
+            {/if}
+            <div class="divider-big"></div>
+                {foreach $product->variants as $variant}
+                <span class="selected-delivery dlvry{$variant->id}" style="display: none;">
+                    {if $variant->stock > 0 || $product->stock_availability == 0}
+                        {_'Zboží je skladem a připravené k odeslání'}
+                    {else}
+                        {_'Na cestě. Za '}{$product->stock_availability+1}{_'dny můžeš mít doma.'}
+                    {/if}
+                </span>
+                <span class="showed-delivery dlvry{$variant->id}" style="display: none;">
+                    {if $variant->stock > 0 || $product->stock_availability == 0}                  
+                        {_'Zboží je skladem a připravené k odeslání'}
+                    {else}
+                        {_'Na cestě. Za '}{$product->stock_availability+1}{_'dny můžeš mít doma.'}
+                    {/if}
+                    </span>
+                {/foreach}
+                
+           {if $product->deleted==0}
+            <div class="cart-block">
+
+                {if isset($product->variants)}
+                    <select class="form-control" id="all-variants">
+                        {? $i = 0 }
+                        {foreach $product->variants as $variant}
+                                {if $variant->stock > 0}
+                                    {? $stockRate = 0; }
+                                {else}
+                                    {? $stockRate = $product->stock_availability; }
+                                {/if}
+                                {if $stockRate == -1}
+                                    {? $stockRate = 20; }
+                                {/if}
+                            <option value="{$variant->id}" class="variants-box" name="variants" data-price="{$variant->getRealPrice()}" data-stock-rate="{$stockRate}" data-delivery-id="dlvry{$variant->id}">{$variant->name} - {$variant->getRealPrice()}
+                                {if $variant->stock > 0}
+                                    {_'skladem'}
+                                {else}
+                                    - {Product::$stockAvailabilityValues[$product->stock_availability]}
+                                {/if}
+                            </option>
+                          {? $i++; }
+                        {/foreach}
+                    </select>
+                {/if}
+                <script>
+                    $(document).ready(function(){
+                        var minStockRate = 20;
+                        $('.variants-box').each(function(){
+                            if(parseInt($(this).data('stock-rate')) < minStockRate){
+                                minStockRate = $(this).data('stock-rate');
+                            }
+                        });
+
+                        $('.variants-box[data-stock-rate="' + minStockRate + '"]').first().prop('selected', true);
+
+                        var varId = $('#all-variants .variants-box:selected').data('delivery-id');
+                        $('.selected-delivery.'+varId).css('display','inline-block');
+                        var varPrice = $('.variants-box:selected').data('price');
+                        $('.buy-price').html(varPrice + ' Kč');
+                    });
+                    /// /// /// /// ///
+                    $('#all-variants').change(function(){
+                        var varPrice = $(this).find('.variants-box:selected').data('price');
+                        var varId = $(this).find('.variants-box:selected').data('delivery-id');
+                        $('.selected-delivery').css('display','none');
+                        $('.showed-delivery').css('display','none');
+                        $('.showed-delivery.'+varId).fadeIn();
+                        $('.buy-price').html(varPrice + ' Kč');
+                    });
+
+                </script>
+                <div id="cartfrmDiv">
+                    {control addCartForm}
+                    <a id="addToCartFancy" class="btn btn-primary button">{_'Do košíku'}</a>
+                    <div class="clear"></div>
+                </div>
+                {*pridavani produktu do interaktivniho kosiku*}
+                <div id="cartfrmDiv1">
+                    
+                </div>
+                <a id="hidLink" href="#hidCont" style="visibility:hidden; height:0px; width:0px;">fancybox hid</a>
+                <div style="display:none;">
+                  <div id="hidCont"></div>
+                </div>  
+                <a n:href="invalidateSnippet! cartbox" class="ajax" id="invalidateCartbox" style="visibility:hidden; display:inline-block; height:0px; width:0px;">invalidate</a>
+                <script>
+                    $('#addToCartFancy').click(function(){
+                        $.ajax({
+                            url: '/kosik/addtocart?productId='+{$product->id}+'&count='+$('#frmaddCartForm-count').val()+'&variantId='+$('#all-variants :selected').val(),             // ukazujeme URL a
+                            dataType: 'html',
+                            success: function (data, textStatus) { // funkce success zpracovává data
+                                $('#hidCont').html(data);
+                                $('#hidLink').trigger('click');
+                                $('#invalidateCartbox').trigger('click');
+                                $('#ajax-spinner').hide();
+                            }
+                        });     
+                    });
+                    
+                    $('#hidLink').fancybox();
+                    
+                </script>
+            </div>
+                {else}
+                <p style="color: red;">Vyprodáno</p>
+                {/if}
+            <div class="wish">
+                <ul class="col-xs-7 col-sm-7 col-md-7 col-lg-7 guarantees">
+                    <li><span class="fa fa-check"></span> <strong class="dark">dopravné zdarma</strong> od 1500 Kč</li>
+                    <li><span class="fa fa-check"></span> 14 denní <strong class="dark">možnost vrácení</strong></li>
+                    <li><span class="fa fa-check"></span> <strong class="dark">odeslání zboží do 24h</strong></li>
+                </ul>
+                <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                    {snippet userinteraction-det}
+                        <a href="{if isset($user)} {plink addToWishlist! $product->id} {/if}" class="to-wish pull-right">{_'Přidat na můj seznam'}</a>
+                        {if !isset($user)}
+                            <script>
+                                $('.to-wish').click(function(){
+                                    alert('Pro vložení prouktu do nákupního seznamu je nutné se přihlásit.')
+                                    $("html:not(:animated),body:not(:animated)").animate({ scrollTop: $("body").offset().top }, 300 );
+                                    $('#snippet-simpleLoginForm-simpleloginlogin a.simple-login-login').trigger('click');
+                                    $('#frm-simpleLoginForm-loginForm #frmloginForm-login.text').focus();
+                                    return false;
+                                });
+                            </script>
+                        {else}
+                            <script>
+                                /*prida do wishlist hrefu i variantu a pocet kusu*/
+                                $('.to-wish').click(function(){
+                                     var variant = '&idVariant='+$('#frm-addCartForm #frmaddCartForm-variant').val();
+                                    // var count = '&count='+$('#frm-addCartForm #frmaddCartForm-count').val();
+                                    $(this).attr('href',$(this).attr('href').replace('&do=addToWishlist',variant+'&do=addToWishlist'));
+                                    return true;
+                                });
+                            </script>
+                        {/if}
+                    {/snippet}
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="divider-big"></div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tabs">
+                <ul class="ul-tabs">
+                    <li><a href="#tabs-1">Informace</a></li>
+                    <li><a href="#tabs-2">Velikosti</a></li>
+                    <li><a href="#tabs-3">Dotaz</a></li>
+                </ul>
+                <div id="tabs-1" class="info-box on">
+                    <span><strong>Název:</strong> {$product->name}</span><br />
+                    {foreach $product->parameters as $param}
+                        {if isset($product->param[$param->implementationName]) && !empty($product->param[$param->implementationName])}
+                            {if $param->implementationName == 'barva' || $param->implementationName == 'zanr' || $param->implementationName == 'material'}
+                                <span><strong>{$param->name}:</strong> </span>
+                                {if is_array($product->param[$param->implementationName])}
+                                    {$product->param[$param->implementationName]|implode: ' '.$param->unit.', '}<br />
+                                {else}
+                                    {$product->param[$param->implementationName]}<br />
+                                {/if}
+                                {if isset($param->unit)} {$param->unit}{/if}
+                            {/if}
+                            {if $param->implementationName == 'model'}
+                                <span><strong>{$param->name}:</strong> <span class="inlineblock">{!$product->param[model]->describe|implode:', '}</span></span><br />
+                            {/if}
+                            {if $param->implementationName == 'typavyrobce'}
+                                <div class="btn-group">
+                                    {foreach $product->param['typavyrobce']->galleries as $psG}
+                                        {foreach $psG->files as $opt}
+                                            <img src="{plink Files:default $opt->id,50,50,null,null,false,File::FILL}" alt="{$opt->describe}" title="{$opt->describe}" />    
+                                        {/foreach}
+                                    {/foreach}
+                                </div><br />
+                            {/if}
+                        {/if}    
+                    {/foreach}
+                </div>
+                <div id="tabs-2" class="info-box">
+                    {if isset($product->param['typavyrobce']) && !empty($product->param['typavyrobce'])}
+                        {!$product->param['typavyrobce']->describe}
+                    {/if}
+                    <a n:href="Section: clanky, tabulky-velikosti" class="btn btn-default pull-right">Obecné tabulky</a>
+                </div>
+                <div id="tabs-3" class="info-box">
+                    <form>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Jméno</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Jméno">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Email</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="email">
+                        </div>
+                        <textarea class="form-control" rows="3"></textarea>
+                        <button type="submit" class="btn btn-default">Submit</button>
+                    </form>
+                    <div class="divider-mid"></div>
+                </div>
+            {* <!--  <script>
+                    $('.info-box h3').live('click',function(){
+                        if ($(this).parent('.info-box').hasClass('on') ){
+                            $(this).parent('.info-box').removeClass('on');
+                            $(this).parent('.info-box').next().addClass('on');
+                        } else {                       
+                            $('.info-box').removeClass('on');
+                            $(this).parent('.info-box').addClass('on');
+                        }
+                    });
+                </script> --> *}
+            </div>
+        </div>
+        {* <!-- ******************** R - PRAVY SLOUPEC (doplnky) ******************** --> *}
+        {* <!-- __________________________________________________________________ --> *}
+        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 product-more">
+           {* <!-- <div class="tabs">
+                <ul class="ul-tabs">
+                    <li><a href="#tabs-1">{_'Mohlo by vás zajímat'}</a></li>
+                    <li><a href="#tabs-2">{_'Z kategorie'}</a></li>            
+                </ul>
+                <div id="tabs-1">
+                    <div class="clear"></div>
+                </div>
+                <div id="tabs-2">
+                    {if isset($actualCategory)}
+                        {? $myCat = $actualCategory->id}
+                        {? $cat = new Category($myCat);}
+                        {* <!-- - - - - - - - - - - -> * d }
+                        {foreach $productsList as $product}
+
+                        {$product->name}
+                        {/foreach}
+                    {/if}
+
+                </div>
+            </div> --> *}
+            <div class="tabs">
+                <ul class="ul-tabs">
+                    <li><a href="#tabs-1">Další<br />podobné</a></li>
+                    <li><a href="#tabs-2">A co<br />tohle?</a></li>
+                </ul>
+                <div id="tabs-1">
+                    <div class="row">
+                        {?
+                          $cat = dibi::query('SELECT l.id_category FROM c_link_product_category AS l WHERE l.id_product = %i',$product->id)->fetchSingle();
+         
+                          $res =  dibi::query('SELECT id FROM c_products AS p 
+                                              JOIN c_link_product_category AS l ON l.id_product = p.id
+                                              WHERE p.price <= (%i + (%i * 0.2)) AND p.price >= (%i - (%i * 0.2))
+                                              AND l.id_category = %i AND p.id != %i AND p.deleted = 0
+                                              ',$product->price,$product->price,$product->price,$product->price,$cat,$product->id); 
+                        }
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            {? $mineIter = 0;}
+                            <ul class="more1 products-list">
+                                {foreach $res as $catPr}
+                                    {? $categoryProduct = new Product($catPr->id);}
+                                        <li>{include ../Includes/product-list-more.phtml product=>$categoryProduct}</li>
+                                        {? $mineIter++;}
+                                        {if $mineIter == 3}{? break;}{/if}
+                                {/foreach}
+                            </ul>  
+                        </div>
+                    </div>
+                </div>
+                <div id="tabs-2">
+                    
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+        <div class="clear line "></div>
+{/block}
+{block footer}detail{/block}

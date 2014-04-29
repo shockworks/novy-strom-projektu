@@ -1,0 +1,129 @@
+
+<html>
+    <head>
+        <title>Informace o produktu - lyzarna.cz, bruslarna.cz</title>
+        <style type="media/css">
+            * { border: 0;}
+            body { font-family: Arial, Helvetica; font-size: 12px;}
+            table { border: 0;}
+            table td{ vertical-align: top; border: 0;}
+        </style>
+    </head>
+    <body style="font-family: Arial, Helvetica; font-size: 12px;">
+         <table>
+            <tr>
+                <td><h1 style="font-size: 16px; color: #1283c1;">Rodina sportovních e-shopů<br /> www.LYZARNA.cz a www.BRUSLARNA.cz</h1></td>
+                <td style="font-size: 11px; color: #777777;">ROYAL AGENCY BRNO, spol. s r.o.<br />
+                Čápkova 1<br />
+                602 00 Brno<br />
+                IČ: 49969978<br />
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 10px;">
+                    <h2><a style="color: #32A3E1; font-size: 18px; " href="{link //Detail:default $product->id}">{$product->name_producer} {$product->name}</a></h2>
+
+                    {!$product->full_describe}
+                    <table width="100%" border="0">
+                        <tr>
+                            <td>Výrobce:</td>
+                            <td>{$product->name_producer}</td>
+                        </tr>
+                        <tr>
+                            <td>Typ:</td>
+                            <td><a href="{link //Search:default 'limiter'=>array('category'=>$product->id_main_category)}">{$product->name_main_category}</a></td>
+                        </tr>
+                        <tr>
+                            <td>Doporučená cena:</td>
+                            <td><del>{$product->price_recommended} Kč</del></td>
+                        </tr>
+                        <tr>
+                            <td>Akční cena:</td>
+
+                            <td><strong style="font-size: 16px">{$product->price} Kč</strong></td>
+                        </tr>
+                        {if $product->price_recommended>0}
+                        <tr>
+                            <td>Sleva:</td>
+                            <td><strong>{=round(100-($product->price*100/$product->price_recommended))}%</strong></td>
+                        </tr>
+                        {/if}
+                        <tr>
+                            <td>Stav:</td>
+                            <td><strong style="color: green">{if $product->maxStock>0}skladem{else}na dotaz{/if}</strong></td>
+                        </tr>
+                    </table>
+                    <p style="color: #ccc;">Uvedené ceny jsou včetně DPH</p>
+                </td>
+                <td style="padding: 10px;">
+                    <div class="product-img">
+                    {if isset($product->galleries['foto'])}
+                    {foreach $product->galleries['foto'] as $gal}
+                        {foreach $gal->files as $file}
+                        <a href="{link //Files:default $file->id}" class="thickbox" rel="gallery"><img src="{link //Files:default $file->id,300,300}" alt="{$product->name}" /></a>
+                        <br />
+                        {/foreach}
+                    {/foreach}
+                    {/if}
+                    <br />
+                    {if isset($product->parameters)}
+                    <table width="100%">
+                        <tr>
+                            <td><strong>Varianty</strong></td>
+                            <td><strong>
+                            {if isset($product->variants)}
+                                {foreach $product->variants as $variant}
+                                    {$variant->name}{if !$iterator->isLast()}, {/if}
+                                {/foreach}
+                            {/if}
+                            </strong></td>
+                        </tr>
+                        {foreach $product->parameters as $param}
+                            {if isset($product->param[$param->implementationName]) && !empty($product->param[$param->implementationName])}
+                                <tr{if !$iterator->isEven()} class="even"{/if}><td><strong>{$param->name}</strong></td><td>{$product->param[$param->implementationName]} {$param->describe}</td></tr>
+                            {/if}
+                        {/foreach}
+                    </table>
+                    {/if}
+                </div>
+                </td>
+            </tr>
+        </table>
+        <hr />
+        <table>
+            <tr>
+                <td width="30%">
+                    <strong>Lyžárna</strong><br />
+                    Křenová 19, Brno<br />
+                    Tel.: 543 25 51 81<br />
+                    <i>(budova 33F) areál bývalé Mosilany</i><br /><br />
+
+                    Otevírací doba:<br />
+                    Po až Pá: 10:00 až 18:00<br />
+                    So: 9:00 - 12:00<br />
+                    (sobotní prodej pouze v období listopad až březen)
+                </td>
+                <td width="25%">
+                    <strong>U Lyžaře</strong><br />
+                    Čápkova 1, Brno<br />
+                    Tel.: 541 247 434<br /><br /><br />
+
+                    Otevírací doba:<br />
+                    Po až Pá: 10:00 až 18:00<br />
+                    So: 9:00 - 12:00
+                </td>
+                <td width="35%">
+                    <strong>Bruslárna</strong><br />
+                    Pěstitelská 24, Brno<br />
+                    Tel.: 737 744 775<br />
+                    <i>Na cyklostezce za Ikea (posezení U Trabanta)</i><br /><br />
+
+                    Otevírací doba:<br />
+                    Po až Pá: 14:00 - 20:00<br />
+                    So, Ne a svátky: 11:00 - 20:00<br />
+                    Za pěkného počasí :-)
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>

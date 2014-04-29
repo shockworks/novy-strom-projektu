@@ -1,0 +1,208 @@
+{block canonical}<link rel="canonical" href="{plink //Search:default 'limiter'=>array('category'=>$actualCategory->id)}"/>{/block}
+{block container}search{/block}
+{block banner}
+    {if isset($actualCategory)}
+        {foreach $actualCategory->galleries as $gall}
+            {if $gall->implementation_name == 'banner'}
+                {foreach $gall->files as $file}        
+                    <div class="cat-banner">
+                        <img src="{plink Files:default $file->id,1170,125}" alt="" class="img-responsive cat-img-banner" />
+                    </div>
+                {/foreach}
+            {/if}
+        {/foreach}
+    {/if}
+{/block}
+
+{block content}
+<div class="row">
+
+    {* <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = --> *}
+    {* <!-- ---------------- NADPIS + POPIS KATEGORIE / producera / limmiteru / fulltextu --> *}
+    {* <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = --> *}
+
+    {if isset($actualCategory) || isset(limiter["gender"]) || ( isset($searchword) && isset($productsList) && count($productsList)>0 ) }
+        
+        {* <!-- ******************** L - LEVY SLOUPEC (filtr) ******************** --> *}
+        {* <!-- __________________________________________________________________ --> *}
+        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 left-sidebar">
+            {include ../Includes/filter.phtml limitersURL => $limitersURL}
+        </div>     
+
+        {* <!-- ******************** R - PRAVY SLOUPEC (vypis kategorie) ******************** --> *}
+        {* <!-- _____________________________________________________________________________ --> *}    
+        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 read-sector"> {* <!-- ONLY OPENING DIV FOR DISPLAYING SIDEBAR & CONTENT --> *}
+            <div class="breadcrumb-box">
+                {control breadcrumb}
+            </div>
+            {if isset($actualCategory)
+                <div class="cat-description">
+                    {foreach $actualCategory->galleries as $gal}
+                        {foreach $gal->files as $file}    
+                            {if $gal->implementation_name == 'uvodni'}    
+                                {if isset($file->url) && $file->url != '' }
+                                    {if strpos($file->url , 'youtube')}
+                                        <object width="459" height="258" class="youtube">
+                                            <param value="true" name="allowfullscreen" />
+                                            <param value="always" name="allowscriptaccess" />
+                                            <param name="movie" value="{$file->url|replace:'watch?v=':'v/'}?version=3&amp;hl=cs_CZ" />
+                                            <param name="wmode" value="transparent" />
+                                            <embed width="459" height="258" allowscriptaccess="always" 
+                                              allowfullscreen="true" type="application/x-shockwave-flash"          
+                                              src="{$file->url|replace:'watch?v=':'v/'}?version=3&amp;hl=cs_CZ"
+                                              wmode="transparent"
+                                              >
+                                            </embed>
+                                        </object>
+                                    {elseif strpos($file->url , 'vimeo')}
+                                        <iframe  class="vimeo" src="{$file->url|replace:'http://vimeo.com/':'//player.vimeo.com/video/'}?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;color=ffffff" width="459" height="258" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                                    {/if}                                        
+                                {else}
+                                    <img src="{plink Files:default $file->id,459,258,null,null,false,File::FILL}" class="img-thumbnail pull-left" />
+                                {/if}
+                            {/if}
+                        {/foreach}                                
+                    {/foreach}
+                    <h1>{$actualCategory->name}</h1>
+                    <div>{!$actualCategory->description|truncate:530}</div>
+                    <hr class="clear" />
+                </div>
+            {/if}
+            <div class="row" id="gal-wrap-note">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <h2 class="h-na-note">Na podobné notě</h2>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 endless na-note" id="na-podobne-note"> 
+                        <ul class="row ul products-list">                                    
+                            {foreach $lists['co-frci'] as $product}
+                                <li class="col-xs-2 col-sm-2 col-md-2 col-lg-2 {if $iterator->getCounter()%5==0}last{/if}">
+                                    {include ../Includes/product-list.phtml product=>$product}
+                                </li>
+                            {/foreach}
+                        </ul>
+                    </div>
+                    <script>
+                        $('#na-podobne-note').endlessGallery({ speed: 200, count: 1 });
+                        $('#out-na-podobne-note').addClass('row');
+                    </script>
+                </div>
+                <div class="divider-big"></div>
+                <a class="anchor">Nahoru</a>
+            </div>
+    {/if}
+    {* <!-- ___________________________________________________ --> *}
+    {* <!-- ||||||||||||||||||||| CATEGORY |||||||||||||||||||| --> *}
+    {if isset($actualCategory)}
+        
+    {* <!-- ____________________________________________________ --> *}
+    {* <!-- ||||||||||||||||| LIMITERS gender |||||||||||||||||| --> *}
+    {else if isset(limiter["gender"])}
+            <h1 class="limiters">Výpis gender</h1>
+            <div class="cat-description"></div>
+    {* <!-- ____________________________________________________ --> *}
+    {* <!-- ||||||||| LIMITERS kategory list (štítky) |||||||||| --> *}
+    {else if isset(limiter["category_list"])}
+            <h1 class="limiters">Výpis kategory list</h1>
+            <div class="cat-description"></div>
+
+    {* <!-- ____________________________________________________ --> *}
+    {* <!-- ||||||||||||||||||||| FULLTEXT ||||||||||||||||||||| --> *}
+    {else if isset($searchword)}
+
+        {* <!-- - - - - - - - - - NALEZENO - - - - - - - - - --> *}
+        {if isset($productsList) && count($productsList)>0}
+            <h1 class="fulltxt">Výsledek hledání slova: {$searchWord}</h1>
+
+        {* <!-- - - - - - - - - - NENALEZENO - - - - - - - - - --> *}
+        {else}
+            <div class="col-lg-12 col-md-12 col-xs-12 read-sector"> {* <!-- ONLY OPENING DIV FOR DISPLAYING SIDEBAR & CONTENT --> *}
+                <div class="breadcrumb-box">
+                    {control breadcrumb}
+                </div>
+                <div id="errors" class="row fulltxt">
+                    <div class="col-md-6 col-lg-6 col-xs-6 err-img"></div>
+                    <div class="col-md-6 col-lg-6 col-xs-6 err-text">
+                        <h1 class="fulltxt">Výsledek hledání<br />slova: {$searchWord}</h1>
+                        <p>Na hledaný výraz jsme nenašli žádné odpovídající zboží.</p>
+                        <h4><b>Jak dál postupovat</b></h4>
+                        <ul>
+                            <li>Vyzkoušejte vyhledat jiný výraz</li>
+                            <li>Přejděte na <a href="/">titulní stránku</a></li>
+                            <li>Vyberte si některou z kategorií produktů v horní liště</li>
+                            <li>Kontaktujte nás pomocí kontaktů uvedených v horní liště</li>
+                        </ul>
+                    </div>  
+                    <hr class="clear">
+                </div>                    
+        {/if}
+
+    {* <!-- ____________________________________________________ --> *}
+    {* <!-- ||||||||||||||||| OTHERS PRODUCTS |||||||||||||||||| --> *}
+    {else}
+            <h1 class="others">Výpis ostatních neurčených produktů</h1>
+    {/if}
+   
+    {* <!-- OPENING DIV PLACE HERE - - - - - - OPENING DIV PLACE HERE - - - - - - OPENING DIV PLACE HERE-->*}
+
+    {* <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = --> *}
+    {* <!-- ---------------- PRODUCT LIST  |||||||||||||||||||||||||||||||||||||||||||||| --> *}
+    {* <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = --> *}
+
+    {if isset($productsList) && count($productsList)>0}
+        {* <!-- ___________________________________________________________ --> *}
+        {* <!-- |||||||||||||||||||| FILTRACE PRODUKTŮ |||||||||||||||||||| --> *}
+        
+        {snippet filter}
+            {* <!-- - - - - - - - - - CHECKBOXY - - - - - - - - - --> *}
+
+            {* <!-- - - - - - - - - - PARAMETRY / ZNACKY - - - - - - - - - --> *}
+        {/snippet}
+
+        {* <!-- _________________________________________________________ --> *}
+        {* <!-- |||||||||||||||||||| ŘAZENÍ PRODUKTŮ |||||||||||||||||||| --> *}
+        <div id="search-tabs-box">
+            <div id="ordererTabs"></div>
+        </div>
+        <hr class="clear zero" />
+
+        {* <!-- __________________________________________________ --> *}
+        {* <!-- ||||||||||||||||| VÝPIS PRODUKTŮ ||||||||||||||||| --> *}
+        {snippet productsList}
+            <ul id="products-list">       
+                {foreach $productsList as $product}
+                    <li class="">
+                        {include ../Includes/product-list.phtml product=>$product}
+                    </li>
+                {/if}
+            </ul>             
+        {/snippet}
+
+        {* <!-- __________________________________________________ --> *}
+        {* <!-- |||||||||||||||||||| PAGINÁTOR ||||||||||||||||||| --> *}
+        <div id="paginator-out" class=" ">
+            <a class="up anchor">Nahoru</a>
+            {control paginator}
+        </div>
+    {else}
+        <p>Nejsou zde žádné produkty</p>
+    {/if}
+
+    {else}
+        {if isset($limiter['list']) && $limiter['list']==14 && !isset($limiter['category'])}
+
+        {else}
+            {if isset($searchWord)}
+
+            {/if}
+        {/if}
+    {/if}
+        </div>
+</div>
+{/block}
+
+
+
+{* {if $actualCategory->id_upper==0} *}
+
+{* <!-- {if isset($limiter['list']) && ($limiter['list']==14 || is_array($limiter['list']) && in_array(14, $limiter['list']))
+isset($limiter['category']) && ($limiter['category']==10 || is_array($limiter['category']))} --> *}  
+ {* || isset(limiter["category_list"]) *}

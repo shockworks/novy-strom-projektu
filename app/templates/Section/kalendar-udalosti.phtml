@@ -1,0 +1,60 @@
+{block content}
+<div class="row events">
+    <h1 class="text-center">Události</h1>
+    {? 
+        $parameter = new Parameter(4); // param udalosti
+        $ssortedParams = $parameter->getOptions(TRUE);
+    }
+    <div id="timeline"></div>
+    <div id="loadmore">Load More</div>
+ 
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var timeline_data = [
+                {foreach $ssortedParams as $param}
+                {
+                    type:        'blog_post',
+                    date:        '2011-08-03',
+                    dateFormat:  'DD MMMM YYYY',
+                    title:       {$param->name},
+                    width:       450,
+                    content:     '<h3>'+{$param->name}+'</h3>'+{$param->describe},
+                    image:       {plink Files:default $param->mainFoto,458,257,null,null,false,File::FILL},
+                    readmore:    {plink Search:default array('udalost'=>$param->id)}
+                }
+                {if !$iterator->isLast()},{/if}
+                {/foreach}
+            ];
+
+            var timeline = new Timeline($('#timeline'), timeline_data);
+            timeline.setOptions({
+                lightbox: false
+            })
+            timeline.display();
+            
+            var year = 2013;
+            $('#loadmore').on('click', function(e) {
+                var button = $(this);
+
+                if (button.hasClass('loading')) {
+                    return;
+                }
+
+                year--;
+                button.addClass('loading').text('Loading...');
+                setTimeout(function() {
+                    var scroll_to = '#timeline_date_separator_' + year;
+
+                    button.removeClass('loading').text('Load More');
+                    $('<div>').text(year).appendTo($('#menu'));
+
+                    var new_data = getTimelineData([year]);
+                    timeline.appendData(new_data);
+                    $.scrollTo(scroll_to, 500);
+                }, 1000);
+            });
+        });
+    </script>
+    <a class="anchor"></a>
+</div>
+{/block}

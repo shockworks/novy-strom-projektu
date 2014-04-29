@@ -1,0 +1,66 @@
+<li class="mix col-xs-2 col-sm-2 col-md-2 col-lg-2" data-added="2014-03-12" data-name="{$item->product->name}" data-price="{$item->product->price}">
+<div class="product-wrap">
+    <div class="img">
+        <a class="main-a-img" href="{plink Detail:default $item->product->id}">
+            <img src="{plink Files:default $item->product->mainFoto,NULL,212}" alt="" class="img-responsive" />
+        </a>
+        {if $item->product->lists['rozbaleno']}
+            <span class="rozbaleno">Rozbaleno</span>
+        {/if}
+    </div>
+    <h2 title="{$item->product->name}">
+        <a href="{plink Detail:default $item->product->id}">
+            {$item->product->name}{=($item->id_variant>0)?' / '.$item->product->variants[$item->id_variant]->name:''}
+        </a>
+    </h2>
+    <div class="price-box">
+        {if $item->product->price_recommended > $item->product->price}
+            <p><span class="price-trought">{$item->product->price_recommended|money} </span>&nbsp;<strong class="buy-price"> {$item->product->price|money}</strong></p>
+        {else}
+            <p><strong class="buy-price">{$item->product->price|money}</strong></p>
+        {/if}
+    </div>
+
+
+    {if ($item->product->price_recommended > $item->product->price) && ((round((($item->product->price_recommended - $item->product->price) * 100) / ($item->product->price_recommended))) > 30) }
+        <div class="lists-big">
+        <span class="lists-ico action" ></span><span class="lists-txt" ><span>- {=round((($item->product->price_recommended - $item->product->price) * 100) / ($item->product->price_recommended))}</span><span>%</span></div>
+
+    {elseif $item->product->lists['new-product']}
+        <div class="lists-big">
+        <span class="lists-ico new" ></span><span class="lists-txt" ><span>{_'Nové'}</span></div>
+    {/if}
+    <!-- -- -- -- -- -- -- -- -- -- -- -- -- -->
+    <div class="additional-box">
+        <form class="addit" style="display: none;" href="#" data-choosen-variant="{$item->id_variant}">
+            <select class="all-var variants form-control" data-id="{$item->product->id}">
+                <option value="0">Výběr varianty</option>
+                {foreach $item->product->variants as $variant}
+                <option value="{$variant->id}" {if $variant->id==$item->id_variant}selected{/if} class="variant" data-var-id="{$variant->id}" data-price="{$variant->getRealPrice()}">{$variant->name}: {$variant->price|money}</option>
+                {/foreach}
+            </select>
+            <input type="submit" id="send" value="Do tašky" data-product-id="{$item->id_product}" />
+        </form>
+        <div class="to-cart">
+            <a class="to-bag" href="#" data-id="{$item->product->id}">Do tašky</a>
+            <a class="edit" href="#" data-id="{$item->product->id}">Editovat</a>
+            <a class="delete ajax" href="{plink deleteItem! $item->id}">Odebrat</a>
+        </div>
+    </div>
+    <div id="cartfrmDiv1">
+
+    </div>
+    <a id="hidLink" href="#hidCont" style="visibility:hidden; height:0px; width:0px;">fancybox hid</a>
+    <div style="display:none;">
+        <div id="hidCont"></div>
+      </div>  
+    
+    {* produkt je vyprodany *}
+    {if $item->product->deleted==1}
+    <span class="">Vyprodáno</span>
+    {elseif $item->product->variants[$item->id_variant]->deleted==1}
+    {* varianta je vyprodana *}
+    <span class="">Varianta je vyprodaná</span>
+    {/if}
+</div>
+</li>

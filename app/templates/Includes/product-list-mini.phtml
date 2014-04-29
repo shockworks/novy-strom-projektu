@@ -1,0 +1,17 @@
+<li class="product-li">
+    <div class="product-img img">
+        <a href="{plink Detail:default $product->id}">
+            <img src="{plink Files:default $product->mainFoto,86,115}" alt="{$product->name}" title="{$product->name}" />
+        </a>
+    </div>
+    <a n:href="noteDeleteProduct! $product->id, Note::VISITED" class="erase ajax"></a>
+    {if $product->lists['rozbaleno']}
+        <span class="rozbaleno">Rozbaleno</span>
+    {/if}
+    {snippet userinteraction}
+        <div class="to-wish-wrap">
+            <a href="{if isset($user)} {plink addToWishlist! $product->id, 0} {/if}" class="to-wish">{_'Na seznam'}</a>
+        </div>
+    {/snippet}
+</li>
+

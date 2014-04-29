@@ -1,0 +1,251 @@
+<h2 class="filter-heading">Můj výběr</h2>
+<ul id="filtered-items">
+</ul>
+<hr class="divider-sml line">
+
+
+<div id="interactive-filter">
+</div>
+
+<script>
+
+    function sortSizes(){
+        var baseSizes = {
+            'XXS': 0,
+            'XS': 1,
+            'S': 2,
+            'M': 3,
+            'L': 4,
+            'XL': 5,
+            'XXL': 6,
+            '3XL': 7
+        }
+        
+        var sizes = $('[data-filter-name="variant"] .elements-wrapper div').sort(function (a, b) {
+            var contentA = $(a).attr('data-filter-id');
+            
+            if(typeof baseSizes[contentA] != 'undefined'){
+                contentA = baseSizes[contentA];
+            }
+            else {
+                contentA = 8;
+            }
+            
+            var contentB = $(b).attr('data-filter-id');
+            
+            if(typeof baseSizes[contentB] != 'undefined'){
+                contentB = baseSizes[contentB];
+            }
+            else {
+                contentB = 8;
+            }
+
+            if(contentA == 8 && contentB == 8){
+                return $(a).attr('data-filter-id').localeCompare($(b).attr('data-filter-id'));
+            }
+            
+            return (contentA < contentB) ? -1 : (contentA > contentB) ? 1 : 0;
+        });
+
+        $('[data-filter-name="variant"] .elements-wrapper').html('').append(sizes);
+    }
+
+    var myFilters = {};
+    
+    
+    myFilters = $.extend(true, myFilters, {});
+    {if isset($actualCategory)}
+        var genderFilterExt = {
+            variantFilterName: 'gender', 
+            title: 'Gender', 
+            args: 'gender',
+            position: 1
+        };
+
+        myFilters = $.extend(true, myFilters, { 'gender': extendBasicFilter('param', genderFilterExt)});
+    {/if}
+    
+    var typeFilterExt = {
+        variantFilterName: 'type', 
+        title: 'Typ', 
+        args: 'typzbozi',
+        position: 5
+    };
+    
+    myFilters = $.extend(true, myFilters, { 'type': extendBasicFilter('param', typeFilterExt)});
+    
+    var variantFilterExt = {
+        title: 'Velikost',
+        position: 8,
+        initSubmit: function(element, interactiveFilter){
+            sortSizes();
+            $('[data-filter-name="variant"] .elements-wrapper div input').change(function(){
+              interactiveFilter.submit($(this).parents('.checkbox'));
+            });
+        },
+    };
+    
+    myFilters = $.extend(true, myFilters, { 'variant': extendBasicFilter('variant', variantFilterExt)});
+    {if !isset($actualCategory)}
+        var categoryFilterExt = {
+            title: 'Interpret',
+            position: 2,
+            args: ['hudba']
+        };
+
+        myFilters = $.extend(true, myFilters, { 'category': extendBasicFilter('category', categoryFilterExt)});
+    {/if}
+    var colorFilterExt = {
+        variantFilterName: 'barva',
+        title: 'barva',
+        args: 'barva',
+        position: 7
+    };
+    
+    myFilters = $.extend(true, myFilters, { 'barva': extendBasicFilter('param', colorFilterExt)});
+    
+    var zanrFilterExt = {
+        variantFilterName: 'zanr',
+        title: 'Žánr',
+        args: 'zanrhudba',
+        position: 6
+    };
+    
+    myFilters = $.extend(true, myFilters, { 'zanr': extendBasicFilter('param', zanrFilterExt)});
+
+    var priceFilterExt = {
+        title: 'Cena',
+        args: {  },
+        position: 9
+    };
+    
+    myFilters = $.extend(true, myFilters, { 'price': extendBasicFilter('price', priceFilterExt)});
+
+    var listFilterExt = { 
+        args: ['action-product','zanovni-product'], 
+        title: 'Speciální',
+        position: 3
+    };
+    
+    myFilters = $.extend(true, myFilters, { 'list': extendBasicFilter('list', listFilterExt)});
+    
+    var stockAvailabilityFilterExt = {
+        position: 4
+    };
+    
+    myFilters = $.extend(true, myFilters, { 'stockAvailability': extendBasicFilter('stockAvailability', stockAvailabilityFilterExt)});
+
+    $(document).ready(function(){
+        
+        $('#interactive-filter').interactiveFilter({
+            initialLimiters: {=$limitersURL},
+            filters: myFilters,
+            afterRender: function(){
+                $('[data-filter-name="category"] h4').after('<input id="interpretSearch" placeholder="'+{_'Vyhledat...'}+'" />');
+                
+                initInterpretSearch();
+                
+                $('[data-filter-name]').each(function(){
+                    if($(this).attr('data-filter-name') != 'stockAvailability')
+                    $(this).after('<hr class="divider-sml line">'); 
+                });
+                
+                $('[data-filter-name="stockAvailability"]').appendTo($('[data-filter-name="list"] .elements-wrapper'));
+                
+                $('[data-filter-id="univerzální"]').hide();
+                
+                initFilterOpening();
+                
+                $('[data-active-filter="1"]').each(function(){
+                    if($(this).attr('data-filter-id') != 'min' && $(this).attr('data-filter-id') != 'max'){
+                        var input = $(this).find('input');
+                        var position = parseInt($(this).parents('[data-filter-name]').attr('data-filter-position'));
+                        
+                        $('#filtered-items').append('<li data-position="' + position + '"><a data-for-filter-id="' + $(this).attr('data-filter-id') + '">X</a>&nbsp;' + input.parent().text() + '</li>');
+                    }
+                });
+                
+                sortFilteredItems();
+            },
+            beforeSubmit: function(filterElement){
+                var input = filterElement.find('input');
+
+                if(input.length == 1){
+                    if(input.is(':checked')){
+                        var position = parseInt($(input).parents('[data-filter-name]').attr('data-filter-position'));
+                        $('#filtered-items').append('<li data-position="' + position + '"><a data-for-filter-id="' + filterElement.attr('data-filter-id') + '">X</a>&nbsp;' + input.parent().text() + '</li>');
+                        sortFilteredItems();
+                    }
+                    else {
+                        $('#filtered-items [data-for-filter-id="' + filterElement.attr('data-filter-id') + '"]').parents('li').remove();
+                    }
+                }
+            }
+        });
+    });
+    
+    function initInterpretSearch(){
+        $('#interpretSearch').keyup(function(){
+            var search = $(this).val().toLowerCase();
+            $('[data-filter-name="category"] input[type="checkbox"]').each(function(){
+                if($(this).parent().text().toLowerCase().indexOf(search) != -1){
+                    $(this).parents('.checkbox').show();
+                }
+                else {
+                    $(this).parents('.checkbox').hide();
+                }
+            });
+        });
+    }
+    
+    function sortFilteredItems(){
+        var filteredItems = $('#filtered-items li').sort(function (a, b) {
+            var contentA = parseInt( $(a).attr('data-position'));
+            var contentB = parseInt( $(b).attr('data-position'));
+
+            return (contentA < contentB) ? -1 : (contentA > contentB) ? 1 : $(a).find('a').text().localeCompare($(b).find('a').text());
+        });
+
+        $('#filtered-items').html('').append(filteredItems);
+    }
+    
+    function initFilterOpening(){
+        $('#interactive-filter h4').addClass('filter-opened');
+    
+        $('#interactive-filter h4').click(function(){
+            if($(this).hasClass('filter-opened')){
+                $(this).removeClass('filter-opened').addClass('filter-closed');
+                $(this).next().hide();
+            }
+            else {
+                $(this).removeClass('filter-closed').addClass('filter-opened');
+                $(this).next().show();
+            }
+            
+            var closedFilters = [];
+            $('#interactive-filter h4.filter-closed').each(function(){
+                closedFilters.push($(this).parents('[data-filter-name]').attr('data-filter-name'));
+            });
+            $.cookie('closed_filters', closedFilters);
+        });
+        
+        if($.cookie('closed_filters') == undefined){
+            $('#interactive-filter [data-filter-name="price"] h4').trigger('click');
+            $('#interactive-filter [data-filter-name="barva"] h4').trigger('click');
+            $('#interactive-filter [data-filter-name="variant"] h4').trigger('click');
+        }
+        else {
+            var closedFilters = $.cookie('closed_filters').split(',');
+            $.each(closedFilters, function(key, value){
+               $('#interactive-filter [data-filter-name="' + value + '"] h4').trigger('click'); 
+            });
+        }
+    }
+
+    $('#filtered-items a').live('click', function(){
+        $('[data-filter-id="' + $(this).attr('data-for-filter-id') + '"] input').trigger('click');
+    });
+</script>
+
+
+

@@ -1,0 +1,60 @@
+{block content}
+<div id="main">
+        <div id="main-top">
+            <div id="breadcrumb">
+                <p class="reset">
+                    <a href="/">Hlavní stránka</a>
+                    <img src="/images/white-arrow.png" /><a href="">Košík</a>
+                </p>
+            </div> 
+            <div id="search">
+                <a class="prihlas" href="{plink Users:login}">{if isset($user)}můj účet{else}přihlásit se{/if}</a>
+                <a class="regist" href="{plink Users:registrate}">registrovat se</a>
+                {control searchForm}
+            </div>
+            <h1><b class="svetle">Košík</b> <b class="sipka-svetle">Objednávka</b> <b class="sipka-svetle">Potvrzení</b></h1>
+            <p class="nakupni-kosik">V košíku: <a href="{plink Default:kosik}" ><b>{$cartCount} položek</b></a> v ceně {$cartSum|money_czk} Kč</p>          
+        </div>
+        <div id="main-inner">
+            <div id="cart-left">
+                <!-- Google Code for objednavka Conversion Page -->
+                <script type="text/javascript">
+                /* <![CDATA[ */
+                var google_conversion_id = 967872547;
+                var google_conversion_language = "cs";
+                var google_conversion_format = "2";
+                var google_conversion_color = "ffffff";
+                var google_conversion_label = "qnOwCOXSowMQo6DCzQM";
+                var google_conversion_value = 0;
+                /* ]]> */
+                </script>
+                <script type="text/javascript" src="http://www.googleadservices.com/pagead/conversion.js">
+                </script>
+                <noscript>
+                <div style="display:inline;">
+                <img height="1" width="1" style="border-style:none;" alt="" src="http://www.googleadservices.com/pagead/conversion/967872547/?label=qnOwCOXSowMQo6DCzQM&amp;guid=ON&amp;script=0"/>
+                </div>
+                </noscript>
+                <!-- Měřicí kód Sklik.cz -->
+                <iframe width="119" height="22" frameborder="0" scrolling="no" src="http://out.sklik.cz/conversion?c=99992145&color=ffffff&v="></iframe>
+                <script type="text/javascript">
+                $("body").css("visibility", "hidden");
+                $('<div style="position:fixed; left: 50%; top: 50%; margin: -15px 0 0 -15px; background: white url(\'\/css/images/ajax-loader.gif\') no-repeat 50% 50%; padding: 70px 25px 15px 25px; border: 2px solid #CCC; font-size: 14px; font-weight: bold; color: #10557B;">Odesílám objednávku&hellip;</div>').css("visibility", "visible").show().appendTo("body");
+                
+                </script>
+                
+                {if isset($form)}
+                  {!$form}
+                {else}
+                     <script type="text/javascript">
+                      $(document).ready(function(){
+                        window.location.replace({plink //Cart:success});
+                      })
+                     </script>
+                {/if}
+                <p><a href="{plink Cart:success}" style="font-size: 25px">Pokračovat&hellip;</a></p>
+            </div> 
+            </div>
+</div>
+
+{/block}

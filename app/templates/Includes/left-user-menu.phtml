@@ -1,0 +1,18 @@
+<h1>{_('Můj účet')}</h1><strong>{$user->name} {$user->surname}</strong><br />
+<a n:href="logout!">{_'Odhlásit se'}</a>
+<hr class="divider-big">
+<ul class="main-user-nav">
+    <li class="osobni"><a href="{plink Users:default}">{_'Osobní sekce'}</i></a></li>
+    <li class="objednavky"><a href="{plink Users:orders}">{_'Objednávky'}</a></li>
+    <li class="seznam">
+        {snippet userinteractionwish}
+            {if isset($user->id)}
+                <a n:href="Wishlist:detail $wishlist->id" ><span class="count">{$wishlistCount}</span></a>
+            {else}
+                <a href="{plink Wishlist:default}">{_'Můj seznam'}</a></li>
+            {/if}
+        {/snippet}
+    <li class="navrhy"><a href="{plink Section: kontaktni-formular}" class="send-us hphp fancybox.iframe">{_'Přání a návrhy'}</a></li>
+</ul>
+<br />
+

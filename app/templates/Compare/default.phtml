@@ -1,0 +1,155 @@
+{block content}
+    <h2>{_'Porovnávání zboží'}</h2>
+    <p>{_'Náš porovnávač zboží Vám umožní snadnější a přehlednější porovnání Vámi vybraných produktů.'}</p>
+    <hr class="hr-point" />
+    <table id="compare-table">
+        <tr>
+            <th id="empty"></th>
+            {foreach $products as $p}
+                <th>
+                    <div class="img"><a href="{plink Detail:default $p->id}"><img src="{plink Files: $p->mainFoto, 100, 100}" alt="" /></a></div>
+                    <a href="{plink Detail:default $p->id}">{$p->name}</a>      
+                </th>    
+                {?$x = $iterator->getCounter()}
+            {/foreach}
+            {if $x < 5}
+                {? $y = 5 - $x}
+                {for $i=0; $i<$y; $i++}
+                    <th class="th-empty">  
+                    </th>
+                {/for}
+            {/if}
+        </tr>
+        <tr class="dl">
+            <td><a href="{plink deleteAll}" class="del-all del">{_'odebrat vše'}</a></td>         
+            {foreach $products as $p}
+                <td><a href="{plink delete $p->id}" class="del">{_'odebrat'}</a></td>    
+               
+            {/foreach}   
+            {if $x < 5}
+                {? $y = 5 - $x}
+                {for $i=0; $i<$y; $i++}
+                    <td>  
+                    </td>
+                {/for}
+            {/if} 
+        </tr>
+        {foreach $parameters as $pr}
+            <tr> 
+                {? $s = ""; $f = 0;}
+                {foreach $products as $p}  
+                    {if !empty($p->param[$pr->implementationName])}
+                        {? $s .= '<td>'. (is_array($p->param[$pr->implementationName]) ? implode(", ",$p->param[$pr->implementationName]) : $p->param[$pr->implementationName]).'</td>';}
+                        {? $f++}
+                    {else}
+                        {? $s .= '<td>-</td>';} 
+                    {/if}
+                {/foreach}
+                
+                {if $s != "" && $f > 0}
+                    <td class="gray">{$pr->name}:</td>
+                    {!$s}
+                    {if $x < 5}
+                        {? $y = 5 - $x}
+                        {for $i=0; $i<$y; $i++}
+                            <td></td>
+                        {/for}
+                    {/if}
+                    
+                {/if}
+                
+            </tr>
+        {/foreach}
+        
+        
+        <tr class="white"><td></td></tr>
+        <tr>
+            <td class="gray">{_'Dostupnost'}: </td>
+            {foreach $products as $p}  
+                <td>
+                {if $p->getMaxStock()>0}
+                   {_'skladem'}
+                {else}
+                    {if isset($p->param['skladovadostupnost'])}
+                        {$p->param['skladovadostupnost']}
+                    {else}
+                        {_'do 3 dnů'}                                                                                 
+                    {/if}
+                {/if}
+                </td>
+            {/foreach}
+            {if $x < 5}
+                {? $y = 5 - $x}
+                {for $i=0; $i<$y; $i++}
+                    <td>  
+                    </td>
+                {/for}
+            {/if} 
+        </tr>
+        <tr>
+            <td class="gray">{_'Běžná cena'}: </td>
+            {foreach $products as $p}  
+                <td>{$p->price_recommended|money}</td>
+            {/foreach}
+            {if $x < 5}
+                {? $y = 5 - $x}
+                {for $i=0; $i<$y; $i++}
+                    <td>  
+                    </td>
+                {/for}
+            {/if} 
+        </tr>
+        <tr>
+            <td class="gray">{_'Ušetříte'}: </td>
+            {foreach $products as $p}  
+                <td>{= ($p->price_recommended - $p->price)|money} ({=round((($p->price_recommended - $p->price) * 100) / ($p->price_recommended))} %)</td>{?$x = $iterator->getCounter()}
+            {/foreach}
+            {if $x < 5}
+                {? $y = 5 - $x}
+                {for $i=0; $i<$y; $i++}
+                    <td>  
+                    </td>
+                {/for}
+            {/if} 
+        </tr>
+        <tr>
+            <td class="gray">{_'Akční cena'}: </td>
+            {foreach $products as $p}  
+                <td><strong class="red">{$p->price|money}</strong></td>
+            {/foreach}
+            {if $x < 5}
+                {? $y = 5 - $x}
+                {for $i=0; $i<$y; $i++}
+                    <td>  
+                    </td>
+                {/for}
+            {/if} 
+        </tr>
+        <tr class="white"><td></td></tr>
+        <tr>
+            <td class="gray toCase-gray">{_'Koupit'}: </td>
+            {foreach $products as $p}  
+                <td class="cent"><a class="comp-toCase" href="{plink Cart: $p->id}"></a></td>
+            {/foreach}
+            {if $x < 5}
+                {? $y = 5 - $x}
+                {for $i=0; $i<$y; $i++}
+                    <td>  
+                    </td>
+                {/for}
+            {/if}  
+        </tr>
+        <tr class="dl">
+            <td><a href="{plink deleteAll}" class="del-all del">{_'odebrat vše'}</a></td>         
+            {foreach $products as $p}
+                <td><a href="{plink delete $p->id}" class="del">{_'odebrat'}</a></td>   
+            {/foreach}   
+            {if $x < 5}
+                {? $y = 5 - $x}
+                {for $i=0; $i<$y; $i++}
+                    <td></td>
+                {/for}
+            {/if} 
+        </tr>
+    </table>
+{/block}

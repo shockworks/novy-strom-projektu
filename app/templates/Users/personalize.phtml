@@ -1,0 +1,100 @@
+{block presenter}user account{/block}
+{block content}
+    {* presmerovani *}
+    {if !isset($user)}
+    <script>
+        window.location =  '/';
+    </script>
+    {/if}
+    {* <!-- ********************************************************************** --> *}
+    {* <!-- ******************** USER (sprava uctu uzivatele) ******************** --> *}
+    {* <!--                                                                        --> *}
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            {* <!-- ******************** MENU ******************** --> *}
+            {* <!-- ______________________________________________ --> *}
+            <div class="user-menu">
+                <h1>{_('Seznam objednávek')}</h1><strong>{$user->name} {$user->surname}</strong>
+                <a class="logout" n:href="logout!">{_'Odhlásit se'}</a>
+                <hr class="divider-big">
+                <ul class="main-user-nav">
+                    <li class="osobni active"><a href="{plink Users:account}">{_'Osobní sekce'}</a></li>
+                    <li class="objednavky"><a href="{plink Users:orders}">{_'Objednávky'}</a></li>
+                    <li class="seznam">
+                        {snippet userinteractionwishuser}
+                            {if isset($user->id)}
+                                <span class="count">{$wishlistCount}</span>
+                                <a n:href="Wishlist:detail $wishlist->id" >{_'Můj seznam'}</a>
+                            {else}
+                                <a href="{plink Wishlist:default}">{_'Můj seznam'}</a></li>
+                            {/if}
+                        {/snippet}
+                    <li class="navrhy"><a href="{plink Users:sendmsg}" class="send-us">{_'Přání a návrhy'}</a></li>
+                </ul>
+                <ul class="secondary-user-nav">
+                    <li class="active"><a href="{plink Users:personalize}">{_'Personalizace'}</a></li>
+                    <li><a href="{plink Users:account}">{_'Změnit osobní údaje'}</a></li>
+                    <li><a href="{plink Users:changepassword}">{_'Změnit heslo'}</a></li>
+                </ul>
+            </div>
+            {* <!-- ******************** CONTENT ******************** --> *}
+            {* <!-- _________________________________________________ --> *}
+            <div class="row">
+                <p class="text-center">Lorem ipsum</p>
+            </div>
+            <div class="row">
+                <h2 class="text-center">Gender</h2>
+                <div class="col-lg-6">
+                    <label for="">Muž</label>
+                    <input type="radio" value="Muž" name="gender" />
+                    <label for="">Žena</label>
+                    <input type="radio" value="Žena" name="gender" />
+                </div>
+            </div>
+            <div class="row">
+                <h2 class="text-center">Věk</h2>
+                <div class="col-lg-6">
+                    <input type="radio" value="10-15" name="age" />
+                    <label for="">10-15</label>
+                    <input type="radio" value="20-30" name="age" />
+                    <label for="">20-30</label>
+                    <input type="radio" value="30-40" name="age" />
+                    <label for="">30-40</label>
+                    <input type="radio" value="50-60" name="age" />
+                    <label for="">50-60</label>
+                    <input type="radio" value="60+" name="age" />
+                    <label for="">60+</label>
+                    
+                </div>
+            </div>
+            
+            <div class="row">
+                <h2 class="text-center">Preference žánrů</h2>
+                <div class="col-lg-12">
+                    {?
+                        $lists = new CategoryList;
+                        $lists = $lists->getAll();
+                    }
+                    {foreach $lists as $list}
+                        <input type="checkbox" value="{$list->name}" name="style" />
+                        <label for="">{$list->name}</label>
+                    {/foreach}
+                </div>
+            </div>
+            <div class="row text-center">
+                <input type="button" name="save" id="save-preferences" class="btn btn-default" value="Uložit mé preference" />
+            </div>
+            <script>
+                $(document).ready(function(){
+                    var selected = new Array();
+                    {foreach $user->getGroups() as $group}
+                        selected[{!$iterator->counter-1}] = {$group};
+                    {/foreach}
+                    $.each(selected, function(index,value){
+                        $('input[value="'+value+'"]').attr('checked', true);
+                    })
+                })
+            </script>
+        </div>
+    </div>
+{/block}

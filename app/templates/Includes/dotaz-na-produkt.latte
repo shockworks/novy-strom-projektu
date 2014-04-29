@@ -1,0 +1,18 @@
+{snippet form}
+    <div class="contact-form-form {!$name}">
+        {control $name}
+    </div>
+    {if isset($flashes) && count($flashes)>0}
+        <div class="contact-form-flashes {!$name}">
+            {foreach $flashes as $flash}
+                {$flash->message}
+            {/foreach}
+        </div>
+    {/if}
+{/snippet}
+<script>
+    $('.contact-form-flashes').live('click',function(){
+        $(this).hide();
+    });
+</script>
+

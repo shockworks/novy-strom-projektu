@@ -1,0 +1,60 @@
+{block left}{/block}
+{block content}
+    <h1 class="center">nákupní taška</h1>
+    <ul id="cart-steps" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <li><a href="{plink Cart:default}">1/ {_'Obsah tašky'}</a></li>
+        <li><a href="{plink Cart:paymant}">2/ {_'Doprava a platba'}</a></li>
+        <li><a href="{plink Cart:user}">3/ {_'Dodací údaje'}</a></li>
+        <li class="last active"><a href="#" >4/ {_'Souhrn'}</a></li>
+    </ul> 
+    <hr class="clear" />
+    <p>Prosíme, zkontrolujte si Vaše osobní údaje a dodací adresu, objednávané produkty, způsob dopravy, platby a výslednou cenu. Pokud chcete cokoli ve své objednávce změnit, vraťte se pomocí tlačítka zpět do předchozích kroků.</p><p>Pokud je vše v pořádku, tlačítkem Odeslat objednávku, svůj nákup dokončíte a objednávku odešlete ke zpracování.</p><p class="check-buy">Nevíte si s něčím rady? Rádi Vám pomůžeme, <a class="cart-anchor">kontaktujte nás</a>.<a href="{plink send}" class="complete-send btn btn-primary" value="Odeslat objednávku">Odeslat objednávku</a></p>
+    <div id="cart" class="incontent">
+        <h2>{_'Souhrn objednávky'}</h2>
+        <div id="completeCartData" class="border-box row {if $cart->order->anotherDelivery == true}three-boxes{else}two-boxes{/if}">
+            <fieldset class="{if $cart->order->anotherDelivery == true}col-md-4{else}col-md-6{/if}">
+                <h5>{_'Osobní údaje'}</h5>
+                <p>
+                    {$user->name} {$user->surname}<br />
+                    {$user->email}<br />
+                    {$user->phone}
+                </p>
+            </fieldset>
+            <fieldset class="{if $cart->order->anotherDelivery == true}col-md-4{else}col-md-6 last{/if}">
+                <h5>{_'Fakturační údaje'}</h5>
+                <table>
+                    <tr><td>{if !empty($user->company)}{$user->company}{/if}</td><td>{if !empty($user->ic)}{_'IČ'}: {$user->ic}{/if}</td></tr>
+                    <tr><td>{$user->street}</td><td>{if !empty($user->dic)}{_'DIČ'}: {$user->dic}{/if}</td></tr>
+                    <tr><td>{$user->psc} {$user->city} - {$user->country}</td><td></td></tr>
+                </table>
+            </fieldset>
+            {if $cart->order->anotherDelivery == true}
+                <fieldset class="{if $cart->order->anotherDelivery == true}col-md-4 last{else}col-md-6{/if}">
+                    <h5>{_'Dodací adresa'}</h5>
+                    <p>
+                        {$user->del_name_surname}<br />
+                        {$user->del_company}<br />
+                        {$user->del_street}<br />
+                        {$user->del_psc} {$user->del_city}<br />
+                        {$user->del_country}
+                    </p>
+                </fieldset>
+            {/if}
+        </div>
+        <hr class="clear" />
+        <h2 class="hidden-h2">{_'Obsah košíku'}</h2>    
+        {control CartTable:transport}
+        <div id="under-cart-table" class="paymant-under">
+           <div class="right">
+               <b>{_'Celková cena za zboží'}:</b> <strong class="right-p">{=($cart->order->totalAmount+$cart->order->paymantMethod->price)|money}</strong>
+           </div>
+        </div>  
+        <hr class="clear" />
+        {control noteForm}
+        <hr class="clear" />
+        <script type="text/javascript">
+            $('#frmnoteForm-newsletter').attr('checked', true);
+        </script>
+    </div>
+{/block}
+

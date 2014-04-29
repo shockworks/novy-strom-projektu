@@ -1,0 +1,24 @@
+<div id="interactiv-cart">
+    <div class="out-triangle"><div class="triangle-with-shadow"></div></div>
+    <div class="left">
+        <h4>{_'Produkt'} <strong>{$orderItem->name}</strong><br />{_'byl vložen do košíku'}</h4>
+        <div class="img">
+            <img src="{plink Files:default $orderItem->object->mainFoto,180,220}" />
+        </div>
+        <table>
+            <tr><td>{_'Varianta'}:</td><td>{$orderItem->variant_name} </td></tr>
+            <tr><td>{_'Počet kusů v košíku'}:</td><td>{$orderItem->count} {_'ks'}</td></tr>
+            <tr><td>{_'Cena'}:</td><td>{$orderItem->price|money} / {_'ks'}</td></tr>
+        </table>
+    </div>        
+    <hr class="clear" />
+    <div class="under">
+        <div class="btn back btn-default">{_'Dále nakupovat'}</div>
+        <a n:href="Cart:" class="btn btn-primary toCart">{_'Přejít do košíku'}</a>
+    </div>
+    <script>
+        $('#interactiv-cart .btn.back').click(function(){
+            $('#fancybox-close').trigger('click');
+        });
+    </script>
+</div>

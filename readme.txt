@@ -11,3 +11,9 @@ X. TODO(odnekud) si zkopiruji package.json a Gruntfile.js
 4.1.3 ssh-add ~/.ssh/id_rsa
 4.1.4 ulozeny klic ve slozce prekopiruji do klicu v gitu (public key s priponou pub)
 5.
+
+
+
+
+// nova stromova struktura
+1. doslo ke zmene slozky pictures/ na client-files/ s podsložkama @todo: pro prevod starsich projektu bude nutne prehrat vse z pictures/ do client-files/images/ a v htaccess nastavit presmerovani

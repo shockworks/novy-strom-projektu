@@ -1,0 +1,40 @@
+{block presenter}section{/block}
+{block content}
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            {control breadcrumb}
+            {if !isset($arg)}
+                {if isset($sections[$implementationName]->pages['default']->text)}
+                    <h1>{$sections[$implementationName]->pages['default']->name}</h1>
+                    <p>{!$sections[$implementationName]->pages['default']->anotation}</p>
+                    {!$sections[$implementationName]->pages['default']->text}
+                {else}
+                    <h1>{$section->name}</h1>
+                {/if}
+                {foreach $sections[$implementationName]->pages as $k => $page}
+                    {if $page->implementationName != 'default'}
+                        <div class="clanek-box">
+                            <div class="img" >
+                                <a n:href="Section: $implementationName, $page->id"><img src="{plink Files:default $page->mainPhoto,210,155}" alt="" /></a>
+                            </div>
+                            <h2><a n:href="Section: $implementationName, $page->id">{!$page->name}</a></h2>
+                            {if isset($page->anotation) && !empty($page->anotation)}
+                                <p>{!$page->anotation|truncate:150}</p>
+                            {else}
+                                <p>{!$page->text|truncate:150}</p>
+                            {/if}
+                            <a n:href="Section: $implementationName, $page->id" class="readMore">{_'Více informací'}</a>
+                        </div>
+                        {if !$iterator->isLast()}<hr />{/if}
+                    {/if}
+                {/foreach}
+            {else}
+                <div id="detail">
+                    <h1>{!$sections[$implementationName]->pages[$arg]->name}</h1>
+                    {!$sections[$implementationName]->pages[$arg]->text}
+                </div>
+            {/if}
+            <hr class="clear" />
+        </div>
+    </div>
+{/block}

@@ -1,0 +1,24 @@
+{block presenter}wishlist{/block}
+{block content}
+    <div id="wish-list">
+        {control breadcrumb}
+        <h1>{_'Nákupní seznamy (wishlist)'}</h1>
+        <hr class="clear" />
+        <div class="white-box radius">
+            <p class="desc">
+                 Přivítali jste nového člena rodiny a potřebujete novou výbavičku pro miminko? Nebo se chystáte slavit prckovy narozeniny?
+                 Připravte si vlastní výběr výbavičky a předejděte tomu, že budete majiteli tří chůviček, šesti jídelních židliček, ale ani jedněch dupaček!
+                 Náš nákupní košík usnadní práci jak vám s výměnou zboží, tak vašim známým, kteří si nebudou muset lámat hlavu s výběrem dárku. Stačí nákupní seznam
+                 zaslat svým známým, kteří si zvolí požadovaný dáreček a zaplatí jej. Obsah nákupního seznamu se po zaplacení dostane vcelku k vám, v jednotném balení!
+              <b>Přihlašte se pod svým účtem a naplňte svůj nákupní seznam přidáním produktů v detailu zboží, napište k seznamu krátký popis, přidejte fotografii a rozešlete seznam e-mailem nebo jej umístěte na Facebook.</b>
+            </p>
+        </div>
+        <hr class="clear" />
+        <a href="{plink Default: }" id="btn-back-to-shop">{_'Zpět do obchodu'}</a>
+        {snippet userinteraction}
+            {if isset($user->id)}
+                <a n:href="createNew!" class="btn reverse" style="float: right; margin-top: 30px;">{_'Přidat nákupní seznam'}</a>
+            {/if}
+        {/snippet}
+    </div>
+{/block}

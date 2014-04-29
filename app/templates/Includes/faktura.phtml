@@ -1,0 +1,108 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Language" content="cs">
+      <style type="text/css">    
+          #top { text-align: right; border-bottom: 2px solid #000; color: #000; font-size: 20px; margin-bottom: 10px; padding-bottom: 20px; margin-top: -35px;}
+          h2 { font-size: 16px; margin: 20px 0 10px 0; font-weight: normal; text-transform: uppercase;}
+          strong { font-weight: bold;}         
+          p { font-size: 14px; color: #333;}
+          body { font-family: sans-serif;; }    
+          table { font-size: 12px; margin: 0; padding: 0; border-collapse: collapse; } 
+          td { margin: 0; padding: 3px 5px; border-collapse: collapse;}
+          .right table, .left table {   margin-top: 0px; border-top: 1px solid #083144; width: 300px;}
+          .right table td, .left table td { padding-left: 0;}
+          .left, .right { width: 45%;}
+          .left { float: left;}
+          .comp-reg { font-size: 11px;}
+          .bott-web { position: absolute; right: 60px; bottom: 40px; font-size: 12px;}
+          .stamp-wrap { width: 170px; margin-top: 130px; margin-left: 40px; text-align: center;}
+          .stamp { border-top: 1px solid #000; font-size: 12px;}
+          .right { float: right;}
+      </style>
+  </head>
+  <body>  
+      <img src="images/logo.png" width="150" />
+      <div id="top"><strong>{$title} {$id}</strong></div>    
+      <div class="left">
+          <h2>{_'Dodavatel'}:</h2>
+          <p>
+              <b>{$supplierName}</b><br />
+              {$supplierStreet} {$supplierHouseNumber}<br />
+              {$supplierCity}, {$supplierZip}<br />
+              <b>{_'IČ'}</b>: {$supplierIn}<br />
+              <b>{_'DIČ'}</b>: {$supplierTin}<br /><br />
+              <span class="comp-reg">{$supplierCompanyRegistration}</span><br /><br />
+              <b>{_'tel'}</b>: {$supplierPhone}<br />
+              <b>{_'mail'}</b>: {$supplierEmail}<br />
+              <b>{_'web'}</b>: <span>nevyplněno</span><br /><br />
+              <b>{_'Číslo účtu'}:</b> <strong>{$supplierAccountNumber}</strong>   
+          </p> 
+          <table>
+              <tr><td>{_'Variabilní symbol'}:</td><td>{$variableSymbol}</td></tr>  
+              <tr><td>{_'Specifický symbol'}:</td><td>{$specificSymbol}</td></tr>
+              <tr><td>{_'Konstantní symbol'}:</td><td>{$constantSymbol}</td></tr>    
+          </table> 
+      </div>
+      <div class="right">
+          <h2>{_'Odběratel'}:</h2>
+          <p>
+               {if $customerCompany != ""}{$customerCompany}{else}{$customerName}{/if}<br />
+               {$customerStreet} {$customerHouseNumber}<br />
+               {$customerCity}, {$customerZip}<br />
+               {_'IČ'}: {$customerIn == 0 ? '' : $customerIn}<br />
+               {_'DIČ'}: {$customerTin}<br /><br />
+               <span class="comp-reg">&nbsp;</span><br /><br />
+               <b>{_'tel'}</b>: {$customerPhone}<br />
+               <b>{_'mail'}</b>: {$customerEmail}<br /><br /><br /> <br />             
+          </p>
+          <table>
+              <tr><td>{_'Forma úhrady'}:</td><td>{$paymentType}</td></tr>  
+              <tr><td>{_'Datum uskutečnění plnění'}:</td><td>{$dateOfVatRevenueRecognition}</td></tr>
+              <tr><td>{_'Datum vystavení'}:</td><td>{$dateOfIssuance}</td></tr>
+              <tr><td><b>{_'Datum splatnosti'}:</b></td><td><b>{$expirationDate}</b></td></tr>
+          </table>     
+      </div>   
+      <div style="border: 1px solid #BEC8CE; clear: both; margin-bottom: 15px; margin-top: 35px; padding: 5px">        
+          <table style="width: 100%;">            
+            <tr>                
+                <th style="text-align:left; "><strong>Položka</strong></th>                
+                <th style="text-align: right;padding-right:10px;"><strong>Jednotková cena<br />bez DPH</strong></th>                
+                <th style="text-align: center;padding-right:10px;"><strong>Počet<br />kusů</strong></th>                 
+                <th style="text-align: center;padding-right:10px;"><strong>Sleva<br />(%)</strong></th>                  
+                <th style="text-align: center;padding-right:10px;"><strong>DPH<br />(%)</strong></th>
+                <th style="text-align: right;padding-right:10px;"><strong>DPH<br />(Kč)</strong></th>   
+                <th style="text-align: right;"><strong>Cena<br />bez PDH</strong></th>                                    
+            </tr>            
+            {foreach $items as $item}             
+                <tr>                
+                  <td style="width: 40%;">{$item->getDescription()}</td>                
+                  <td style="text-align: right;padding-right:10px;">{$item->getUntaxedUnitValue()|round}</td>                
+                  <td style="text-align: center;padding-right:10px;">{$item->getUnits()|number}</td>                    
+                  <td style="text-align: center;padding-right:10px;">{$item->getDiscount()}</td>              
+                  <td style="text-align: center;padding-right:10px;">{$item->getTax() * 100 - 100|number}</td>
+                  <td style="text-align: right;padding-right:10px;">{$item->getTaxValue()|round}</td>               
+                  <td style="text-align: right;">{$item->getFinalValue()|round}</td>               
+                </tr>           
+            {/foreach}         
+          </table>    
+      </div>    
+      <div style="border: 2px solid #000000; margin-bottom: 15px; padding: 5px;">        
+          <table style="width: 100%;">            
+            <tr>                
+                <td>{_'Celkem bez DPH (Kč)'}:</td>                
+                <td style="text-align: right;">{$finalUntaxedValue|round}</td>            
+            </tr>            
+            <tr>                
+                <td>{_'DPH (Kč)'}:</td>                
+                <td style="text-align: right;">{$finalTaxValue|round}</td>            
+            </tr>            
+            <tr style="font-size: 20px;">                
+                <td><strong><b>{_'Celkem s DPH (Kč)'}:</b></strong></td>                
+                <td style="text-align: right;"><strong><b>{=$finalTaxValue+$finalUntaxedValue|round:0}</b></strong></td>            
+            </tr>        
+          </table>    
+      </div>    
+      
+      <p class="bott-web">www adresa -nevyplněno</p>
+  </body>
+</html>

@@ -1,0 +1,101 @@
+    <head>
+        <title>Objednávka {$cart->order->order_number} byla přijata</title>
+        <style type="media/css">
+            * { border: 0; font-family: Arial, Helvetica;}
+            body { font-family: Arial, Helvetica; font-size: 12px;}
+            table { border: 0;}
+            table td{ vertical-align: top; border: 0; background-color: #fcfcfc; font-family: Arial, Helvetica;}
+            th{ text-align: left; border: 0; background-color: #eee;}
+        </style>
+    </head>
+    <body face="Arial, Helvetica" style="font-family: Arial, Helvetica; font-size: 12px;">
+        <h1 style="font-size: 18px; text-decoration: none; margin-bottom: 5px;">Florbal.com – potvrzení objednávky</h1>    
+        <p><strong>číslo {$cart->order->order_number} ze dne {=date("j. m. Y ")}</strong></p>
+        <p>Vážený zákazníku,<br />
+děkujeme za Vaši objednávku. Objednávka na internetovém obchodě společnosti Florbal.com byla v pořádku přijata.</p>
+        <p>
+        Dodavatel: Mgr. Marek Šenkypl., IČ: 65332504, DIČ: CZ7804034546 <br />
+Provozovna: Florbal.com, Hrnčířská 33, Brno 60200
+        </p>
+        <p>
+        Vaši objednávku právě zpracováváme, budeme Vás co nejdříve kontaktovat, kdy bude
+zboží expedováno, případně kdy si budete moci zboží vyzvednout (při osobním odběru).
+        </p>
+        <p>Vámi objednané zboží</p>
+        <table border="1" style="font-family: Arial, Helvetica; font-size: 12px;">
+            <tr><th colspan="2">Název produktu</th><th>Varianta</th><th>Počet</th><th>Cena za kus s DPH</th><th>Celková cena s DPH</th></tr>
+            {foreach $cartList as $item}
+                <tr>
+                    <td style="text-align: left;">
+                        <a href="{link //Files:default $item->foto}" class="thickbox">
+                            <img src="{link //Files:default $item->foto,100,70}" alt="{$item->name}" />
+                        </a>
+                    </td>
+                    {? $s = substr($item->name,strpos($item->name,' ')); }
+                    <td style="text-align: left;"><strong><a href="{plink Detail:default $item->product_id}">{$s}</a></strong></td>
+                    <td style="text-align: left;"><strong>{$item->variant_name}</strong></td>
+                    <td style="text-align: left;">{$item->count}</td>
+                    <td style="text-align: left;">á {$item->price} Kč</td>
+                    <td style="text-align: left;"><strong>{$item->total_price} Kč</strong></td>
+                </tr>
+            {/foreach}
+        </table>
+        <p>
+        Doprava s DPH: {=$cart->order->paymantMethod->price} Kč <br />   
+        Celkem bez DPH: {=round(($cart->order->totalAmount+$cart->order->paymantMethod->price)/119*100)} Kč <br />  
+        Celkem s DPH: {=($cart->order->totalAmount+$cart->order->paymantMethod->price)} Kč 
+        </p>
+        <p>Dopravní a platební podmínky: {$cart->order->paymantMethod->name}, {$cart->order->deliveryMethod->name}</p>
+        {if $cart->order->paymantMethod->id == 4}
+            <p>Při platbě převodem vyčkejte, prosím, na fakturu, kterou Vám zašleme emailem a teprve poté proveďte platbu se správným variabilním symbolem.</p>    
+        {/if}
+        {if !empty($cart->order->note)}
+            <h2 style="font-size: 14px; text-decoration: none;">Vaše poznámka k objednávce</h2>
+            <p>{$cart->order->note}</p>
+        {/if}
+        <h2 style="font-size: 14px; text-decoration: none;">Vaše údaje</h2>
+        <p><strong>Osobní údaje</strong></p>
+        <p>
+        Jméno Příjmení: {$user->name} {$user->surname} <br /><br />
+        E-mail: <a href="mailto:{$user->email}">{$user->email}</a><br />
+        Telefon: {$user->phone}
+        </p>
+        <p><strong>Fakturační údaje</strong></p>
+        <p>
+        {if !empty($user->company)}
+        Firma: {$user->company}<br />
+        {/if}
+        Ulice a ČP: {$user->street}<br />
+        Město: {$user->city}<br />
+        PSČ: {$user->psc} <br />
+        Stát: {$user->country} 
+        {if !empty($user->ic)}
+            <br />IČ: {$user->ic}
+        {/if}
+        {if !empty($user->dic)}
+            <br />DIČ: {$user->dic}
+        {/if}  
+        </p>
+        {if !empty($user->del_name_surname) || !empty($user->del_company)}
+        <p>
+        Jméno a příjmení: {$user->del_name_surname}<br />
+        Firma: {$user->del_company}<br />
+        Ulice a ČP: {$user->del_street}<br />
+        Město: {$user->del_city}<br />
+        PSČ: {$user->del_psc}<br />
+        Stát: {$user->del_country}    
+        </p>
+        {/if}
+        <p>
+        Prosíme Vás o kontrolu uvedených údajů. V případě, že chcete některé z informací
+upravit, kontaktujte nás na:
+        </p>
+        <p>
+        e-mail: <a href="mailto:obchod@florbal.com">obchod@florbal.com</a><br />
+        telefon: (+420) 541 214 249
+        </p>
+        <p>
+        Ještě jednou děkujeme za nákup na Florbal.com.
+        </p>
+    </body>
+</html>

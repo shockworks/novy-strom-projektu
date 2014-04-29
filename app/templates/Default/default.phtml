@@ -1,0 +1,71 @@
+{block presenter}default{/block}
+{block logo}h1{/block}
+{block logo_end}h1{/block}
+{block content}
+    <div class="row outer-hp-slider">
+        <div class="divider-big"></div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 hp-slider">
+            {foreach $sections['titulni-strana']->galleries['slideshow']->files as $file}
+            {if isset($file->url) && $file->url != ""}
+                <a href="{$file->url}" class="slide">
+            {/if}
+                <img src="{plink Files:default $file->id,1170,477,null,null,false,File::FILL}" class="banner img-responsive" /> 
+            {if isset($file->url) && $file->url != ""}
+                </a>
+            {/if}
+            {/foreach}
+        </div>
+        <div id="next"></div>
+        <div id="prev"></div>
+    </div>
+    <div class="row hp-banners"> 
+        {foreach $sections['titulni-strana']->galleries['bannery']->files as $f}
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 banners">
+                <img src="{plink Files: $f->id}" class="banner img-responsive" alt="{$f->name}" />
+            </div>
+        {/foreach}
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 top-brands">
+            <h2 class="topky">Hitovky</h2>
+            {? $tops = CategoryList::getCategories('top-titulka'); }
+            
+            {foreach $tops as $t}
+                {foreach $t->galleries as $gal}
+                    {if $gal->implementation_name == 'logo'}
+                            {foreach $gal->files as $file}
+                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                    <a href="{plink Search: array('category'=>$t->id)}">
+                                        <img src="{plink Files:default $file->id,130,90,null,null,false,File::FILL}" class="img-responsive" alt="{$t->name}" />
+                                    </a>
+                                </div>
+                            {/foreach}
+                    {/if}
+                {/foreach}
+            {/foreach}
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 topky-line">
+            <div class="clear line"></div>
+        </div>
+        {* <!-- <hr class="divider-sml">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 top-brands">
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><img src="" data-src="holder.js/100%x90/text:interpret" class="img-thumbnail img-responsive" /></div>
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><img src="" data-src="holder.js/100%x90/text:interpret" class="img-thumbnail img-responsive" /></div>
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><img src="" data-src="holder.js/100%x90/text:interpret" class="img-thumbnail img-responsive" /></div>
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><img src="" data-src="holder.js/100%x90/text:interpret" class="img-thumbnail img-responsive" /></div>
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><img src="" data-src="holder.js/100%x90/text:interpret" class="img-thumbnail img-responsive" /></div>
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><img src="" data-src="holder.js/100%x90/text:interpret" class="img-thumbnail img-responsive" /></div>
+        </div> --> *}
+    </div>
+    {include '../Includes/top-products-row.latte'}
+    <script>
+        $('.hp-slider').cycle({
+          fx:     'fade',
+          speed:  'fast',
+          timeout: 4000,
+          next:   '#next',
+          prev:   '#prev',
+          pause: 1
+        });
+    </script>
+{/block}
