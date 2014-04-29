@@ -17,3 +17,6 @@ X. TODO(odnekud) si zkopiruji package.json a Gruntfile.js
 
 // nova stromova struktura
 1. doslo ke zmene slozky pictures/ na client-files/ s podsložkama @todo: pro prevod starsich projektu bude nutne prehrat vse z pictures/ do client-files/images/ a v htaccess nastavit presmerovani
+2. todo: chybi zde backend, potreba vyresit kam dame
+3. todo:
+4. adresar /includes/ by mel byt temp vsech ruznych sablon, css a js po kompilaci
